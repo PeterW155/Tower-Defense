@@ -68,5 +68,7 @@ public class EnemyMovement : MonoBehaviour
                 IF adjacent_cell is not in OPEN_LIST
                     ADD adjacent_cell to OPEN_LIST
         */
+
+        
     }
 }
