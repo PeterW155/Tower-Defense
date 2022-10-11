@@ -49,13 +49,11 @@ public class TerrainEditingInspector : Editor
                 // if we clicked on the same index, deselect it
                 if (index == prevIndex)
                 {
-                    HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Keyboard));
                     index = -1;
                     editing = false;
                 }
                 else
                 {
-                    HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
                     editing = true;
                 }
             }
@@ -66,18 +64,20 @@ public class TerrainEditingInspector : Editor
     {
         if (editing)
         {
+            HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
+
             TerrainEditor terrainEditor = (TerrainEditor)target;
 
             if (terrainEditor.world == null)
                 terrainEditor.world = terrainEditor.GetComponent<World>();
 
-            if (Event.current.type == EventType.MouseDown && Event.current.button == 0)
+            if (Event.current.type == EventType.MouseDown && Event.current.button == 0 && !Event.current.alt)
             {
-                Ray ray = Camera.main.ScreenPointToRay(GUIUtility.GUIToScreenPoint(Event.current.mousePosition));
+                Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition); ;
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                 {
-                    if (Event.current.type == EventType.KeyDown && Event.current.shift)
+                    if (Event.current.shift)
                         terrainEditor.ModifyTerrain(hit);
                     else
                         terrainEditor.ModifyTerrain(hit, terrainEditor.blockType, true);

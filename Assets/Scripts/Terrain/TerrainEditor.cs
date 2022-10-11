@@ -16,6 +16,6 @@ public class TerrainEditor : MonoBehaviour
 
     public void ModifyTerrain(RaycastHit hit, BlockType blockType = BlockType.Air, bool place = false)
     {
-        world.SetBlock(hit, blockType);
+        world.SetBlock(hit, blockType, place);
     }
 }

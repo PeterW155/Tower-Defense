@@ -189,7 +189,6 @@ public class World : MonoBehaviour
         if (chunk == null)
             return false;
 
-        Debug.Log(hit.point);
         Vector3Int pos = GetBlockPos(hit, place);
 
         WorldDataHelper.SetBlock(chunk.ChunkData.worldReference, pos, blockType);
