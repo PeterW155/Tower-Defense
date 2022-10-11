@@ -49,7 +49,7 @@ public class Grid : MonoBehaviour
     public Node NodeFromWorldPosition(Vector3 a_WorldPosition)
     {
         float xpoint = ((a_WorldPosition.x + gridWorldSize.x / 2) / gridWorldSize.x);
-        float ypoint = ((a_WorldPosition.y + gridWorldSize.y / 2) / gridWorldSize.y);
+        float ypoint = ((a_WorldPosition.z + gridWorldSize.y / 2) / gridWorldSize.y);
 
         xpoint = Mathf.Clamp01(xpoint);
         ypoint = Mathf.Clamp01(ypoint);

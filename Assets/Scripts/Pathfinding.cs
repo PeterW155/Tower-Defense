@@ -88,8 +88,8 @@ public class Pathfinding : MonoBehaviour
     int GetManhattenDistance(Node a_nodeA, Node a_nodeB)
     {
         int ix = Mathf.Abs(a_nodeA.gridX - a_nodeB.gridX);
-        int iy = Mathf.Abs(a_nodeA.gridY - a_nodeB.gridY);
+        int iz = Mathf.Abs(a_nodeA.gridY - a_nodeB.gridY);
 
-        return ix + iy;
+        return ix + iz;
     }
 }
