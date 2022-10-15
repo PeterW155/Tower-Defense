@@ -14,7 +14,7 @@ public class ChunkRenderer : MonoBehaviour
     Mesh mesh;
     public bool showGizmo = false;
 
-    public ChunkData ChunkData { get; private set; }
+    public ChunkData ChunkData;
 
     public bool ModifiedByThePlayer
     {
@@ -63,6 +63,7 @@ public class ChunkRenderer : MonoBehaviour
     public void UpdateChunk()
     {
         RenderMesh(Chunk.GetChunkMeshData(ChunkData));
+        Debug.Log("updated");
     }
 
     public void UpdateChunk(MeshData data)

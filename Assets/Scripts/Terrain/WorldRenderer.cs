@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class WorldRenderer : MonoBehaviour
@@ -23,7 +24,7 @@ public class WorldRenderer : MonoBehaviour
         chunkPool.Clear();
     }
 
-    public void Refresh()
+    public void DeleteRenderers()
     {
         if (chunkPool == null || chunkPool.Count() <= 0)
             for (int i = transform.childCount - 1; i >= 0; i--)
@@ -36,6 +37,26 @@ public class WorldRenderer : MonoBehaviour
             }
     }
 
+    public void LoadRenderersFromPrefab(GameObject gameObject, World world, ref Dictionary<Vector3Int, ChunkRenderer> chunkDictionary, ref Dictionary<Vector3Int, ChunkData> chunkDataDictionary)
+    {
+        foreach (Transform child in gameObject.transform)
+        {
+            GameObject newChild = Instantiate(child.gameObject, transform);
+            Vector3Int pos = Vector3Int.FloorToInt(newChild.transform.position);
+            newChild.name = "Chunk" + pos;
+            if (chunkDictionary.ContainsKey(pos))
+            {
+                ChunkRenderer cr = newChild.GetComponent<ChunkRenderer>();
+                chunkPool.Enqueue(cr);
+                cr.ChunkData.worldReference = world;
+                chunkDictionary[pos] = cr;
+                chunkDataDictionary[pos] = cr.ChunkData;
+            }
+            else
+                throw new Exception("Corrupted world data. Chunk positions do not match.");
+            newChild.SetActive(false);
+        }
+    }
 
     internal ChunkRenderer RenderChunk(WorldData worldData, Vector3Int position, MeshData meshData)
     {

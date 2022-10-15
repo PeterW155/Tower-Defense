@@ -14,7 +14,24 @@ public class WorldInspector : Editor
 
         if (GUILayout.Button("Generate World"))
         {
-            world.GenerateWorld();
+                world.GenerateWorld();
+        }
+
+        GUILayout.Space(25);
+
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Save World"))
+        {
+            world.SaveWorld();
+        }
+        if (GUILayout.Button("Save As World"))
+        {
+            world.SaveWorld(true);
+        }
+        GUILayout.EndHorizontal();
+        if (GUILayout.Button("Load World"))
+        {
+            world.LoadWorld(true);
         }
     }
 }
