@@ -11,6 +11,7 @@ public class Pathfinding : MonoBehaviour
     private void Awake()
     {
         grid = GetComponent<PathfindGrid>();
+        
     }
 
     private void Update()

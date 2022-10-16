@@ -16,13 +16,31 @@ public class PathfindGrid : MonoBehaviour
 
     float nodeDiameter;
     int gridSizeX, gridSizeY;
+    int mapSize, chunkSize;
+    //Vector2 gridWorldSize;
 
     private void Start()
     {
         nodeDiameter = nodeRadius * 2;
+        GridSizeFromEditor();
+        //GridSizeFromWorldObject(); // Remember to uncomment Vector2 gridWorldSize and comment public Vector2 gridWorldSize and comment GridSizeFromEditor() when using this and vice versa
+        CreateGrid();
+    }
+
+    void GridSizeFromEditor()
+    {
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
-        CreateGrid();
+    }
+
+    void GridSizeFromWorldObject()
+    {
+        mapSize = GameObject.Find("World").GetComponent<World>().mapSizeInChunks;
+        chunkSize = GameObject.Find("World").GetComponent<World>().chunkSize;
+        gridWorldSize.x = mapSize * chunkSize;
+        gridWorldSize.y = mapSize * chunkSize;
+        gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
+        gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
     }
 
     void CreateGrid()
@@ -41,7 +59,7 @@ public class PathfindGrid : MonoBehaviour
                     Wall = false;
                 }
 
-                grid[x, y] = new PathfindNode(Wall, worldPoint, x, y);
+                grid[x, y] = new PathfindNode(Wall, worldPoint, x, y); // might be this
             }
         }
     }
