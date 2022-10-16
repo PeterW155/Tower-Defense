@@ -47,6 +47,8 @@ public class PathfindGrid : MonoBehaviour
     {
         grid = new PathfindNode[gridSizeX, gridSizeY];
         Vector3 bottomLeft = transform.position - Vector3.right * gridWorldSize.x / 2 - Vector3.forward * gridWorldSize.y / 2;
+        //Vector3 bottomLeft = GameObject.Find("World").transform.position - Vector3.right * gridWorldSize.x / 2 - Vector3.forward * gridWorldSize.y / 2;
+        //Vector3 bottomLeft = transform.localPosition - Vector3.right * gridWorldSize.x / 2 - Vector3.forward * gridWorldSize.y / 2;
         for (int x = 0; x < gridSizeX; x++)
         {
             for (int y = 0; y < gridSizeY; y++)
@@ -134,7 +136,7 @@ public class PathfindGrid : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
-
+        Debug.Log(FinalPath);
         if (grid != null) // If the grid is not empty
         {
             foreach (PathfindNode node in grid) // Loop through every node in the grid
