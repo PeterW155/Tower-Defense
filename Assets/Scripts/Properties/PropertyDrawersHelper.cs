@@ -8,7 +8,7 @@ public static class PropertyDrawersHelper
     public static string[] AllActionMaps()
     {
         var temp = new List<string>();
-        InputActionAsset playerInputs = (InputActionAsset)AssetDatabase.LoadAssetAtPath("Assets/Input/PlayerInput.inputactions", typeof(InputActionAsset));
+        InputActionAsset playerInputs = (InputActionAsset)AssetDatabase.LoadAssetAtPath("Assets/Input/PlayerControls.inputactions", typeof(InputActionAsset));
         foreach (var actionMap in playerInputs.actionMaps)
         {
              temp.Add(actionMap.name);
@@ -18,7 +18,7 @@ public static class PropertyDrawersHelper
     public static string[] AllPlayerInputs()
     {
         var temp = new List<string>();
-        InputActionAsset playerInputs = (InputActionAsset)AssetDatabase.LoadAssetAtPath("Assets/Input/PlayerInput.inputactions", typeof(InputActionAsset));
+        InputActionAsset playerInputs = (InputActionAsset)AssetDatabase.LoadAssetAtPath("Assets/Input/PlayerControls.inputactions", typeof(InputActionAsset));
         foreach (var actionMap in playerInputs.actionMaps)
         {
             foreach (var binding in actionMap.bindings)

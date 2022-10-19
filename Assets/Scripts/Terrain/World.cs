@@ -143,11 +143,9 @@ public class World : MonoBehaviour
             .Select(keyvalpair => keyvalpair.Value)
             .ToList();
 
-        Debug.Log("runnning");
-        meshDataDictionary = await CreateMeshDataAsync(dataToRender);
         try
         {
-            
+            meshDataDictionary = await CreateMeshDataAsync(dataToRender);
         }
         catch (Exception)
         {
