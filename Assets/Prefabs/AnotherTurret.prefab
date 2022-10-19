@@ -406,7 +406,7 @@ MonoBehaviour:
   enemyTag: Enemy
   partToRotate: {fileID: 1059197709588517820}
   rotationSpeed: 7
-  bullet: {fileID: 8952111980692290676, guid: 0b5b1263b634a6040bf50d7be8b66951, type: 3}
+  bullet: {fileID: 3095520895904579980, guid: 4754eceeab5396d40bc7874dd35dc962, type: 3}
   firePoint: {fileID: 2610151050243111025}
 --- !u!1 &6387314077730022355
 GameObject:
