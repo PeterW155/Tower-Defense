@@ -16,13 +16,18 @@ public class Pathfinding : MonoBehaviour
 
     private void Update()
     {
+        //Debug.Log(StartPosition.position.x + ", " + StartPosition.position.z + "|" + TargetPosition.position.x + ", " + TargetPosition.position.z);
         FindPath(StartPosition.position, TargetPosition.position);
     }
 
     void FindPath(Vector3 a_StartPos, Vector3 a_TargetPos)
     {
+        //Debug.Log(a_StartPos.x + ", " + a_StartPos.z);
+        
         PathfindNode StartNode = grid.NodeFromWorldPosition(a_StartPos);
         PathfindNode TargetNode = grid.NodeFromWorldPosition(a_TargetPos);
+
+        //Debug.Log(StartNode.position.x + ", " + StartNode.position.z);
 
         List<PathfindNode> OpenList = new List<PathfindNode>();
         HashSet<PathfindNode> ClosedList = new HashSet<PathfindNode>();

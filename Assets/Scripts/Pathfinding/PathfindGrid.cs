@@ -31,6 +31,9 @@ public class PathfindGrid : MonoBehaviour
     {
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
+
+        //gridSizeX = Mathf.RoundToInt((gridWorldSize.x * 2) / nodeDiameter);
+        //gridSizeY = Mathf.RoundToInt((gridWorldSize.y * 2) / nodeDiameter);
     }
 
     void GridSizeFromWorldObject()
@@ -74,8 +77,18 @@ public class PathfindGrid : MonoBehaviour
         xpoint = Mathf.Clamp01(xpoint);
         ypoint = Mathf.Clamp01(ypoint);
 
-        int x = Mathf.RoundToInt((gridSizeX - 1) * xpoint);
+        int x = Mathf.RoundToInt((gridSizeX - 1) * xpoint); // issue origin
         int y = Mathf.RoundToInt((gridSizeY - 1) * ypoint);
+
+        x -= Mathf.RoundToInt(gridSizeX / 2); // This partially fixed the grid shift issue
+        y -= Mathf.RoundToInt(gridSizeY / 2);
+
+        Debug.Log("Original: " + a_WorldPosition.x + ", " + a_WorldPosition.z);
+        Debug.Log("Clamp01: " + xpoint + ", " + ypoint);
+        //Debug.Log(gridSizeX + ", " + gridSizeY);
+        //Debug.Log((gridSizeX - 1) * xpoint);
+        //Debug.Log((gridSizeY - 1) * ypoint);
+        Debug.Log("Result: " + x + ", " + y);
 
         return grid[x, y];
     }
@@ -129,14 +142,13 @@ public class PathfindGrid : MonoBehaviour
                 NeighboringNodes.Add(grid[xCheck, yCheck]);
             }
         }
-
         return NeighboringNodes;
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
-        Debug.Log(FinalPath);
+        //Debug.Log(FinalPath);
         if (grid != null) // If the grid is not empty
         {
             foreach (PathfindNode node in grid) // Loop through every node in the grid
@@ -154,6 +166,7 @@ public class PathfindGrid : MonoBehaviour
                 {
                     if (FinalPath.Contains(node)) // If the current node is in the final path
                     {
+                        //Debug.Log(node.gridX + ", " + node.gridY);
                         Gizmos.color = Color.red; // Set the color of that node
                     }
                 }
