@@ -31,9 +31,6 @@ public class PathfindGrid : MonoBehaviour
     {
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
-
-        //gridSizeX = Mathf.RoundToInt((gridWorldSize.x * 2) / nodeDiameter);
-        //gridSizeY = Mathf.RoundToInt((gridWorldSize.y * 2) / nodeDiameter);
     }
 
     void GridSizeFromWorldObject()
@@ -74,17 +71,25 @@ public class PathfindGrid : MonoBehaviour
         float xpoint = ((a_WorldPosition.x + gridWorldSize.x / 2) / gridWorldSize.x);
         float ypoint = ((a_WorldPosition.z + gridWorldSize.y / 2) / gridWorldSize.y);
 
-        xpoint = Mathf.Clamp01(xpoint);
-        ypoint = Mathf.Clamp01(ypoint);
+        Debug.Log("xy point: " + xpoint + ", " + ypoint);
 
-        int x = Mathf.RoundToInt((gridSizeX - 1) * xpoint); // issue origin
-        int y = Mathf.RoundToInt((gridSizeY - 1) * ypoint);
+        //xpoint = Mathf.Clamp01(xpoint);
+        //ypoint = Mathf.Clamp01(ypoint);
 
-        x -= Mathf.RoundToInt(gridSizeX / 2); // This partially fixed the grid shift issue
-        y -= Mathf.RoundToInt(gridSizeY / 2);
+        xpoint = Mathf.Clamp(xpoint, 0.5f, 1.5f);
+        ypoint = Mathf.Clamp(ypoint, 0.5f, 1.5f);
+
+        //int x = Mathf.RoundToInt((gridSizeX - 1) * xpoint); // issue origin
+        //int y = Mathf.RoundToInt((gridSizeY - 1) * ypoint);
+
+        int x = Mathf.RoundToInt((gridSizeX) * xpoint); // issue origin
+        int y = Mathf.RoundToInt((gridSizeY) * ypoint);
+
+        x = x - Mathf.RoundToInt(gridSizeX / 2); // This partially fixed the grid shift issue
+        y = y - Mathf.RoundToInt(gridSizeY / 2); 
 
         Debug.Log("Original: " + a_WorldPosition.x + ", " + a_WorldPosition.z);
-        Debug.Log("Clamp01: " + xpoint + ", " + ypoint);
+        Debug.Log("Clamp: " + xpoint + ", " + ypoint);
         //Debug.Log(gridSizeX + ", " + gridSizeY);
         //Debug.Log((gridSizeX - 1) * xpoint);
         //Debug.Log((gridSizeY - 1) * ypoint);
