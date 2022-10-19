@@ -1,11 +1,13 @@
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class CannonBullet : MonoBehaviour
 {
     private Transform target;
 
     public float speed = 70f;
     public GameObject impactEffect;
+    public string enemyTag = "Enemy";
+    public float splashDamageRange = 10f;
 
     public void Seek(Transform _target)
     {
@@ -27,7 +29,7 @@ public class Bullet : MonoBehaviour
         Vector3 dir = target.position - transform.position;
         float distanceThisFrame = speed * Time.deltaTime;
 
-        if(dir.magnitude <= distanceThisFrame)
+        if (dir.magnitude <= distanceThisFrame)
         {
             HitTarget();
             return;
@@ -38,9 +40,20 @@ public class Bullet : MonoBehaviour
 
     void HitTarget()
     {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
+
         GameObject effectInst = (GameObject)Instantiate(impactEffect, transform.position, transform.rotation);
         Destroy(effectInst, 2f);
         Destroy(gameObject.gameObject);
         Destroy(target.gameObject);
+
+        foreach (GameObject enemy in enemies)
+        {
+            float dist = Vector3.Distance(target.transform.position, enemy.transform.position);
+            if(dist < splashDamageRange)
+            {
+                Destroy(enemy.gameObject);
+            }
+        }
     }
 }
