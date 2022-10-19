@@ -26,6 +26,7 @@ public class PathfindGrid : MonoBehaviour
         //GridSizeFromEditor();
         GridSizeFromWorldObject(); // Remember to uncomment Vector2 gridWorldSize and comment public Vector2 gridWorldSize and comment GridSizeFromEditor() when using this and vice versa
         CreateGrid();
+        GameObject.Find("GameManager").SetActive(false);
     }
 
     void GridSizeFromEditor()
