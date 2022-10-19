@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Pathfinding : MonoBehaviour
 {
+    private const int MOVE_STRAIGHT_COST = 10;
+    private const int MOVE_DIAGONAL_COST = 14;
+    
     PathfindGrid grid;
     public Transform StartPosition;
     public Transform TargetPosition;
@@ -58,12 +61,14 @@ public class Pathfinding : MonoBehaviour
                 {
                     continue;
                 }
-                int MoveCost = CurrentNode.gCost + GetManhattenDistance(CurrentNode, NeighborNode);
+                //int MoveCost = CurrentNode.gCost + GetManhattenDistance(CurrentNode, NeighborNode);
+                int MoveCost = CurrentNode.gCost + CalculateDistanceCost(CurrentNode, NeighborNode);
 
                 if (MoveCost < NeighborNode.gCost || !OpenList.Contains(NeighborNode))
                 {
                     NeighborNode.gCost = MoveCost;
-                    NeighborNode.hCost = GetManhattenDistance(NeighborNode, TargetNode);
+                    //NeighborNode.hCost = GetManhattenDistance(NeighborNode, TargetNode);
+                    NeighborNode.hCost = CalculateDistanceCost(NeighborNode, TargetNode);
                     NeighborNode.Parent = CurrentNode;
 
                     if (!OpenList.Contains(NeighborNode))
@@ -97,5 +102,14 @@ public class Pathfinding : MonoBehaviour
         int iz = Mathf.Abs(a_nodeA.gridY - a_nodeB.gridY);
 
         return ix + iz;
+    }
+
+    int CalculateDistanceCost(PathfindNode a_nodeA, PathfindNode a_nodeB)
+    {
+        int ix = Mathf.Abs(a_nodeA.gridX - a_nodeB.gridX);
+        int iz = Mathf.Abs(a_nodeA.gridY - a_nodeB.gridY);
+        int remaining = Mathf.Abs(ix - iz);
+
+        return MOVE_DIAGONAL_COST * Mathf.Min(ix, iz) + MOVE_STRAIGHT_COST * remaining;
     }
 }

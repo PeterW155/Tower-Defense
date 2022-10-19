@@ -82,9 +82,6 @@ public class PathfindGrid : MonoBehaviour
         xpoint = Mathf.Clamp(xpoint, 0.5f, 1.5f);
         ypoint = Mathf.Clamp(ypoint, 0.5f, 1.5f);
 
-        //xpoint = Mathf.Clamp01(xpoint);
-        //ypoint = Mathf.Clamp01(ypoint);
-
         int x = Mathf.RoundToInt((gridSizeX) * xpoint); // issue origin
         int y = Mathf.RoundToInt((gridSizeY) * ypoint);
 
