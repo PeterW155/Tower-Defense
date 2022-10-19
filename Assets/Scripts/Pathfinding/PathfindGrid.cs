@@ -46,7 +46,7 @@ public class PathfindGrid : MonoBehaviour
         gameObjectPosX = GameObject.Find("GameManager").transform.position.x;
         gameObjectPosY = GameObject.Find("GameManager").transform.position.y;
         gameObjectPosZ = GameObject.Find("GameManager").transform.position.z;
-        GameObject.Find("GameManager").transform.position = new Vector3 ((gameObjectPosX + gridWorldSize.x / 2) - 0.5f, 10f, (gameObjectPosZ + gridWorldSize.y / 2) - 0.5f);
+        GameObject.Find("GameManager").transform.position = new Vector3 ((gameObjectPosX + gridWorldSize.x / 2) - 0.5f, gameObjectPosY, (gameObjectPosZ + gridWorldSize.y / 2) - 0.5f);
     }
 
     void CreateGrid()
