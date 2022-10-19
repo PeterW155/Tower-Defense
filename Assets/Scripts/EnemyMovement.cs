@@ -9,10 +9,34 @@ public class EnemyMovement : MonoBehaviour
     private Transform target;
     private int wavepointIndex = 0;
 
+    public int value = 75;
+
+    public GameObject deathEffect;
+
+    public int health = 100;
     // Start is called before the first frame update
     void Start()
     {
         target = Waypoints.waypoints[0];
+    }
+
+    public void TakeDamage (int amount)
+    {
+        health -= amount;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die ()
+    {
+        PlayerStats.Money += value;
+
+        GameObject effect = (GameObject)Instantiate(deathEffect, transform.position, Quaternion.identity);
+        Destroy(effect, 5f);
+
+        Destroy(gameObject);
     }
 
     // Update is called once per frame
@@ -31,11 +55,17 @@ public class EnemyMovement : MonoBehaviour
     {
         if (wavepointIndex >= Waypoints.waypoints.Length-1)
         {
-            Destroy(gameObject);
+            EndPath();
             return;
         }
 
         wavepointIndex++;
         target = Waypoints.waypoints[wavepointIndex];
+    }
+
+    void EndPath()
+    {
+        PlayerStats.Lives--;
+        Destroy(gameObject);
     }
 }
