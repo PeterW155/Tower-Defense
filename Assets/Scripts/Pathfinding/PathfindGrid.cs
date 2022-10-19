@@ -6,7 +6,7 @@ public class PathfindGrid : MonoBehaviour
 {
     public Transform StartPosition;
     public LayerMask WallMask;
-    public Vector2 gridWorldSize;
+    //public Vector2 gridWorldSize;
     public float nodeRadius;
     public float distance;
 
@@ -16,14 +16,15 @@ public class PathfindGrid : MonoBehaviour
 
     float nodeDiameter;
     int gridSizeX, gridSizeY;
+    float gameObjectPosX, gameObjectPosY, gameObjectPosZ;
     int mapSize, chunkSize;
-    //Vector2 gridWorldSize;
+    Vector2 gridWorldSize;
 
     private void Start()
     {
         nodeDiameter = nodeRadius * 2;
-        GridSizeFromEditor();
-        //GridSizeFromWorldObject(); // Remember to uncomment Vector2 gridWorldSize and comment public Vector2 gridWorldSize and comment GridSizeFromEditor() when using this and vice versa
+        //GridSizeFromEditor();
+        GridSizeFromWorldObject(); // Remember to uncomment Vector2 gridWorldSize and comment public Vector2 gridWorldSize and comment GridSizeFromEditor() when using this and vice versa
         CreateGrid();
     }
 
@@ -41,6 +42,11 @@ public class PathfindGrid : MonoBehaviour
         gridWorldSize.y = mapSize * chunkSize;
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
+
+        gameObjectPosX = GameObject.Find("GameManager").transform.position.x;
+        gameObjectPosY = GameObject.Find("GameManager").transform.position.y;
+        gameObjectPosZ = GameObject.Find("GameManager").transform.position.z;
+        GameObject.Find("GameManager").transform.position = new Vector3 ((gameObjectPosX + gridWorldSize.x / 2) - 0.5f, 10f, (gameObjectPosZ + gridWorldSize.y / 2) - 0.5f);
     }
 
     void CreateGrid()
