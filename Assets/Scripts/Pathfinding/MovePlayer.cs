@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.AI;
 using UnityEngine;
 
 public class MovePlayer : MonoBehaviour
 {
-    public UnityEngine.AI.NavMeshAgent agent;
+    public NavMeshAgent agent;
     public LayerMask hitLayers;
 
     bool walkPointSet;
@@ -13,13 +14,13 @@ public class MovePlayer : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // If the player has left clicked
+        if (Input.GetMouseButtonDown(1)) // If the player has right clicked
         {
             Vector3 mouse = Input.mousePosition; // Get the mouse Position
             Ray castPoint = Camera.main.ScreenPointToRay(mouse); // Cast a ray to get where the mouse is pointing at
