@@ -11,5 +11,8 @@ public enum BlockType
     Grass_Stone,
     Stone,
     Water,
-    Sand
+    Sand,
+    Bedrock,
+    Barrier,
+    Wood
 }

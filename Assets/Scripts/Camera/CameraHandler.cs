@@ -23,25 +23,28 @@ public class CameraHandler : MonoBehaviour
     [Range(1, 5)]
     public float zoomSensetivity = 2.5f;
     public Vector2 zoomMinMax = new Vector2(2, 20);
+
     [Space]
     [Header("Controls")]
-    private PlayerInput _playerInput;
+    public PlayerInput _playerInput;
+    [StringInList(typeof(PropertyDrawersHelper), "AllActionMaps")] public string cameraActionMap;
     [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string moveControl;
     private InputAction _move;
     [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string lookControl;
     private InputAction _look;
-    [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string cameraControl;
-    private InputAction _camera;
+    [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string rotateControl;
+    private InputAction _rotate;
     [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string zoomControl;
     private InputAction _zoom;
 
     private Rigidbody _rigidbodyParent;
     private Rigidbody _rigidbodyRotate;
-    [Space(25)]
     private Vector2 warpPosition;
     private float zoomPosZ;
     private float zoomTarget;
     private float zoomTime;
+    [Space]
+    [Header("Debug")]
     [ReadOnly] [SerializeField] private Vector2 move;
     [ReadOnly] [SerializeField] private Vector2 look;
     [ReadOnly] [SerializeField] private float zoom;
@@ -58,16 +61,18 @@ public class CameraHandler : MonoBehaviour
 
         _playerInput = GetComponent<PlayerInput>();
 
+        _playerInput.actions.FindActionMap(cameraActionMap).Enable();
+
         //initialize inputs
         _move = _playerInput.actions[moveControl];
         _look = _playerInput.actions[lookControl];
-        _camera = _playerInput.actions[cameraControl];
+        _rotate = _playerInput.actions[rotateControl];
         _zoom = _playerInput.actions[zoomControl];
     }
 
     private void Update()
     {
-        if (_camera.WasPressedThisFrame())
+        if (_rotate.WasPressedThisFrame())
             warpPosition = Mouse.current.position.ReadValue();
         move = _move.ReadValue<Vector2>();
         look = _look.ReadValue<Vector2>();
@@ -108,7 +113,7 @@ public class CameraHandler : MonoBehaviour
         }
 
         //camera rotation
-        if (_camera.IsPressed())
+        if (_rotate.IsPressed())
         {
             Mouse.current.WarpCursorPosition(warpPosition);
 

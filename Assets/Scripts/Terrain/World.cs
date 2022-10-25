@@ -236,15 +236,47 @@ public class World : MonoBehaviour
 
     }
 
-    internal bool SetBlock(RaycastHit hit, BlockType blockType, bool place = false)
+    internal BlockType GetBlock(RaycastHit hit, bool place = false)
     {
         ChunkRenderer chunk = hit.collider.GetComponent<ChunkRenderer>();
         if (chunk == null)
+            return BlockType.Nothing;
+
+        Vector3Int pos = Vector3Int.RoundToInt(GetBlockPos(hit, place));
+
+        return WorldDataHelper.GetBlock(chunk.ChunkData.worldReference, pos);
+    }
+
+    internal bool GetBlockVolume(Vector3Int corner1, Vector3Int corner2, bool checkEmpty) //if it is checking empty: true if empty, false if any blocks || if checking filled: true if filled, false if any empty
+    {
+        Vector3Int size = corner2 - corner1;
+
+        for (int x = 0; (size.x > 0 ? x <= size.x : x >= size.x); x += (size.x > 0 ? 1 : -1))
+        {
+            for (int y = 0; (size.y > 0 ? y <= size.y : y >= size.y); y += (size.y > 0 ? 1 : -1))
+            {
+                for (int z = 0; (size.z > 0 ? z <= size.z : z >= size.z); z += (size.z > 0 ? 1 : -1))
+                {
+                    BlockType block = GetBlockFromChunkCoordinates(null, corner1.x + x, corner1.y + y, corner1.z + z);
+                    if (checkEmpty? //whether to be checking for emptiness or filled
+                        block != BlockType.Nothing && block != BlockType.Air : //if the block is anything but empty
+                        block == BlockType.Nothing || block == BlockType.Air || block == BlockType.Barrier)  //if the block is empty
+                        return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    internal bool SetBlock(RaycastHit hit, BlockType blockType, bool place = false)
+    {
+        Vector3Int pos = Vector3Int.RoundToInt(GetBlockPos(hit, place));
+
+        Vector3Int chunkPos = Chunk.ChunkPositionFromBlockCoords(this, pos.x, pos.y, pos.z);
+
+        ChunkRenderer chunk = WorldDataHelper.GetChunk(this, chunkPos);
+        if (chunk == null)
             return false;
-
-        Vector3Int pos = GetBlockPos(hit, place);
-
-        Debug.Log(pos);
 
         WorldDataHelper.SetBlock(chunk.ChunkData.worldReference, pos, blockType);
         chunk.ModifiedByThePlayer = true;
@@ -255,9 +287,12 @@ public class World : MonoBehaviour
             foreach (ChunkData neighbourData in neighbourDataList)
             {
                 //neighbourData.modifiedByThePlayer = true;
-                ChunkRenderer chunkToUpdate = WorldDataHelper.GetChunk(neighbourData.worldReference, neighbourData.worldPosition);
-                if (chunkToUpdate != null)
-                    chunkToUpdate.UpdateChunk();
+                if (neighbourData != null)
+                {
+                    ChunkRenderer chunkToUpdate = WorldDataHelper.GetChunk(neighbourData.worldReference, neighbourData.worldPosition);
+                    if (chunkToUpdate != null)
+                        chunkToUpdate.UpdateChunk();
+                }
             }
 
         }
@@ -266,7 +301,54 @@ public class World : MonoBehaviour
         return true;
     }
 
-    private Vector3Int GetBlockPos(RaycastHit hit, bool place = false)
+    internal bool SetBlockVolume(Vector3Int corner1, Vector3Int corner2, BlockType blockType)
+    {
+        Vector3Int size = corner2 - corner1;
+
+        HashSet<ChunkRenderer> updateChunks = new HashSet<ChunkRenderer>();
+
+        for (int x = 0; (size.x > 0 ? x <= size.x : x >= size.x); x += (size.x > 0 ? 1 : -1))
+        {
+            for (int y = 0; (size.y > 0 ? y <= size.y : y >= size.y); y += (size.y > 0 ? 1 : -1))
+            {
+                for (int z = 0; (size.z > 0 ? z <= size.z : z >= size.z); z += (size.z > 0 ? 1 : -1))
+                {
+                    Vector3Int pos = Vector3Int.RoundToInt(new Vector3(corner1.x + x, corner1.y + y, corner1.z + z));
+                    Vector3Int chunkPos = Chunk.ChunkPositionFromBlockCoords(this, corner1.x + x, corner1.y + y, corner1.z + z);
+
+                    ChunkRenderer chunk = WorldDataHelper.GetChunk(this, chunkPos);
+                    if (chunk == null)
+                        return false;
+
+                    updateChunks.Add(chunk);
+
+                    WorldDataHelper.SetBlock(chunk.ChunkData.worldReference, pos, blockType);
+                    chunk.ModifiedByThePlayer = true;
+
+                    if (Chunk.IsOnEdge(chunk.ChunkData, pos))
+                    {
+                        List<ChunkData> neighbourDataList = Chunk.GetEdgeNeighbourChunk(chunk.ChunkData, pos);
+                        foreach (ChunkData neighbourData in neighbourDataList)
+                        {
+                            //neighbourData.modifiedByThePlayer = true;
+                            if (neighbourData != null)
+                            {
+                                ChunkRenderer chunkToUpdate = WorldDataHelper.GetChunk(neighbourData.worldReference, neighbourData.worldPosition);
+                                if (chunkToUpdate != null)
+                                    updateChunks.Add(chunkToUpdate);
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+        foreach (ChunkRenderer cr in updateChunks)
+            cr.UpdateChunk();
+        return true;
+    }
+
+    public Vector3 GetBlockPos(RaycastHit hit, bool place = false, int[] baseWidthLength = null )
     {
         Vector3 pos = new Vector3(
              GetBlockPositionIn(hit.point.x, hit.normal.x, place),
@@ -274,16 +356,42 @@ public class World : MonoBehaviour
              GetBlockPositionIn(hit.point.z, hit.normal.z, place)
              );
 
+        if (baseWidthLength != null)
+        {
+            float x, y, z;
+            if (baseWidthLength[0] % 2 != 1)
+            {
+                x = pos.x + 0.5f;
+                x = Mathf.Round(x) - 0.5f;
+            }
+            else
+                x = Mathf.Round(pos.x);
+
+            if (baseWidthLength[1] % 2 != 1)
+            {
+                z = pos.z + 0.5f;
+                z = Mathf.Round(z) - 0.5f;
+            }
+            else
+                z = Mathf.Round(pos.z);
+
+            y = pos.y;
+            y = Mathf.Round(y);
+
+            pos = new Vector3(x, y, z);
+
+            return pos;
+        }
         return Vector3Int.RoundToInt(pos);
     }
 
     private float GetBlockPositionIn(float pos, float normal, bool place)
     {
-        if (Mathf.Abs(pos % 1) == 0.5f)
+        float halfway = Mathf.Abs(pos % 1);
+        if (0.49f < halfway && halfway < 0.51f)
         {
             pos += place ? (normal / 2) : -(normal / 2);
         }
-
 
         return (float)pos;
     }

@@ -19,16 +19,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 30
-    width: 1920
-    height: 947
+    width: 1706.6666
+    height: 867.3333
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-<<<<<<< HEAD
-  controlID: 100
-=======
-  controlID: 3782
->>>>>>> parent of 219be0a (Revert "Sean demo")
+  controlID: 20701
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -45,21 +41,14 @@ MonoBehaviour:
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
     m_Text: Game
-    m_Image: {fileID: -6423792434712278376, guid: 0000000000000000d000000000000000, type: 0}
+    m_Image: {fileID: 4621777727084837110, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-<<<<<<< HEAD
-    x: 377
-    y: 73
-    width: 1085
-    height: 538
-=======
-    x: 378
-    y: 19
-    width: 1085
-    height: 664
->>>>>>> parent of 219be0a (Revert "Sean demo")
+    x: 342
+    y: 72.66667
+    width: 1036
+    height: 476.33334
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -67,23 +56,10 @@ MonoBehaviour:
   m_SerializedViewNames: []
   m_SerializedViewValues: []
   m_PlayModeViewName: GameView
-<<<<<<< HEAD
-  m_ShowGizmos: 1
-  m_TargetDisplay: 0
-  m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 1085, y: 517}
-  m_TextureFilterMode: 0
-  m_TextureHideFlags: 61
-  m_RenderIMGUI: 1
-  m_EnterPlayModeBehavior: 2
-  m_UseMipMap: 0
-  m_VSyncEnabled: 0
-  m_Gizmos: 1
-=======
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 1085, y: 643}
+  m_TargetSize: {x: 2560, y: 1440}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -91,23 +67,17 @@ MonoBehaviour:
   m_UseMipMap: 0
   m_VSyncEnabled: 0
   m_Gizmos: 0
->>>>>>> parent of 219be0a (Revert "Sean demo")
   m_Stats: 0
-  m_SelectedSizes: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  m_SelectedSizes: 05000000000000000000000000000000000000000000000000000000000000000000000000000000
   m_ZoomArea:
     m_HRangeLocked: 0
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -542.5
-    m_HBaseRangeMax: 542.5
-<<<<<<< HEAD
-    m_VBaseRangeMin: -258.5
-    m_VBaseRangeMax: 258.5
-=======
-    m_VBaseRangeMin: -321.5
-    m_VBaseRangeMax: 321.5
->>>>>>> parent of 219be0a (Revert "Sean demo")
+    m_HBaseRangeMin: -853.3334
+    m_HBaseRangeMax: 853.3334
+    m_VBaseRangeMin: -480
+    m_VBaseRangeMax: 480
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -116,7 +86,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 0
+    m_EnableMouseInput: 1
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -125,38 +95,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 1085
-<<<<<<< HEAD
-      height: 517
-    m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 542.5, y: 258.5}
-=======
-      height: 643
-    m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 542.5, y: 321.5}
->>>>>>> parent of 219be0a (Revert "Sean demo")
+      width: 1036
+      height: 455.33334
+    m_Scale: {x: 0.47430557, y: 0.47430557}
+    m_Translation: {x: 518, y: 227.66667}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -542.5
-<<<<<<< HEAD
-      y: -258.5
-      width: 1085
-      height: 517
+      x: -1092.1229
+      y: -480
+      width: 2184.2458
+      height: 960
     m_MinimalGUI: 1
-  m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 1085, y: 538}
-=======
-      y: -321.5
-      width: 1085
-      height: 643
-    m_MinimalGUI: 1
-  m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 1085, y: 664}
->>>>>>> parent of 219be0a (Revert "Sean demo")
+  m_defaultScale: 0.47430557
+  m_LastWindowPixelSize: {x: 1554, y: 714.5}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -181,16 +136,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1464
-    height: 947
+    width: 1380
+    height: 867.3333
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-<<<<<<< HEAD
-  controlID: 101
-=======
-  controlID: 3772
->>>>>>> parent of 219be0a (Revert "Sean demo")
+  controlID: 20702
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -210,20 +161,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1464
-<<<<<<< HEAD
-    height: 559
+    width: 1380
+    height: 497.33334
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 102
-=======
-    height: 685
-  m_MinSize: {x: 200, y: 100}
-  m_MaxSize: {x: 16192, y: 8096}
-  vertical: 0
-  controlID: 3773
->>>>>>> parent of 219be0a (Revert "Sean demo")
+  controlID: 20703
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -241,14 +184,10 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 377
-<<<<<<< HEAD
-    height: 559
-=======
-    height: 685
->>>>>>> parent of 219be0a (Revert "Sean demo")
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+    width: 342
+    height: 497.33334
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 6}
   m_Panes:
   - {fileID: 6}
@@ -270,18 +209,14 @@ MonoBehaviour:
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
     m_Text: Hierarchy
-    m_Image: {fileID: 7966133145522015247, guid: 0000000000000000d000000000000000, type: 0}
+    m_Image: {fileID: -3734745235275155857, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 73
-    width: 376
-<<<<<<< HEAD
-    height: 538
-=======
-    height: 664
->>>>>>> parent of 219be0a (Revert "Sean demo")
+    y: 72.66667
+    width: 341
+    height: 476.33334
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -289,15 +224,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-<<<<<<< HEAD
-      m_SelectedIDs: 9e700000
-      m_LastClickedID: 0
-      m_ExpandedIDs: 0cfbffff
-=======
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: da98ffff3cb2ffff24b4ffff0aca0000
->>>>>>> parent of 219be0a (Revert "Sean demo")
+      m_ExpandedIDs: 08fcfdff3808feffb408feff54c8feff16fbffffa86f0000b86f0000e26f00001c700000b6700000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -336,16 +265,12 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 377
+    x: 342
     y: 0
-    width: 1087
-<<<<<<< HEAD
-    height: 559
-=======
-    height: 685
->>>>>>> parent of 219be0a (Revert "Sean demo")
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+    width: 1038
+    height: 497.33334
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 8}
@@ -368,18 +293,14 @@ MonoBehaviour:
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
     m_Text: Scene
-    m_Image: {fileID: 2593428753322112591, guid: 0000000000000000d000000000000000, type: 0}
+    m_Image: {fileID: 8634526014445323508, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 377
-    y: 73
-    width: 1085
-<<<<<<< HEAD
-    height: 538
-=======
-    height: 664
->>>>>>> parent of 219be0a (Revert "Sean demo")
+    x: 293.33334
+    y: 72.66667
+    width: 884
+    height: 476.33334
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -389,9 +310,9 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: 0, y: 0}
+      snapOffset: {x: -101, y: -26}
       snapOffsetDelta: {x: 0, y: 0}
-      snapCorner: 0
+      snapCorner: 3
       id: Tool Settings
       index: 0
       layout: 1
@@ -406,17 +327,6 @@ MonoBehaviour:
       id: unity-grid-and-snap-toolbar
       index: 1
       layout: 1
-    - dockPosition: 0
-      containerId: overlay-toolbar__top
-      floating: 0
-      collapsed: 0
-      displayed: 1
-      snapOffset: {x: 0, y: 26}
-      snapOffsetDelta: {x: 0, y: 0}
-      snapCorner: 0
-      id: unity-transform-toolbar
-      index: 2
-      layout: 2
     - dockPosition: 1
       containerId: overlay-toolbar__top
       floating: 0
@@ -439,6 +349,17 @@ MonoBehaviour:
       id: unity-search-toolbar
       index: 1
       layout: 1
+    - dockPosition: 0
+      containerId: overlay-container--left
+      floating: 0
+      collapsed: 0
+      displayed: 1
+      snapOffset: {x: 0, y: 25.333334}
+      snapOffsetDelta: {x: 0, y: 0}
+      snapCorner: 0
+      id: unity-transform-toolbar
+      index: 0
+      layout: 2
     - dockPosition: 0
       containerId: overlay-container--right
       floating: 0
@@ -581,15 +502,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-<<<<<<< HEAD
-    m_Target: {x: 26.466917, y: 4.5388975, z: 60.391}
+    m_Target: {x: 24.495499, y: -13.281718, z: 35.33981}
     speed: 2
-    m_Value: {x: 26.466917, y: 4.5388975, z: 60.391}
-=======
-    m_Target: {x: 8.486277, y: -17.311874, z: 6.253502}
-    speed: 2
-    m_Value: {x: 8.486277, y: -17.311874, z: 6.253502}
->>>>>>> parent of 219be0a (Revert "Sean demo")
+    m_Value: {x: 24.495499, y: -13.281718, z: 35.33981}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -636,23 +551,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-<<<<<<< HEAD
-    m_Target: {x: -0.051319055, y: 0.9203734, z: -0.36547726, w: -0.1292283}
+    m_Target: {x: -0.26684022, y: 0.5962432, z: -0.21772593, w: -0.7262429}
     speed: 2
-    m_Value: {x: -0.0513192, y: 0.92037594, z: -0.36547828, w: -0.12922865}
+    m_Value: {x: -0.26663455, y: 0.5957837, z: -0.21755813, w: -0.7256832}
   m_Size:
-    m_Target: 29.608166
+    m_Target: 15.402001
     speed: 2
-    m_Value: 29.608166
-=======
-    m_Target: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-    speed: 2
-    m_Value: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_Size:
-    m_Target: 49.614864
-    speed: 2
-    m_Value: 49.614864
->>>>>>> parent of 219be0a (Revert "Sean demo")
+    m_Value: 15.402001
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -687,31 +592,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
     x: 0
-<<<<<<< HEAD
-    y: 559
-    width: 1464
-    height: 388
-  m_MinSize: {x: 231, y: 271}
-  m_MaxSize: {x: 10001, y: 10021}
-=======
-    y: 685
-    width: 1464
-    height: 262
-  m_MinSize: {x: 230, y: 250}
-  m_MaxSize: {x: 10000, y: 10000}
->>>>>>> parent of 219be0a (Revert "Sean demo")
-  m_ActualView: {fileID: 10}
+    y: 497.33334
+    width: 1380
+    height: 369.99997
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 11}
   m_Panes:
   - {fileID: 10}
   - {fileID: 11}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -728,20 +625,14 @@ MonoBehaviour:
   m_MaxSize: {x: 10000, y: 10000}
   m_TitleContent:
     m_Text: Project
-    m_Image: {fileID: -5467254957812901981, guid: 0000000000000000d000000000000000, type: 0}
+    m_Image: {fileID: -5179483145760003458, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
     x: 0
-<<<<<<< HEAD
-    y: 632
-    width: 1463
-    height: 367
-=======
-    y: 758
-    width: 1463
-    height: 241
->>>>>>> parent of 219be0a (Revert "Sean demo")
+    y: 570
+    width: 1379
+    height: 348.99997
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -759,29 +650,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs
+    - Assets/Scenes
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Prefabs
+  - Assets/Scenes
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: D:\drexel\Senior\Fall\GMAP\Tower-Defense
+  m_LastProjectPath: C:\TempProjects\Horde\Git\Tower-Defense
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-<<<<<<< HEAD
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: fa720000
-    m_LastClickedID: 29434
-    m_ExpandedIDs: 000000004e71000000ca9a3b
-=======
-    scrollPos: {x: 0, y: 11}
-    m_SelectedIDs: fec60000
-    m_LastClickedID: 50942
-    m_ExpandedIDs: 00000000f8c60000fec6000004c70000
->>>>>>> parent of 219be0a (Revert "Sean demo")
+    scrollPos: {x: 0, y: 179}
+    m_SelectedIDs: ea740000
+    m_LastClickedID: 29930
+    m_ExpandedIDs: 00000000c0740000c2740000c4740000c6740000c8740000ca740000cc740000ce740000d074000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -809,11 +693,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-<<<<<<< HEAD
-    m_ExpandedIDs: 000000004e710000
-=======
-    m_ExpandedIDs: 00000000f8c60000fec6000004c70000
->>>>>>> parent of 219be0a (Revert "Sean demo")
+    m_ExpandedIDs: 00000000c0740000c2740000c4740000c6740000c8740000ca740000cc740000ce740000d074000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -838,14 +718,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-<<<<<<< HEAD
-    m_SelectedInstanceIDs: 9e700000
-    m_LastClickedInstanceID: 28830
-=======
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
->>>>>>> parent of 219be0a (Revert "Sean demo")
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs: de870000
+    m_LastClickedInstanceID: 34782
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -890,14 +765,14 @@ MonoBehaviour:
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
     m_Text: Console
-    m_Image: {fileID: -4327648978806127646, guid: 0000000000000000d000000000000000, type: 0}
+    m_Image: {fileID: -4950941429401207979, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 584.6667
-    width: 1301
-    height: 334.3333
+    y: 570
+    width: 1379
+    height: 348.99997
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -917,17 +792,12 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1464
+    x: 1380
     y: 0
-    width: 456
-    height: 947
-<<<<<<< HEAD
+    width: 326.66663
+    height: 867.3333
   m_MinSize: {x: 275, y: 50}
   m_MaxSize: {x: 4000, y: 4000}
-=======
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
->>>>>>> parent of 219be0a (Revert "Sean demo")
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -950,14 +820,14 @@ MonoBehaviour:
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
     m_Text: Inspector
-    m_Image: {fileID: -2667387946076563598, guid: 0000000000000000d000000000000000, type: 0}
+    m_Image: {fileID: -440750813802333266, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1464
-    y: 73
-    width: 455
-    height: 926
+    x: 1380
+    y: 72.66667
+    width: 325.66663
+    height: 846.3333
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -968,12 +838,8 @@ MonoBehaviour:
     m_CachedPref: 160
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: -1
-<<<<<<< HEAD
-  m_LastVerticalScrollValue: 176
-=======
+  m_LastInspectedObjectInstanceID: 34782
   m_LastVerticalScrollValue: 0
->>>>>>> parent of 219be0a (Revert "Sean demo")
   m_GlobalObjectId: 
   m_InspectorMode: 0
   m_LockTracker:
@@ -999,17 +865,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-<<<<<<< HEAD
-    x: 1172
-    y: 73.6
-    width: 363
-    height: 709.8
-=======
-    x: 1464
-    y: 73
-    width: 455
-    height: 926
->>>>>>> parent of 219be0a (Revert "Sean demo")
+    x: 1179.3334
+    y: 72.66667
+    width: 526.33325
+    height: 846.3333
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default

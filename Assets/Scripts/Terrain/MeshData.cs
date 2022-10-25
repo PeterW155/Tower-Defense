@@ -21,25 +21,26 @@ public class MeshData
         }
     }
 
-    public void AddVertex(Vector3 vertex, bool vertexGeneratesCollider)
+    public void AddVertex(Vector3 vertex, bool vertexGeneratesMesh, bool vertexGeneratesCollider)
     {
-        vertices.Add(vertex);
+        if (vertexGeneratesMesh)
+            vertices.Add(vertex);
         if (vertexGeneratesCollider)
-        {
             colliderVertices.Add(vertex);
-        }
-
     }
 
-    public void AddQuadTriangles(bool quadGeneratesCollider)
+    public void AddQuadTriangles(bool quadGeneratesMesh, bool quadGeneratesCollider)
     {
-        triangles.Add(vertices.Count - 4);
-        triangles.Add(vertices.Count - 3);
-        triangles.Add(vertices.Count - 2);
+        if (quadGeneratesMesh)
+        {
+            triangles.Add(vertices.Count - 4);
+            triangles.Add(vertices.Count - 3);
+            triangles.Add(vertices.Count - 2);
 
-        triangles.Add(vertices.Count - 4);
-        triangles.Add(vertices.Count - 2);
-        triangles.Add(vertices.Count - 1);
+            triangles.Add(vertices.Count - 4);
+            triangles.Add(vertices.Count - 2);
+            triangles.Add(vertices.Count - 1);
+        }
 
         if (quadGeneratesCollider)
         {

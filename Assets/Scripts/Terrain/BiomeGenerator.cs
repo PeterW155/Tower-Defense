@@ -50,9 +50,9 @@ public class BiomeGenerator : MonoBehaviour
         {
             terrainHeight = domainWarping.GenerateDomainNoise(x, z, biomeNoiseSettings);
         }
-
         terrainHeight = MyNoise.Redistribution(terrainHeight, biomeNoiseSettings);
-        int surfaceHeight = MyNoise.RemapValue01ToInt(terrainHeight, 0, chunkHeight);
+        int surfaceHeight = MyNoise.RemapValue01ToInt(terrainHeight, 0, chunkHeight - 1); //subtract the offset
+        surfaceHeight += 1; //add offset back
         return surfaceHeight;
     }
 }

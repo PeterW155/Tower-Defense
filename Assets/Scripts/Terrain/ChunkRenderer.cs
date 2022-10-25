@@ -11,7 +11,6 @@ public class ChunkRenderer : MonoBehaviour
 {
     MeshFilter meshFilter;
     MeshCollider meshCollider;
-    Mesh mesh;
     public bool showGizmo = false;
 
     public ChunkData ChunkData;
@@ -63,7 +62,6 @@ public class ChunkRenderer : MonoBehaviour
     public void UpdateChunk()
     {
         RenderMesh(Chunk.GetChunkMeshData(ChunkData));
-        Debug.Log("updated");
     }
 
     public void UpdateChunk(MeshData data)
@@ -76,7 +74,7 @@ public class ChunkRenderer : MonoBehaviour
     {
         if (showGizmo)
         {
-            if (Application.isPlaying && ChunkData != null)
+            if (ChunkData != null)
             {
                 if (Selection.activeObject == gameObject)
                     Gizmos.color = new Color(0, 1, 0, 0.4f);

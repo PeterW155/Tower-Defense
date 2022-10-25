@@ -78,9 +78,9 @@ public class TerrainEditingInspector : Editor
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                 {
                     if (Event.current.shift)
-                        terrainEditor.ModifyTerrain(hit);
+                        terrainEditor.ModifyTerrainEditor(hit);
                     else
-                        terrainEditor.ModifyTerrain(hit, terrainEditor.blockType, true);
+                        terrainEditor.ModifyTerrainEditor(hit, terrainEditor.blockType, true);
                 }
             }
         }

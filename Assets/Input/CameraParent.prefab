@@ -322,10 +322,13 @@ MonoBehaviour:
   rotationDrag: 10
   zoomSensetivity: 2.5
   zoomMinMax: {x: 4, y: 30}
-  moveControl: Main/Move
-  lookControl: Main/Look
-  cameraControl: Main/Camera
-  zoomControl: Main/Zoom
+  _playerInput: {fileID: 0}
+  cameraActionMap: Camera
+  UIActionMap: UI
+  moveControl: Camera/Move
+  lookControl: Camera/Look
+  rotateControl: Camera/Rotate
+  zoomControl: Camera/Zoom
   move: {x: 0, y: 0}
   look: {x: 0, y: 0}
   zoom: 0
