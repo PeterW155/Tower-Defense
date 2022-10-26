@@ -6,7 +6,7 @@ public class BuildManager : MonoBehaviour
     private TurretBlueprint turretToBuild;
     public GameObject turretPrefab;
     public GameObject anotherTurretPrefab;
-
+    public GameObject fireTurretPrefab;
     public GameObject buildEffect;
 
     private void Awake()

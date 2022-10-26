@@ -8,6 +8,8 @@ public class CannonBullet : MonoBehaviour
     public GameObject impactEffect;
     public string enemyTag = "Enemy";
     public float splashDamageRange = 10f;
+    public int damage = 75;
+    public int splashDamage = 50;
 
     public void Seek(Transform _target)
     {
@@ -42,17 +44,23 @@ public class CannonBullet : MonoBehaviour
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
 
+        EnemyMovement e = target.GetComponent<EnemyMovement>();
+
+        if (e != null)
+        {
+            e.TakeDamage(damage);
+        }
+
         GameObject effectInst = (GameObject)Instantiate(impactEffect, transform.position, transform.rotation);
         Destroy(effectInst, 2f);
         Destroy(gameObject.gameObject);
-        Destroy(target.gameObject);
 
         foreach (GameObject enemy in enemies)
         {
             float dist = Vector3.Distance(target.transform.position, enemy.transform.position);
             if(dist < splashDamageRange)
             {
-                Destroy(enemy.gameObject);
+                enemy.GetComponent<EnemyMovement>().TakeDamage(splashDamage);
             }
         }
     }

@@ -223,7 +223,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 16f563e68945e8f4683555bc181ae998, type: 2}
+  - {fileID: 2100000, guid: d13f7a0c5a6320a4faf9d3e424a50cc0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -321,7 +321,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bc49d165da4189947b235517409bd459, type: 2}
+  - {fileID: 2100000, guid: 3cab286ac95e5ab469a81774151619eb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -400,13 +400,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d223c27a1fe739f4fb786546eb550eb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 1
+  fireRate: 0.3
   fireReload: 0
-  range: 15
+  range: 30
   enemyTag: Enemy
   partToRotate: {fileID: 1059197709588517820}
   rotationSpeed: 7
-  bullet: {fileID: 8952111980692290676, guid: 0b5b1263b634a6040bf50d7be8b66951, type: 3}
+  bullet: {fileID: 8952111980692290676, guid: e9e03a27246631b449414cec3729a3d2, type: 3}
   firePoint: {fileID: 2610151050243111025}
 --- !u!1 &6387314077730022355
 GameObject:
@@ -418,7 +418,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7939827575190920760}
   m_Layer: 0
-  m_Name: TestTurret
+  m_Name: FireTurret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
