@@ -16,6 +16,9 @@ using UnityEngine.Networking;
 [ExecuteAlways]
 public class World : MonoBehaviour
 {
+    public delegate void WorldEvent();
+    public static event WorldEvent ChunkUpdated;
+
     public int mapSizeInChunks = 6;
     public int chunkSize = 16, chunkHeight = 100;
     [Space]
@@ -223,6 +226,8 @@ public class World : MonoBehaviour
         {
             IsWorldCreated = true;
             OnWorldCreated?.Invoke();
+            if (ChunkUpdated != null)
+                ChunkUpdated();
         }
         Time.timeScale = 1;
         StopCoroutine(editorUpdate);
@@ -298,6 +303,8 @@ public class World : MonoBehaviour
         }
 
         chunk.UpdateChunk();
+        if (ChunkUpdated != null)
+            ChunkUpdated();
         return true;
     }
 
@@ -345,6 +352,8 @@ public class World : MonoBehaviour
         }
         foreach (ChunkRenderer cr in updateChunks)
             cr.UpdateChunk();
+        if (ChunkUpdated != null)
+            ChunkUpdated();
         return true;
     }
 
