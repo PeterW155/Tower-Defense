@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class PopupHandler : MonoBehaviour
 {
+    public delegate void PopUpEditor();
+    public static event PopUpEditor PopUpEnabled;
+    public static event PopUpEditor PopUpDisabled;
     public enum Direction { up, down, left, right }
     public List<RectTransform> popups;
     public List<RectTransform> offsets;
@@ -35,6 +38,7 @@ public class PopupHandler : MonoBehaviour
         activating = true;
         if (index == currentActive) //if selected active needs to be deactivated
         {
+            PopUpDisabled();
             //deactive current popup
             RectTransform deactivePopup = popups.ElementAtOrDefault(index);
             StartCoroutine(Animation(deactivePopup, 0));
@@ -63,6 +67,7 @@ public class PopupHandler : MonoBehaviour
         }
         else //nothing is active so activate index
         {
+            PopUpEnabled();
             //activate new popup
             RectTransform activePopup = popups.ElementAtOrDefault(index);
             StartCoroutine(Animation(activePopup, GetTarget(index)));
