@@ -29,7 +29,10 @@ public class UnitSelections : MonoBehaviour
         DeselectAll();
         unitsSelected.Add(unitToAdd);
         unitToAdd.transform.GetChild(0).gameObject.SetActive(true);
-        unitToAdd.GetComponent<MovePlayer>().enabled = true;
+        if (LayerMask.LayerToName(unitToAdd.gameObject.layer) == "Player")
+        {
+            unitToAdd.GetComponent<MovePlayer>().enabled = true;
+        }
     }
 
     public void ShiftClickSelect(GameObject unitToAdd)
@@ -38,11 +41,17 @@ public class UnitSelections : MonoBehaviour
         {
             unitsSelected.Add(unitToAdd);
             unitToAdd.transform.GetChild(0).gameObject.SetActive(true);
-            unitToAdd.GetComponent<MovePlayer>().enabled = true;
+            if (LayerMask.LayerToName(unitToAdd.gameObject.layer) == "Player")
+            {
+                unitToAdd.GetComponent<MovePlayer>().enabled = true;
+            }
         }
         else
         {
-            unitToAdd.GetComponent<MovePlayer>().enabled = false;
+            if (LayerMask.LayerToName(unitToAdd.gameObject.layer) == "Player")
+            {
+                unitToAdd.GetComponent<MovePlayer>().enabled = false;
+            }
             unitToAdd.transform.GetChild(0).gameObject.SetActive(false);
             unitsSelected.Remove(unitToAdd);
         }
@@ -54,7 +63,10 @@ public class UnitSelections : MonoBehaviour
         {
             unitsSelected.Add(unitToAdd);
             unitToAdd.transform.GetChild(0).gameObject.SetActive(true);
-            unitToAdd.GetComponent<MovePlayer>().enabled = true;
+            if (LayerMask.LayerToName(unitToAdd.gameObject.layer) == "Player")
+            {
+                unitToAdd.GetComponent<MovePlayer>().enabled = true;
+            }
         }
     }
 
@@ -62,7 +74,10 @@ public class UnitSelections : MonoBehaviour
     {
         foreach (var unit in unitsSelected)
         {
-            unit.GetComponent<MovePlayer>().enabled = false;
+            if (LayerMask.LayerToName(unit.gameObject.layer) == "Player")
+            {
+                unit.GetComponent<MovePlayer>().enabled = false;
+            }           
             unit.transform.GetChild(0).gameObject.SetActive(false);
         }
         

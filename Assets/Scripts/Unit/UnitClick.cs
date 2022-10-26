@@ -59,5 +59,10 @@ public class UnitClick : MonoBehaviour
                 groundMarker.SetActive(true);
             }
         }
+
+        if (Input.GetMouseButton(0))
+        {
+            groundMarker.SetActive(false);
+        }
     }
 }
