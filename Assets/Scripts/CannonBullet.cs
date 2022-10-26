@@ -60,6 +60,7 @@ public class CannonBullet : MonoBehaviour
             float dist = Vector3.Distance(target.transform.position, enemy.transform.position);
             if(dist < splashDamageRange)
             {
+                GameObject effectNst = (GameObject)Instantiate(impactEffect, enemy.transform.position, enemy.transform.rotation);
                 enemy.GetComponent<EnemyMovement>().TakeDamage(splashDamage);
             }
         }

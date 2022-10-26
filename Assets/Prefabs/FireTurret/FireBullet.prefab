@@ -99,6 +99,6 @@ MonoBehaviour:
   speed: 70
   impactEffect: {fileID: 7081970572383328169, guid: 68b89d475bbab1447b674d33e28c9d64, type: 3}
   enemyTag: Enemy
-  splashDamageRange: 10
-  damage: 50
+  splashDamageRange: 12
+  damage: 25
   splashDamage: 25
