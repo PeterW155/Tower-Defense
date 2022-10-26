@@ -58,7 +58,7 @@ public class CannonBullet : MonoBehaviour
         foreach (GameObject enemy in enemies)
         {
             float dist = Vector3.Distance(target.transform.position, enemy.transform.position);
-            if(dist < splashDamageRange)
+            if(dist <= splashDamageRange && enemy != target)
             {
                 GameObject effectNst = (GameObject)Instantiate(impactEffect, enemy.transform.position, enemy.transform.rotation);
                 enemy.GetComponent<EnemyMovement>().TakeDamage(splashDamage);
