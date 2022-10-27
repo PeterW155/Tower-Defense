@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PopupHandler : MonoBehaviour
 {
-    public delegate void PopUpEditor();
-    public static event PopUpEditor PopUpEnabled;
-    public static event PopUpEditor PopUpDisabled;
     public enum Direction { up, down, left, right }
     public List<RectTransform> popups;
     public List<RectTransform> offsets;
@@ -15,6 +13,9 @@ public class PopupHandler : MonoBehaviour
     public Direction direction;
     public float animationTime = 0.5f;
     public AnimationCurve animationCurve = AnimationCurve.Linear(0, 0, 1, 1);
+    [Space(25)]
+    public UnityEvent PopupEnabled;
+    public UnityEvent PopupDisabled;
 
     private int currentActive;
     private bool animating;
@@ -38,7 +39,7 @@ public class PopupHandler : MonoBehaviour
         activating = true;
         if (index == currentActive) //if selected active needs to be deactivated
         {
-            PopUpDisabled();
+            PopupDisabled.Invoke();
             //deactive current popup
             RectTransform deactivePopup = popups.ElementAtOrDefault(index);
             StartCoroutine(Animation(deactivePopup, 0));
@@ -67,7 +68,7 @@ public class PopupHandler : MonoBehaviour
         }
         else //nothing is active so activate index
         {
-            PopUpEnabled();
+            PopupEnabled.Invoke();
             //activate new popup
             RectTransform activePopup = popups.ElementAtOrDefault(index);
             StartCoroutine(Animation(activePopup, GetTarget(index)));

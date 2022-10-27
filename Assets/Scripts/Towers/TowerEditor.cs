@@ -21,7 +21,7 @@ public class TowerEditor : MonoBehaviour
 
     [Space]
     [Header("Controls")]
-    public PlayerInput _playerInput;
+    private PlayerInput _playerInput;
     [StringInList(typeof(PropertyDrawersHelper), "AllActionMaps")] public string editingActionMap;
     [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string clickControl;
     private InputAction _click;
@@ -47,6 +47,8 @@ public class TowerEditor : MonoBehaviour
 
     private void Awake()
     {
+        _playerInput = FindObjectOfType<PlayerInput>();
+
         _click = _playerInput.actions[clickControl];
         _remove = _playerInput.actions[removeControl];
 

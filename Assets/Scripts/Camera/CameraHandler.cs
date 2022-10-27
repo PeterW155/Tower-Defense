@@ -61,13 +61,21 @@ public class CameraHandler : MonoBehaviour
 
         _playerInput = GetComponent<PlayerInput>();
 
-        _playerInput.actions.FindActionMap(cameraActionMap).Enable();
-
         //initialize inputs
         _move = _playerInput.actions[moveControl];
         _look = _playerInput.actions[lookControl];
         _rotate = _playerInput.actions[rotateControl];
         _zoom = _playerInput.actions[zoomControl];
+    }
+
+    private void OnEnable()
+    {
+        _playerInput.actions.FindActionMap(cameraActionMap).Enable();
+    }
+
+    private void OnDisable()
+    {
+        _playerInput.actions.FindActionMap(cameraActionMap).Disable();
     }
 
     private void Update()

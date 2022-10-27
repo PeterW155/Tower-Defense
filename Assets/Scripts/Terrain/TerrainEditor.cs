@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(World))]
 public class TerrainEditor : MonoBehaviour
@@ -22,7 +21,7 @@ public class TerrainEditor : MonoBehaviour
 
     [Space]
     [Header("Controls")]
-    public PlayerInput _playerInput;
+    private PlayerInput _playerInput;
     [StringInList(typeof(PropertyDrawersHelper), "AllActionMaps")] public string editingActionMap;
     [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string clickControl;
     private InputAction _click;
@@ -40,6 +39,8 @@ public class TerrainEditor : MonoBehaviour
 
     private void Awake()
     {
+        _playerInput = FindObjectOfType<PlayerInput>();
+
         _click = _playerInput.actions[clickControl];
         _remove = _playerInput.actions[removeControl];
 

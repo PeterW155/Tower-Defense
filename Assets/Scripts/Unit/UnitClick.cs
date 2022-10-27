@@ -1,56 +1,51 @@
-
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class UnitClick : MonoBehaviour
 {
-    //private Camera myCam;
     public GameObject groundMarker;
 
     public LayerMask clickableLayer;
     public LayerMask ground;
 
     [Header("Controls")]
-    public PlayerInput _playerInput;
+    private PlayerInput _playerInput;
     [StringInList(typeof(PropertyDrawersHelper), "AllActionMaps")] public string mainActionMap;
     [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string rightClickControl;
     private InputAction _rightClick;
-
     [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string leftClickControl;
     private InputAction _leftClick;
-
     [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string leftShiftControl;
     private InputAction _leftShift;
     
     // Start is called before the first frame update
     private void Awake()
     {
-        //myCam = Camera.main;
+        _playerInput = FindObjectOfType<PlayerInput>();
+
         _rightClick = _playerInput.actions[rightClickControl];
         _leftClick = _playerInput.actions[leftClickControl];
         _leftShift = _playerInput.actions[leftShiftControl];
     }
 
-    void EnableMain()
+    public void EnableMain()
     {
         _playerInput.actions.FindActionMap(mainActionMap).Enable();
     }
 
-    void DisableMain()
+    public void DisableMain()
     {
-        _playerInput.actions.FindActionMap(mainActionMap).Disable();
+        _playerInput.actions.FindActionMap(mainActionMap, true).Disable();
     }
 
     private void OnEnable()
     {
-        PopupHandler.PopUpEnabled += EnableMain;
         _rightClick.performed += OnRightClick;
         _leftClick.performed += OnLeftClick;
     }
 
     private void OnDisable()
     {
-        PopupHandler.PopUpDisabled += DisableMain;
         _rightClick.performed -= OnRightClick;
         _leftClick.performed -= OnLeftClick;
     }

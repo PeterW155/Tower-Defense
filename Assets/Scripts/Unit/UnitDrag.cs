@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class UnitDrag : MonoBehaviour
 {
@@ -6,14 +8,27 @@ public class UnitDrag : MonoBehaviour
 
     // Graphical
     [SerializeField]
-    RectTransform boxVisual;
+    private RectTransform boxVisual;
+
+    [Header("Controls")]
+    private PlayerInput _playerInput;
+    [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string selectionControl;
+    private InputAction _selection;
 
     // Logical
-    Rect selectionBox;
+    private Rect selectionBox;
     
 
-    Vector2 startPosition;
-    Vector2 endPosition;
+    private Vector2 startPosition;
+    private Vector2 endPosition;
+
+    private Coroutine dragging;
+
+    private void Awake()
+    {
+        _playerInput = FindObjectOfType<PlayerInput>();
+        _selection = _playerInput.actions[selectionControl];
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -24,32 +39,44 @@ public class UnitDrag : MonoBehaviour
         DrawVisual();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        // When clicked
-        if (Input.GetMouseButtonDown(0))
-        {
-            startPosition = Input.mousePosition;
-            selectionBox = new Rect();
-        }
+        _selection.started += OnClick;
+        _selection.canceled += OnRelease;
+    }
 
-        //When dragging
-        if (Input.GetMouseButton(0))
-        {
-            endPosition = Input.mousePosition;
-            DrawVisual();
-            DrawSelection();
-        }
+    private void OnDisable()
+    {
+        _selection.started -= OnClick;
+        _selection.canceled -= OnRelease;
+    }
 
-        // When release click
-        if (Input.GetMouseButtonUp(0))
+    private void OnClick(InputAction.CallbackContext context)
+    {
+        startPosition = Mouse.current.position.ReadValue();
+        selectionBox = new Rect();
+        dragging = StartCoroutine(OnDrag());
+    }
+
+    private IEnumerator OnDrag()
+    {
+        for(; ; )
         {
-            SelectUnits();
-            startPosition = Vector2.zero;
-            endPosition = Vector2.zero;
+            endPosition = Mouse.current.position.ReadValue();
             DrawVisual();
+            DrawSelection(endPosition);
+            yield return null;
         }
+    }
+
+    private void OnRelease(InputAction.CallbackContext context)
+    {
+        SelectUnits();
+        startPosition = Vector2.zero;
+        endPosition = Vector2.zero;
+        DrawVisual();
+        if (dragging != null)
+            StopCoroutine(dragging);
     }
 
     void DrawVisual()
@@ -65,34 +92,34 @@ public class UnitDrag : MonoBehaviour
         boxVisual.sizeDelta = boxSize;
     }
 
-    void DrawSelection()
+    void DrawSelection(Vector2 mousePos)
     {
         // Do X calculations
-        if (Input.mousePosition.x < startPosition.x)
+        if (mousePos.x < startPosition.x)
         {
             // Dragging left
-            selectionBox.xMin = Input.mousePosition.x;
+            selectionBox.xMin = mousePos.x;
             selectionBox.xMax = startPosition.x;
         }
         else
         {
             // Dragging right
             selectionBox.xMin = startPosition.x;
-            selectionBox.xMax = Input.mousePosition.x;
+            selectionBox.xMax = mousePos.x;
         }
         
         // Do Y calculations
-        if (Input.mousePosition.y < startPosition.y)
+        if (mousePos.y < startPosition.y)
         {
             // Dragging down
-            selectionBox.yMin = Input.mousePosition.y;
+            selectionBox.yMin = mousePos.y;
             selectionBox.yMax = startPosition.y;
         }
         else
         {
             // Dragging up
             selectionBox.yMin = startPosition.y;
-            selectionBox.yMax = Input.mousePosition.y;
+            selectionBox.yMax = mousePos.y;
         }
     }
 
