@@ -86,6 +86,6 @@ public class UnitSelections : MonoBehaviour
 
     public void Deselect(GameObject unitToDeselect)
     {
-        
+
     }
 }

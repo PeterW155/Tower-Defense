@@ -63,6 +63,10 @@ public class UnitDrag : MonoBehaviour
         for(; ; )
         {
             endPosition = Mouse.current.position.ReadValue();
+
+            Debug.Log("Start: " + startPosition);
+            Debug.Log("End: " + endPosition);
+
             DrawVisual();
             DrawSelection(endPosition);
             yield return null;
@@ -83,6 +87,9 @@ public class UnitDrag : MonoBehaviour
     {
         Vector2 boxStart = startPosition;
         Vector2 boxEnd = endPosition;
+
+        Debug.Log("DrawVisual startPosition" + boxStart);
+        Debug.Log("DrawVisual endPosition" + boxStart);
 
         Vector2 boxCenter = (boxStart + boxEnd) / 2;
         boxVisual.position = boxCenter;
