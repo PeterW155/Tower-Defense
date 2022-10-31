@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 
 public class MoveEnemy : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class MoveEnemy : MonoBehaviour
     public Transform player;
 
     public LayerMask whatIsGround, whatIsPlayer;
+    private PlayerInput _playerInput;
+    [StringInList(typeof(PropertyDrawersHelper), "AllActionMaps")] public string mainActionMap;
+    [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string rightClickControl;
+    private InputAction _rightClick;
 
     public float health;
 
@@ -33,6 +38,9 @@ public class MoveEnemy : MonoBehaviour
     {
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+
+        _playerInput = FindObjectOfType<PlayerInput>();
+        _rightClick = _playerInput.actions[rightClickControl];
     }
 
     // Update is called once per frame
@@ -44,18 +52,28 @@ public class MoveEnemy : MonoBehaviour
         if (!playerInSightRange && !playerInAttackRange) MoveToTarget();
         if (playerInSightRange && !playerInAttackRange) ChasePlayer();
         if (playerInSightRange && playerInAttackRange) AttackPlayer();
+    }
 
-        if (Input.GetMouseButtonDown(1)) // If the player has right clicked
+    private void OnEnable()
+    {
+        _rightClick.performed += OnRightClick;
+    }
+
+    private void OnDisable()
+    {
+        _rightClick.performed -= OnRightClick;
+    }
+
+
+    private void OnRightClick(InputAction.CallbackContext context)
+    {
+        Vector3 mouse = Mouse.current.position.ReadValue(); // Get the mouse Position
+        Ray castPoint = Camera.main.ScreenPointToRay(mouse); // Cast a ray to get where the mouse is pointing at
+        RaycastHit hit; // Stores the position where the ray hit.
+        if (Physics.Raycast(castPoint, out hit, Mathf.Infinity, whatIsGround)) // If the raycast doesn't hit a wall
         {
-            Vector3 mouse = Input.mousePosition; // Get the mouse Position
-            Ray castPoint = Camera.main.ScreenPointToRay(mouse); // Cast a ray to get where the mouse is pointing at
-            RaycastHit hit; // Stores the position where the ray hit.
-            if (Physics.Raycast(castPoint, out hit, Mathf.Infinity, whatIsGround)) // If the raycast doesn't hit a wall
-            {
-                target = hit.point; // Move the target to the mouse position
-            }
+            target = hit.point; // Move the target to the mouse position
         }
-
     }
 
     private void MoveToTarget()
