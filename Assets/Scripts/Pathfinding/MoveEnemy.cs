@@ -7,9 +7,11 @@ using UnityEngine.InputSystem;
 public class MoveEnemy : MonoBehaviour
 {
 
+    public Transform[] destinations;
     public NavMeshAgent agent;
 
     public Transform player;
+    public Transform targetObject;
 
     public LayerMask whatIsGround, whatIsPlayer;
     private PlayerInput _playerInput;
@@ -37,6 +39,7 @@ public class MoveEnemy : MonoBehaviour
     private void Awake()
     {
         player = GameObject.Find("Player").transform;
+        targetObject = GameObject.Find("EnemyTarget").transform;
         agent = GetComponent<NavMeshAgent>();
 
         _playerInput = FindObjectOfType<PlayerInput>();
@@ -48,10 +51,12 @@ public class MoveEnemy : MonoBehaviour
     {
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+        //if (playerInSightRange && !playerInAttackRange) ChasePlayer(); // Prioritize chase player
+        //else if (playerInSightRange && playerInAttackRange) AttackPlayer(); // Then attacking player (probably need to prioritize this later on)
+        //else if (!playerInSightRange && !playerInAttackRange) MoveToTarget(); // Then move to target
 
-        if (!playerInSightRange && !playerInAttackRange) MoveToTarget();
-        if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-        if (playerInSightRange && playerInAttackRange) AttackPlayer();
+        if (playerInSightRange) ChasePlayer(); // Prioritize chase player
+        else if (!playerInSightRange) MoveToTarget(); // Then move to target
     }
 
     private void OnEnable()
@@ -78,7 +83,8 @@ public class MoveEnemy : MonoBehaviour
 
     private void MoveToTarget()
     {
-        agent.SetDestination(target);
+        //Debug.Log("Moving to target");
+        agent.SetDestination(targetObject.position);
     }
 
     private void Patroling()
@@ -111,11 +117,38 @@ public class MoveEnemy : MonoBehaviour
 
     private void ChasePlayer()
     {
-        agent.SetDestination(player.position);
+        //Debug.Log("Chasing Player");
+        agent.SetDestination(GetNearestPlayer());
+    }
+
+    Vector3 GetNearestPlayer()
+    {
+        Vector3 nearestPlayerPosition = new Vector3(Mathf.Infinity, Mathf.Infinity, Mathf.Infinity);
+        GameObject nearestPlayerObject; 
+        float nearestPlayerPositionSquared = Mathf.Infinity;
+        Collider[] playerUnits = Physics.OverlapSphere(transform.position, sightRange, whatIsPlayer);
+        foreach (Collider playerUnit in playerUnits)
+        {
+            Debug.Log("Hit colliders: " + playerUnit.gameObject.name);
+            GameObject playerUnitObject = playerUnit.transform.gameObject;
+            Vector3 playerUnitPosition = playerUnitObject.transform.position;
+
+            Vector3 distanceToPlayerUnit = playerUnitPosition - transform.position;
+            float distanceToPlayerUnitSquared = distanceToPlayerUnit.sqrMagnitude;
+            Debug.Log("Distance Squared: " + distanceToPlayerUnitSquared);
+            Debug.Log("Nearest Distance Squared: " + nearestPlayerPositionSquared);
+            if (distanceToPlayerUnitSquared < nearestPlayerPositionSquared)
+            {
+                nearestPlayerPositionSquared = distanceToPlayerUnitSquared;
+                nearestPlayerPosition = playerUnitPosition;
+            }
+        }
+        return nearestPlayerPosition;
     }
 
     private void AttackPlayer()
     {
+        //Debug.Log("Attacking Player");
         agent.SetDestination(transform.position);
 
         transform.LookAt(player);
