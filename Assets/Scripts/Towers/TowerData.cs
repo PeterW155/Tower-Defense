@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class TowerData : MonoBehaviour
 {
+    public int cost;
+    [Space]
     public Vector3Int size;
     public GameObject main;
     public GameObject proxy;

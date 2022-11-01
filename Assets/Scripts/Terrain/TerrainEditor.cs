@@ -20,8 +20,11 @@ public class TerrainEditor : MonoBehaviour
     public GameObject removeProxy;
 
     [Space]
-    [Header("Controls")]
+    public int cost;
+
     private PlayerInput _playerInput;
+    [Space]
+    [Header("Controls")]
     [StringInList(typeof(PropertyDrawersHelper), "AllActionMaps")] public string editingActionMap;
     [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string clickControl;
     private InputAction _click;
@@ -97,8 +100,11 @@ public class TerrainEditor : MonoBehaviour
                         pos = world.GetBlockPos(hit);
                         removeProxy.transform.position = pos;
 
-                        if (_click.WasPerformedThisFrame())
+                        if (cost <= PlayerStats.Instance.money && _click.WasPerformedThisFrame()) //removed
+                        {
                             ModifyTerrain(hit);
+                            PlayerStats.Instance.money -= cost; //update money
+                        }
                     }
                     else
                     {
@@ -108,8 +114,11 @@ public class TerrainEditor : MonoBehaviour
                         pos = world.GetBlockPos(hit, true);
                         placeProxy.transform.position = pos;
 
-                        if (_click.WasPerformedThisFrame())
+                        if (cost <= PlayerStats.Instance.money && _click.WasPerformedThisFrame()) //placed
+                        {
                             ModifyTerrain(hit, playModeBlockType, true);
+                            PlayerStats.Instance.money -= cost; //update money
+                        }
                     }
                 }
                 else

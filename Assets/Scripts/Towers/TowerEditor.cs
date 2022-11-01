@@ -124,6 +124,10 @@ public class TowerEditor : MonoBehaviour
                         if (_click.WasPerformedThisFrame())
                         {
                             TowerData n_td = hit.transform.GetComponentInParent<TowerData>(true);
+
+                            //reimburse player
+                            PlayerStats.Instance.money += n_td.cost;
+
                             tdList.Remove(n_td);
                             //fill with air/remove barriers
                             Vector3 center = n_td.transform.position + new Vector3(0, n_td.size.y / 2f, 0);
@@ -171,8 +175,11 @@ public class TowerEditor : MonoBehaviour
                                 materialActive = true;
                             }
 
-                            if (_click.WasPerformedThisFrame()) //tower placed
+                            if (_click.WasPerformedThisFrame() && m_td.cost <= PlayerStats.Instance.money) //tower placed
                             {
+                                //remove money from player
+                                PlayerStats.Instance.money -= m_td.cost;
+
                                 GameObject newTower = Instantiate(selectedTower, pos, Quaternion.identity, towerParent);
                                 TowerData n_td = newTower.GetComponent<TowerData>();
                                 tdList.Add(n_td);

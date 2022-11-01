@@ -17,6 +17,8 @@ public class TowerTypeButtons : MonoBehaviour
 
     private void Awake()
     {
+        UpdateText();
+
         foreach (var entry in buttonGameObject)
         {
             entry.Key.onValueChanged.AddListener((b) => ChangeTowerType(entry.Value));
@@ -31,5 +33,15 @@ public class TowerTypeButtons : MonoBehaviour
     public void ChangeTowerType(GameObject tower)
     {
         towerEditor.NewSelectedTower(tower);
+    }
+
+    public void UpdateText()
+    {
+        foreach (var entry in buttonGameObject)
+        {
+            TowerData td = entry.Value.GetComponent<TowerData>();
+            ButtonData bd = entry.Key.GetComponent<ButtonData>();
+            bd.subText.text = string.Format("${0}", td.cost);
+        }
     }
 }

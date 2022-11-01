@@ -303,6 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dff9402201803b479ddfed13b5736d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost: 350
   size: {x: 2, y: 3, z: 2}
   main: {fileID: 5252828529255447809}
   proxy: {fileID: 6918444951597936451}

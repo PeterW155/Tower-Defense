@@ -10,7 +10,7 @@ public class GameOver : MonoBehaviour
 
     void OnEnable()
     {
-        roundsText.text = PlayerStats.Rounds.ToString();
+        roundsText.text = PlayerStats.Instance.rounds.ToString();
     }
 
     public void Retry ()

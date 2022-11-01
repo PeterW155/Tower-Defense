@@ -31,7 +31,7 @@ public class EnemyMovement : MonoBehaviour
 
     void Die ()
     {
-        PlayerStats.Money += value;
+        PlayerStats.Instance.money += value;
 
         GameObject effect = (GameObject)Instantiate(deathEffect, transform.position, Quaternion.identity);
         Destroy(effect, 5f);
@@ -65,7 +65,7 @@ public class EnemyMovement : MonoBehaviour
 
     void EndPath()
     {
-        PlayerStats.Lives--;
+        PlayerStats.Instance.lives--;
         Destroy(gameObject);
     }
 }

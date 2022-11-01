@@ -40,13 +40,13 @@ public class UnitDrag : MonoBehaviour
 
     private void OnEnable()
     {
-        _selection.started += OnClick;
+        _selection.performed += OnClick;
         _selection.canceled += OnRelease;
     }
 
     private void OnDisable()
     {
-        _selection.started -= OnClick;
+        _selection.performed -= OnClick;
         _selection.canceled -= OnRelease;
     }
 
