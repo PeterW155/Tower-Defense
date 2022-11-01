@@ -4,8 +4,6 @@ using UnityEngine.InputSystem;
 
 public class UnitDrag : MonoBehaviour
 {
-    Camera myCam;
-
     // Graphical
     [SerializeField]
     private RectTransform boxVisual;
@@ -17,7 +15,8 @@ public class UnitDrag : MonoBehaviour
 
     // Logical
     private Rect selectionBox;
-    
+
+    private Canvas canvas;
 
     private Vector2 startPosition;
     private Vector2 endPosition;
@@ -26,6 +25,7 @@ public class UnitDrag : MonoBehaviour
 
     private void Awake()
     {
+        canvas = FindObjectOfType<Canvas>();
         _playerInput = FindObjectOfType<PlayerInput>();
         _selection = _playerInput.actions[selectionControl];
     }
@@ -33,7 +33,6 @@ public class UnitDrag : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        myCam = Camera.main;
         startPosition = Vector2.zero;
         endPosition = Vector2.zero;
         DrawVisual();
@@ -64,9 +63,6 @@ public class UnitDrag : MonoBehaviour
         {
             endPosition = Mouse.current.position.ReadValue();
 
-            Debug.Log("Start: " + startPosition);
-            Debug.Log("End: " + endPosition);
-
             DrawVisual();
             DrawSelection(endPosition);
             yield return null;
@@ -88,13 +84,13 @@ public class UnitDrag : MonoBehaviour
         Vector2 boxStart = startPosition;
         Vector2 boxEnd = endPosition;
 
-        Debug.Log("DrawVisual startPosition" + boxStart);
-        Debug.Log("DrawVisual endPosition" + boxStart);
+        //Debug.Log("DrawVisual startPosition" + boxStart);
+        //Debug.Log("DrawVisual endPosition" + boxStart);
 
         Vector2 boxCenter = (boxStart + boxEnd) / 2;
         boxVisual.position = boxCenter;
 
-        Vector2 boxSize = new Vector2(Mathf.Abs(boxStart.x - boxEnd.x), Mathf.Abs(boxStart.y - boxEnd.y));
+        Vector2 boxSize = new Vector2(Mathf.Abs(boxStart.x - boxEnd.x), Mathf.Abs(boxStart.y - boxEnd.y)) / canvas.scaleFactor;
 
         boxVisual.sizeDelta = boxSize;
     }
@@ -136,7 +132,7 @@ public class UnitDrag : MonoBehaviour
         foreach ( var unit in UnitSelections.Instance.unitList)
         {
             // If unit is within the bounds of the selection rect
-            if (selectionBox.Contains(myCam.WorldToScreenPoint(unit.transform.position)))
+            if (selectionBox.Contains(Camera.main.WorldToScreenPoint(unit.transform.position)))
             {
                 // If any unit is within the selection add them to selection
                 UnitSelections.Instance.DragSelect(unit);

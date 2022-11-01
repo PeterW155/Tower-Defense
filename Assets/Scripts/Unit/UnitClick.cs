@@ -11,21 +11,21 @@ public class UnitClick : MonoBehaviour
     [Header("Controls")]
     private PlayerInput _playerInput;
     [StringInList(typeof(PropertyDrawersHelper), "AllActionMaps")] public string mainActionMap;
-    [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string rightClickControl;
-    private InputAction _rightClick;
-    [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string leftClickControl;
-    private InputAction _leftClick;
-    [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string leftShiftControl;
-    private InputAction _leftShift;
+    [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string destinationControl;
+    private InputAction _destination;
+    [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string selectControl;
+    private InputAction _select;
+    [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string unionSelectControl;
+    private InputAction _unionSelect;
     
     // Start is called before the first frame update
     private void Awake()
     {
         _playerInput = FindObjectOfType<PlayerInput>();
 
-        _rightClick = _playerInput.actions[rightClickControl];
-        _leftClick = _playerInput.actions[leftClickControl];
-        _leftShift = _playerInput.actions[leftShiftControl];
+        _destination = _playerInput.actions[destinationControl];
+        _select = _playerInput.actions[selectControl];
+        _unionSelect = _playerInput.actions[unionSelectControl];
     }
 
     public void EnableMain()
@@ -40,14 +40,14 @@ public class UnitClick : MonoBehaviour
 
     private void OnEnable()
     {
-        _rightClick.performed += OnRightClick;
-        _leftClick.performed += OnLeftClick;
+        _destination.performed += OnRightClick;
+        _select.performed += OnLeftClick;
     }
 
     private void OnDisable()
     {
-        _rightClick.performed -= OnRightClick;
-        _leftClick.performed -= OnLeftClick;
+        _destination.performed -= OnRightClick;
+        _select.performed -= OnLeftClick;
     }
 
     private void OnLeftClick(InputAction.CallbackContext context)
@@ -59,7 +59,7 @@ public class UnitClick : MonoBehaviour
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, clickableLayer))
         {
             // If we hit a clickable object
-            if (_leftShift.WasPressedThisFrame())
+            if (_unionSelect.WasPressedThisFrame())
             {
                 // Shift clicked
                 UnitSelections.Instance.ShiftClickSelect(hit.collider.gameObject);
@@ -73,7 +73,7 @@ public class UnitClick : MonoBehaviour
         else
         {
             // If we didn't and we're not shift clicking
-            if (!_leftShift.WasPressedThisFrame())
+            if (!_unionSelect.WasPressedThisFrame())
             {
                 UnitSelections.Instance.DeselectAll();
             }

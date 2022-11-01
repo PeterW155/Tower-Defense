@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -36,6 +37,10 @@ public class CameraHandler : MonoBehaviour
     private InputAction _rotate;
     [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string zoomControl;
     private InputAction _zoom;
+    [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string activateControl;
+    private InputAction _activate;
+
+    private InputAction _deactivate;
 
     private Rigidbody _rigidbodyParent;
     private Rigidbody _rigidbodyRotate;
@@ -45,9 +50,13 @@ public class CameraHandler : MonoBehaviour
     private float zoomTime;
     [Space]
     [Header("Debug")]
+    [ReadOnly] [SerializeField] private bool cameraActive;
     [ReadOnly] [SerializeField] private Vector2 move;
     [ReadOnly] [SerializeField] private Vector2 look;
-    [ReadOnly] [SerializeField] private float zoom;
+
+    private InputActionMap[] disabledActionMaps;
+
+    float defaultDrag = 0.95f;
 
     void Awake()
     {
@@ -66,16 +75,64 @@ public class CameraHandler : MonoBehaviour
         _look = _playerInput.actions[lookControl];
         _rotate = _playerInput.actions[rotateControl];
         _zoom = _playerInput.actions[zoomControl];
+        _activate = _playerInput.actions[activateControl];
+        ControlChange(null);
     }
 
     private void OnEnable()
     {
-        _playerInput.actions.FindActionMap(cameraActionMap).Enable();
+        _activate.started += EnableCameraControls;
+        _deactivate.performed += DisableCameraControls;
+        _playerInput.onControlsChanged += ControlChange;
     }
 
     private void OnDisable()
     {
+        _activate.started -= EnableCameraControls;
+        _deactivate.performed -= DisableCameraControls;
+        _playerInput.onControlsChanged -= ControlChange;
+    }
+
+    private void ControlChange(PlayerInput input)
+    {
+        //Debug.Log("Controls Changed");
+        _playerInput.DeactivateInput();
+
+        //if action doesn't exist yet need to create it
+        if (_playerInput.actions.FindAction("DeactivateCamera") != null)
+            _playerInput.actions.RemoveAction("DeactivateCamera");
+         
+        _playerInput.actions.FindActionMap(cameraActionMap).AddAction("DeactivateCamera", _activate.type, null, "Press(behavior = 1)", _activate.processors, null, _activate.expectedControlType);
+        _deactivate = _playerInput.actions["DeactivateCamera"];
+        _deactivate.wantsInitialStateCheck = true;
+
+        foreach (var b in _activate.bindings)
+            _deactivate.AddBinding(b.path, b.interactions, b.processors, b.groups);
+
+        _playerInput.ActivateInput();
+    }
+
+    private void EnableCameraControls(InputAction.CallbackContext context)
+    {
+        disabledActionMaps = _playerInput.actions.actionMaps.Where(x => x.enabled).ToArray(); //get all currently active maps
+        //enable action map
+        _playerInput.actions.FindActionMap(cameraActionMap).Enable();
+        //disable other action maps
+        foreach(InputActionMap actionMap in disabledActionMaps)
+            actionMap.Disable();
+        
+        cameraActive = true;
+    }
+
+    private void DisableCameraControls(InputAction.CallbackContext context)
+    {
+        //disable action map
         _playerInput.actions.FindActionMap(cameraActionMap).Disable();
+        //enable previously disabled action maps
+        foreach (InputActionMap actionMap in disabledActionMaps)
+            actionMap.Enable();
+
+        cameraActive = false;
     }
 
     private void Update()
@@ -84,27 +141,26 @@ public class CameraHandler : MonoBehaviour
             warpPosition = Mouse.current.position.ReadValue();
         move = _move.ReadValue<Vector2>();
         look = _look.ReadValue<Vector2>();
-        zoom = _zoom.ReadValue<float>();
 
         //camera zoom
-        if (zoom != 0)
+        if (cameraActive && _zoom.IsPressed() && !_rotate.IsPressed()) //if zoom is pressed and rotate isn't so that both aren't active at once
         {
             zoomTime = 0;
             zoomPosZ = cameraZoom.localPosition.z;
-            float zoomAmount = Time.deltaTime * 40f * zoomSensetivity;
-            zoomTarget = Mathf.Clamp(zoomTarget + (zoom > 0 ? zoomAmount : -zoomAmount), -zoomMinMax.y, -zoomMinMax.x);
+            //float zoomAmount = Time.deltaTime * 40f * zoomSensetivity; //this is for scroll wheel
+            //zoomTarget = Mathf.Clamp(zoomTarget + (look.y > 0 ? zoomAmount : -zoomAmount), -zoomMinMax.y, -zoomMinMax.x);
+            zoomTarget = Mathf.Clamp(zoomTarget + look.x * zoomSensetivity * 2f * Time.deltaTime, -zoomMinMax.y, -zoomMinMax.x);
         }
         if (zoomTime < 0.8f)
         {
             zoomTime += Time.deltaTime;
         }
-        cameraZoom.localPosition = new Vector3(0, 0, Mathf.Lerp(zoomPosZ, zoomTarget, Mathf.SmoothStep(0f, 1f, Mathf.Pow(zoomTime/0.8f, 0.4f))));
+
+        cameraZoom.localPosition = new Vector3(0, 0, Mathf.Lerp(zoomPosZ, zoomTarget, Mathf.SmoothStep(0f, 1f, Mathf.Pow(zoomTime / 0.8f, 0.4f))));
     }
 
     private void FixedUpdate()
     {
-        float defaultDrag = 0.95f;
-
         //camera movement
         Vector2 p_move = move.normalized;
         Vector3 rotateOffset = cameraRotate.TransformDirection(new Vector3(p_move.x, 0, p_move.y));
@@ -125,7 +181,7 @@ public class CameraHandler : MonoBehaviour
         {
             Mouse.current.WarpCursorPosition(warpPosition);
 
-            if (look.magnitude > 0)
+            if (cameraActive && look.magnitude > 0)
             {
                 _rigidbodyRotate.AddRelativeTorque(new Vector3(0, 0.035f * look.x * rotationSensetivity, 0), ForceMode.Impulse);
                 _rigidbodyRotate.angularVelocity *= defaultDrag;

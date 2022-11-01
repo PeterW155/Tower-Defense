@@ -6,7 +6,7 @@
             "id": "b1df7e5d-ee17-4669-8ec2-dcb9d5361171",
             "actions": [
                 {
-                    "name": "Left Click",
+                    "name": "Select",
                     "type": "Button",
                     "id": "e4403aad-fbf9-413f-a79c-c1e5ca4e76f4",
                     "expectedControlType": "Button",
@@ -15,7 +15,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Right Click",
+                    "name": "Destination",
                     "type": "Button",
                     "id": "3c31f5a4-0d55-49c2-ad9e-9dbf64b42eaa",
                     "expectedControlType": "Button",
@@ -24,10 +24,28 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Left Shift",
+                    "name": "UnionSelect",
                     "type": "Button",
                     "id": "eb5b9397-f6b1-498a-b515-b80bfd05af05",
                     "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ActivateCamera",
+                    "type": "Button",
+                    "id": "c1fa1180-0373-4676-b004-e3575e7b9975",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=1)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Move",
+                    "type": "PassThrough",
+                    "id": "c65e85a2-9d67-4ef2-8aac-504be75a807e",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -41,7 +59,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Left Click",
+                    "action": "Select",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -52,7 +70,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
-                    "action": "Left Click",
+                    "action": "Select",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -63,7 +81,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Right Click",
+                    "action": "Destination",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -74,57 +92,35 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Left Shift",
+                    "action": "UnionSelect",
                     "isComposite": false,
                     "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "Camera",
-            "id": "2658948d-645a-4505-9011-85a7bb27bf94",
-            "actions": [
-                {
-                    "name": "Move",
-                    "type": "PassThrough",
-                    "id": "0edb7be4-623d-4392-a892-7db6beec322a",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 },
                 {
-                    "name": "Look",
-                    "type": "PassThrough",
-                    "id": "943b0ad4-d2ee-4b74-9bde-fb9e5778fa2b",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
+                    "name": "",
+                    "id": "dc1adfef-bdee-4be0-b11f-0cfd58ff9765",
+                    "path": "<Keyboard>/leftAlt",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "ActivateCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
                 {
-                    "name": "Rotate",
-                    "type": "Button",
-                    "id": "1749a8fa-ee14-4b2f-aceb-450500aab184",
-                    "expectedControlType": "Button",
-                    "processors": "",
+                    "name": "",
+                    "id": "e611811d-edc8-4930-8969-c066d48bcbed",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "ActivateCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
-                {
-                    "name": "Zoom",
-                    "type": "PassThrough",
-                    "id": "683a8216-e382-4542-b1d7-8339093aea33",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
                 {
                     "name": "WASD",
-                    "id": "a58812dc-2197-4cbc-ae00-04481a5f7559",
+                    "id": "b7deacae-ea0e-4163-98c5-3fc4699b7714",
                     "path": "2DVector",
                     "interactions": "",
                     "processors": "",
@@ -135,7 +131,7 @@
                 },
                 {
                     "name": "up",
-                    "id": "03275494-a0fb-49de-8cbb-74e01149564d",
+                    "id": "935e1b85-da6d-401f-84e8-152f1617c795",
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
@@ -146,7 +142,7 @@
                 },
                 {
                     "name": "down",
-                    "id": "f0e5a82d-366e-4a05-b762-4b914147186a",
+                    "id": "b7fe4266-3ffe-402e-84ef-d04b908f7234",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
@@ -157,7 +153,7 @@
                 },
                 {
                     "name": "left",
-                    "id": "ee55d5c5-8285-463e-9a94-684cdbd43a4a",
+                    "id": "9cc5448b-ebeb-4aa3-a940-2553346280df",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
@@ -168,7 +164,7 @@
                 },
                 {
                     "name": "right",
-                    "id": "3dcbd841-bcab-4e5b-ac2c-9f6b40465682",
+                    "id": "1cd5a9e9-e5e6-4885-950f-6ce51b7ebf85",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
@@ -179,7 +175,7 @@
                 },
                 {
                     "name": "Arrow Keys",
-                    "id": "b0e2875f-ccdd-461e-b033-6942a03c30c6",
+                    "id": "64a8ca81-a56d-46bd-9e70-ac611c96abad",
                     "path": "2DVector",
                     "interactions": "",
                     "processors": "",
@@ -190,7 +186,7 @@
                 },
                 {
                     "name": "up",
-                    "id": "f5bbd98f-a3d0-458c-8c13-57aaede8a355",
+                    "id": "866b6a75-de00-4ba3-8238-a8bbbc9e0e24",
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
@@ -201,7 +197,7 @@
                 },
                 {
                     "name": "down",
-                    "id": "f227635a-e5ef-4b36-a70d-0bfba252d69b",
+                    "id": "86398ddd-c7f0-4c1d-a6ff-2762b6263a26",
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
@@ -212,7 +208,7 @@
                 },
                 {
                     "name": "left",
-                    "id": "93b78825-7c0e-4c8f-a265-878566a53b65",
+                    "id": "0b82e129-3bf3-434b-a436-40f4a07c85f5",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
@@ -223,7 +219,7 @@
                 },
                 {
                     "name": "right",
-                    "id": "56678072-3363-4f33-8b14-1b7e4af6e61f",
+                    "id": "2960f737-0181-4dc8-8374-ba9df2770506",
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
@@ -234,7 +230,7 @@
                 },
                 {
                     "name": "",
-                    "id": "b6441bf5-65ad-43a0-afc2-53eb8b9a1922",
+                    "id": "93c01d92-5ec1-4833-b673-3c49c5840365",
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
@@ -242,7 +238,42 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Camera",
+            "id": "2658948d-645a-4505-9011-85a7bb27bf94",
+            "actions": [
+                {
+                    "name": "Look",
+                    "type": "PassThrough",
+                    "id": "943b0ad4-d2ee-4b74-9bde-fb9e5778fa2b",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
+                {
+                    "name": "Zoom",
+                    "type": "Button",
+                    "id": "1749a8fa-ee14-4b2f-aceb-450500aab184",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Rotate",
+                    "type": "Button",
+                    "id": "683a8216-e382-4542-b1d7-8339093aea33",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
                 {
                     "name": "",
                     "id": "48a503b5-2179-48de-a581-77bc64aaf4a8",
@@ -272,64 +303,31 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Rotate",
+                    "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "c11ca4ea-12fc-4694-b889-b28aa8e81643",
-                    "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Rotate",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1adb517c-f689-461f-a66d-234e8edab0d6",
-                    "path": "<Mouse>/scroll/y",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Zoom",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "RB/LB",
-                    "id": "023b8387-475e-4f31-a783-0cac334e49ce",
-                    "path": "1DAxis(whichSideWins=1)",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Zoom",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "a4340e78-ecfb-4f2e-bae9-5091860b017a",
                     "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
                     "action": "Zoom",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 },
                 {
-                    "name": "positive",
-                    "id": "2640b8e2-8744-479d-91e3-1fe697573884",
-                    "path": "<Gamepad>/rightShoulder",
+                    "name": "",
+                    "id": "c4a26bdf-03e8-4f49-aa6d-db549635a03a",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Controller",
-                    "action": "Zoom",
+                    "groups": "Keyboard",
+                    "action": "Rotate",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 }
             ]
         },
