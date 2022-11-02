@@ -40,10 +40,16 @@ public class Bullet : MonoBehaviour
     void HitTarget()
     {
         EnemyMovement e = target.GetComponent<EnemyMovement>();
+        MovePlayer p = target.GetComponent<MovePlayer>();
 
         if(e != null)
         {
             e.TakeDamage(damage);
+        }
+        
+        if(p != null)
+        {
+            p.TakeDamage(damage);
         }
 
         GameObject effectInst = (GameObject)Instantiate(impactEffect, transform.position, transform.rotation);

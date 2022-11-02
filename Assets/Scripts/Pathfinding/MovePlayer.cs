@@ -8,6 +8,7 @@ public class MovePlayer : MonoBehaviour
 {
     public NavMeshAgent agent;
     public LayerMask ground;
+    public int health;
 
     private PlayerInput _playerInput;
     [StringInList(typeof(PropertyDrawersHelper), "AllActionMaps")] public string mainActionMap;
@@ -44,6 +45,16 @@ public class MovePlayer : MonoBehaviour
         {
             target = hit.point; // Move the target to the mouse position
             agent.SetDestination(target);
+        }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+
+        if(health <= 0)
+        {
+            Destroy(agent.gameObject);
         }
     }
 }

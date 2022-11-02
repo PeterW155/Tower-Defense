@@ -112,6 +112,7 @@ GameObject:
   - component: {fileID: 386663479654082272}
   - component: {fileID: 386663479654082274}
   - component: {fileID: 386663479654082285}
+  - component: {fileID: -8980304092676207372}
   m_Layer: 6
   m_Name: TestTroop1
   m_TagString: Untagged
@@ -233,3 +234,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 173c3ea9308d2154db54e00ab0e7bc4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-8980304092676207372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386663479654082284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8db0e744b7ccf924595e8041489afc0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  ground:
+    serializedVersion: 2
+    m_Bits: 8
+  mainActionMap: Main
+  destinationControl: Main/Destination
