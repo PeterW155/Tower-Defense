@@ -16,13 +16,19 @@ public class WaveSpawner : MonoBehaviour
     private int waveIndex = 0;
     private int waveNum = 1;
 
-    
-
     // Update is called once per frame
     void Update()
     {
+
         if (countdown <= 0)
         {
+            //Check for any MarketBuildings
+            MarketBuilding[] markets = FindObjectsOfType(typeof(MarketBuilding)) as MarketBuilding[];
+            foreach (MarketBuilding item in markets)
+            {
+                item.PayPlayer(item.buildingLevel);
+            }
+
             StartCoroutine(spawnWave());
             if(waveNum > 5)
             {
