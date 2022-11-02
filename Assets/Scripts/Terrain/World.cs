@@ -583,6 +583,15 @@ public class World : MonoBehaviour
             mapSizeInChunks = worldData.mapSizeInChunks;
             mapSeedOffset = worldData.mapSeedOffset;
 
+            if (Application.isPlaying)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                DestroyImmediate(gameObject);
+            }
+
             GenerateWorld(true);
         }
         else
