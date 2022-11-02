@@ -271,6 +271,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "DeactivateCamera",
+                    "type": "Button",
+                    "id": "c30740c6-d42c-42ae-81a8-e3ea948ab0b9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=1)",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -326,6 +335,17 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "86f1dfe6-9b91-4aae-a65a-b731f6099f27",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DeactivateCamera",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

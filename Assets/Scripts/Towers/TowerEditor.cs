@@ -92,6 +92,7 @@ public class TowerEditor : MonoBehaviour
         td.main.SetActive(false);
         td.proxy.SetActive(true);
         selectedTower.SetActive(false);
+        materialActive = false;
         renderers = td.proxy.GetComponentsInChildren<Renderer>(true);
     }
 
@@ -170,7 +171,7 @@ public class TowerEditor : MonoBehaviour
                         {
                             if (!materialActive)
                             {
-                                foreach (Renderer r in renderers)//show proxy material
+                                foreach (Renderer r in renderers)//show place proxy material
                                     r.material = placeMaterial;
                                 materialActive = true;
                             }
@@ -195,7 +196,7 @@ public class TowerEditor : MonoBehaviour
                         {
                             if (materialActive)
                             {
-                                foreach (Renderer r in renderers)//show proxy material
+                                foreach (Renderer r in renderers)//show remove proxy material
                                     r.material = removeMaterial;
                                 materialActive = false;
                             }

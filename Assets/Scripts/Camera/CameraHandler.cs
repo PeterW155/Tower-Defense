@@ -23,6 +23,8 @@ public class CameraHandler : MonoBehaviour
     public float rotationDrag = 10f;
     [Range(1, 5)]
     public float zoomSensetivity = 2.5f;
+    [Range(1, 25)]
+    public float zoomDrag = 10f;
     public Vector2 zoomMinMax = new Vector2(2, 20);
 
     [Space]
@@ -39,7 +41,7 @@ public class CameraHandler : MonoBehaviour
     private InputAction _zoom;
     [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string activateControl;
     private InputAction _activate;
-
+    [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string deactivateControl;
     private InputAction _deactivate;
 
     private Rigidbody _rigidbodyParent;
@@ -76,6 +78,7 @@ public class CameraHandler : MonoBehaviour
         _rotate = _playerInput.actions[rotateControl];
         _zoom = _playerInput.actions[zoomControl];
         _activate = _playerInput.actions[activateControl];
+        _deactivate = _playerInput.actions[deactivateControl];
         ControlChange(null);
     }
 
@@ -83,8 +86,7 @@ public class CameraHandler : MonoBehaviour
     {
         _activate.started += EnableCameraControls;
 
-        if (_deactivate != null)
-            _deactivate.performed += DisableCameraControls;
+        _deactivate.performed += DisableCameraControls;
 
         _playerInput.onControlsChanged += ControlChange;
     }
@@ -93,8 +95,7 @@ public class CameraHandler : MonoBehaviour
     {
         _activate.started -= EnableCameraControls;
 
-        if(_deactivate != null)
-            _deactivate.performed -= DisableCameraControls;
+        _deactivate.performed -= DisableCameraControls;
 
         _playerInput.onControlsChanged -= ControlChange;
     }
@@ -102,21 +103,22 @@ public class CameraHandler : MonoBehaviour
     private void ControlChange(PlayerInput input)
     {
         //Debug.Log("Controls Changed");
-        
-        //if action doesn't exist yet need to create it
-        if (_playerInput.actions.FindAction("DeactivateCamera") != null)
-            _playerInput.actions.RemoveAction("DeactivateCamera");
-
-        _playerInput.DeactivateInput();
-
-        _playerInput.actions.FindActionMap(cameraActionMap).AddAction("DeactivateCamera", _activate.type, null, "Press(behavior = 1)", _activate.processors, null, _activate.expectedControlType);
-        _deactivate = _playerInput.actions["DeactivateCamera"];
-        _deactivate.wantsInitialStateCheck = true;
 
         foreach (var b in _activate.bindings)
-            _deactivate.AddBinding(b.path, b.interactions, b.processors, b.groups);
+        {
+            int id = _activate.bindings.IndexOf(x => x == b);
 
-        _playerInput.ActivateInput();
+            if (_deactivate.bindings.ElementAtOrDefault(id) != null)
+            {
+                //Debug.Log("added");
+                _deactivate.AddBinding(b);
+            }
+            else
+            {
+                //Debug.Log("changed");
+                _deactivate.ChangeBinding(id).To(b);
+            }
+        }
     }
 
     private void EnableCameraControls(InputAction.CallbackContext context)
@@ -158,12 +160,16 @@ public class CameraHandler : MonoBehaviour
             //zoomTarget = Mathf.Clamp(zoomTarget + (look.y > 0 ? zoomAmount : -zoomAmount), -zoomMinMax.y, -zoomMinMax.x);
             zoomTarget = Mathf.Clamp(zoomTarget + look.x * zoomSensetivity * 2f * Time.deltaTime, -zoomMinMax.y, -zoomMinMax.x);
         }
-        if (zoomTime < 0.8f)
+        if (zoomTime < (5 / zoomDrag))
         {
             zoomTime += Time.deltaTime;
         }
+        else
+        {
+            zoomTime = (5 / zoomDrag);
+        }
 
-        cameraZoom.localPosition = new Vector3(0, 0, Mathf.Lerp(zoomPosZ, zoomTarget, Mathf.SmoothStep(0f, 1f, Mathf.Pow(zoomTime / 0.8f, 0.4f))));
+        cameraZoom.localPosition = new Vector3(0, 0, Mathf.Lerp(zoomPosZ, zoomTarget, Mathf.SmoothStep(0f, 1f, Mathf.Pow(zoomTime / (5 / zoomDrag), 0.4f))));
     }
 
     private void FixedUpdate()

@@ -482,13 +482,13 @@ public class World : MonoBehaviour
         return blockPos;
     }
 
-    private static string worldAssetPath = "/Terrain/Worlds/";
-    private static string fileType = "worlddata";
+    private static string worldAssetPath = "/Resources/Worlds/";
+    private static string fileType = "txt";
 
     private static string defaultAssetFolder = "temp";
     [SerializeField]
     [HideInInspector]
-    private string customAssetPath = "/Terrain/Worlds/new_world";
+    private string customAssetPath = "/Resources/Worlds/new_world"; //this needs to be changed
 
     //SAVE and LOAD methods
     #if UNITY_EDITOR
@@ -543,13 +543,15 @@ public class World : MonoBehaviour
         string assetName = Path.GetFileNameWithoutExtension(loadTemp ? worldAssetPath + defaultAssetFolder : customAssetPath);
         string assetPath = loadTemp ? worldAssetPath + defaultAssetFolder : customAssetPath;
 
-        assetName = "new_world";
-        assetPath = "/Terrain/Worlds/new_world";
+        //assetName = "new_world";
+        //assetPath = "/Terrain/Worlds/new_world";
         assetPath = assetPath + "/";
 
         Debug.Log("Load from: " + Application.dataPath + assetPath + assetName + "." + fileType);
 
-        if (File.Exists(Application.dataPath + assetPath + assetName + "." + fileType))
+        GameObject gameObject = Resources.Load(assetPath.Replace("/Resources/", "") + assetName, typeof(GameObject)) as GameObject;
+
+        if (gameObject != null)
         {
             BinaryFormatter bf = new BinaryFormatter();
             // 1. Construct a SurrogateSelector object
@@ -560,9 +562,13 @@ public class World : MonoBehaviour
 
             // 2. Have the formatter use our surrogate selector
             bf.SurrogateSelector = ss;
-            FileStream file = File.Open(Application.dataPath + assetPath + assetName + "." + fileType, FileMode.Open);
-            WorldData worldDataTemp = (WorldData)bf.Deserialize(file);
-            file.Close();
+
+            TextAsset textAsset = Resources.Load(assetPath.Replace("/Resources/", "") + assetName, typeof(TextAsset)) as TextAsset;
+            Stream stream = new MemoryStream(textAsset.bytes);
+            //FileStream file = File.Open(Application.dataPath + assetPath + assetName + "." + fileType, FileMode.Open);
+
+            WorldData worldDataTemp = (WorldData)bf.Deserialize(stream);
+            //file.Close();
 
             worldData = new WorldData
             {
@@ -575,7 +581,7 @@ public class World : MonoBehaviour
             };
 
             //GameObject gameObject = PrefabUtility.LoadPrefabContents(Application.dataPath + assetPath + assetName + ".prefab");
-            GameObject gameObject = Instantiate(worldPrefab, transform);
+            //GameObject gameObject = Instantiate(worldPrefab, transform);
             worldRenderer.chunkPool.Clear();
             worldRenderer.DeleteRenderers();
             worldRenderer.LoadRenderersFromPrefab(gameObject, this, ref worldData.chunkDictionary, ref worldData.chunkDataDictionary);
@@ -585,14 +591,15 @@ public class World : MonoBehaviour
             mapSizeInChunks = worldData.mapSizeInChunks;
             mapSeedOffset = worldData.mapSeedOffset;
 
-            if (Application.isPlaying)
+
+            /*if (Application.isPlaying)
             {
                 Destroy(gameObject);
             }
             else
             {
                 DestroyImmediate(gameObject);
-            }
+            }*/
 
             GenerateWorld(true);
         }
