@@ -25,6 +25,7 @@ public class World : MonoBehaviour
     public BlockDataManager blockDataManager;
     [Space]
     public GameObject chunkPrefab;
+    public GameObject worldPrefab;
     public WorldRenderer worldRenderer;
     [Space]
     public TerrainGenerator terrainGenerator;
@@ -42,14 +43,18 @@ public class World : MonoBehaviour
 
     private void OnEnable()
     {
+        #if UNITY_EDITOR
         EditorApplication.playModeStateChanged += SaveTemp;
         if (!EditorApplication.isPlayingOrWillChangePlaymode)
             LoadWorld();
+        #endif
     }
     private void OnDisable()
     {
         taskTokenSource.Cancel();
+        #if UNITY_EDITOR
         EditorApplication.playModeStateChanged -= SaveTemp;
+        #endif
     }
 
     private void Awake()
@@ -59,6 +64,7 @@ public class World : MonoBehaviour
             LoadWorld();
         }
     }
+    #if UNITY_EDITOR
     private void SaveTemp(PlayModeStateChange change)
     {
         switch (change)
@@ -71,6 +77,7 @@ public class World : MonoBehaviour
                 break;
         }
     }
+    #endif
 
 
     public async void GenerateWorld(bool loadOnly = false)
@@ -154,7 +161,9 @@ public class World : MonoBehaviour
         {
             Debug.LogError("Task canceled");
             Time.timeScale = 1;
+            #if UNITY_EDITOR
             StopCoroutine(editorUpdate);
+            #endif
             return;
         }
 
@@ -204,6 +213,7 @@ public class World : MonoBehaviour
         );
     }
 
+    #if UNITY_EDITOR
     IEnumerator EditorUpdate()
     {
         Time.timeScale = 0;
@@ -214,6 +224,7 @@ public class World : MonoBehaviour
         }
         yield return null;
     }
+    #endif
 
     IEnumerator ChunkCreationCoroutine(ConcurrentDictionary<Vector3Int, MeshData> meshDataDictionary, bool loadOnly)
     {
@@ -230,7 +241,9 @@ public class World : MonoBehaviour
                 ChunkUpdated();
         }
         Time.timeScale = 1;
+        #if UNITY_EDITOR
         StopCoroutine(editorUpdate);
+        #endif
     }
 
     private void CreateChunk(WorldData worldData, Vector3Int position, MeshData meshData, bool loadOnly)
@@ -478,6 +491,7 @@ public class World : MonoBehaviour
     private string customAssetPath;
 
     //SAVE and LOAD methods
+    #if UNITY_EDITOR
     public void SaveWorld(bool saveAs = false, bool saveTemp = false)
     {
         if (saveAs)
@@ -514,8 +528,10 @@ public class World : MonoBehaviour
         file.Close();
         AssetDatabase.Refresh();
     }
+    #endif
     public void LoadWorld(bool loadAs = false, bool loadTemp = false)
     {
+        #if UNITY_EDITOR
         if (loadAs)
         {
             customAssetPath = Path.GetDirectoryName(EditorUtility.OpenFilePanel("Get World Data File", Application.dataPath + worldAssetPath, fileType));
@@ -523,6 +539,7 @@ public class World : MonoBehaviour
             if (customAssetPath.StartsWith(Application.dataPath))
                 customAssetPath = customAssetPath.Substring(Application.dataPath.Length);
         }
+        #endif
         string assetName = Path.GetFileNameWithoutExtension(loadTemp ? worldAssetPath + defaultAssetFolder : customAssetPath);
         string assetPath = loadTemp ? worldAssetPath + defaultAssetFolder : customAssetPath;
 
@@ -555,7 +572,8 @@ public class World : MonoBehaviour
                 chunkDictionary = new Dictionary<Vector3Int, ChunkRenderer>(worldDataTemp.chunkDictionary)
             };
 
-            GameObject gameObject = PrefabUtility.LoadPrefabContents(Application.dataPath + assetPath + assetName + ".prefab");
+            //GameObject gameObject = PrefabUtility.LoadPrefabContents(Application.dataPath + assetPath + assetName + ".prefab");
+            GameObject gameObject = Instantiate(worldPrefab, transform);
             worldRenderer.chunkPool.Clear();
             worldRenderer.DeleteRenderers();
             worldRenderer.LoadRenderersFromPrefab(gameObject, this, ref worldData.chunkDictionary, ref worldData.chunkDataDictionary);

@@ -82,26 +82,33 @@ public class CameraHandler : MonoBehaviour
     private void OnEnable()
     {
         _activate.started += EnableCameraControls;
-        _deactivate.performed += DisableCameraControls;
+
+        if (_deactivate != null)
+            _deactivate.performed += DisableCameraControls;
+
         _playerInput.onControlsChanged += ControlChange;
     }
 
     private void OnDisable()
     {
         _activate.started -= EnableCameraControls;
-        _deactivate.performed -= DisableCameraControls;
+
+        if(_deactivate != null)
+            _deactivate.performed -= DisableCameraControls;
+
         _playerInput.onControlsChanged -= ControlChange;
     }
 
     private void ControlChange(PlayerInput input)
     {
         //Debug.Log("Controls Changed");
-        _playerInput.DeactivateInput();
-
+        
         //if action doesn't exist yet need to create it
         if (_playerInput.actions.FindAction("DeactivateCamera") != null)
             _playerInput.actions.RemoveAction("DeactivateCamera");
-         
+
+        _playerInput.DeactivateInput();
+
         _playerInput.actions.FindActionMap(cameraActionMap).AddAction("DeactivateCamera", _activate.type, null, "Press(behavior = 1)", _activate.processors, null, _activate.expectedControlType);
         _deactivate = _playerInput.actions["DeactivateCamera"];
         _deactivate.wantsInitialStateCheck = true;
