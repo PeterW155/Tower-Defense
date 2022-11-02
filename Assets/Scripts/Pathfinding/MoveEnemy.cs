@@ -28,6 +28,7 @@ public class MoveEnemy : MonoBehaviour
     public float timeBetweenAttacks;
     bool alreadyAttacked;
     public GameObject projectile;
+    public Transform firePoint;
 
     //States
     public float sightRange, attackRange;
@@ -117,15 +118,23 @@ public class MoveEnemy : MonoBehaviour
 
         transform.LookAt(playerObject);
 
-        /*if (!alreadyAttacked)
+        if (!alreadyAttacked)
         {
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            //Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+            //rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
+            //rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+
+            GameObject bulletObj = (GameObject)Instantiate(projectile, firePoint.position, firePoint.rotation);
+            Bullet bulletS = bulletObj.GetComponent<Bullet>();
+            
+            if(bulletS != null)
+            {
+                bulletS.Seek(playerObject);
+            }
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
-        }*/
+        }
     }
 
     private void ResetAttack()
