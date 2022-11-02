@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 70573509271531615}
   m_Layer: 0
   m_Name: Test Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -114,7 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destinations: []
   agent: {fileID: 70573509271531615}
-  targetObject: {fileID: 0}
+  targetObject: {fileID: 4793479472201670347, guid: cb184f72956faa2438de7a2fa718cbd1, type: 3}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8

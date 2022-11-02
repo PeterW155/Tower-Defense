@@ -35,10 +35,20 @@ public class MoveEnemy : MonoBehaviour
 
     private void Awake()
     {
-        targetObject = GameObject.Find("EnemyTarget").transform;
+        targetObject = GameObject.Find("END").transform;
         agent = GetComponent<NavMeshAgent>();
 
         StartCoroutine(CheckPlayerInSight());
+    }
+
+    private void Update()
+    {
+        float dist = Vector3.Distance(transform.position, targetObject.transform.position);
+        if(dist <= 1)
+        {
+            Destroy(gameObject);
+            PlayerStats.Instance.lives--;
+        }
     }
 
     private IEnumerator CheckPlayerInSight()
