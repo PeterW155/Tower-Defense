@@ -488,7 +488,7 @@ public class World : MonoBehaviour
     private static string defaultAssetFolder = "temp";
     [SerializeField]
     [HideInInspector]
-    private string customAssetPath;
+    private string customAssetPath = "/Terrain/Worlds/new_world";
 
     //SAVE and LOAD methods
     #if UNITY_EDITOR
@@ -543,6 +543,8 @@ public class World : MonoBehaviour
         string assetName = Path.GetFileNameWithoutExtension(loadTemp ? worldAssetPath + defaultAssetFolder : customAssetPath);
         string assetPath = loadTemp ? worldAssetPath + defaultAssetFolder : customAssetPath;
 
+        assetName = "new_world";
+        assetPath = "/Terrain/Worlds/new_world";
         assetPath = assetPath + "/";
 
         Debug.Log("Load from: " + Application.dataPath + assetPath + assetName + "." + fileType);
