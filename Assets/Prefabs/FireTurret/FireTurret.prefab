@@ -586,7 +586,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 1000
-  size: {x: 1, y: 1, z: 1}
+  size: {x: 2, y: 2, z: 2}
   main: {fileID: 1602951521015417412}
   proxy: {fileID: 4665726626394548834}
   showGizmo: 0
