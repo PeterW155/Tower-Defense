@@ -25,7 +25,7 @@ public class ChunkBaker : MonoBehaviour
     private List<NavMeshBuildSource> Sources = new List<NavMeshBuildSource>();
     private List<GameObject> Chunks = new List<GameObject>();
     private List<GameObject> ChunkPath = new List<GameObject>();
-    private List<GameObject> ChunkStartAndEnd = new List<GameObject>();
+    private GameObject ChunkStart, ChunkEnd;
 
     private int chunkSize;
     
@@ -42,8 +42,8 @@ public class ChunkBaker : MonoBehaviour
     {
         //Debug.Log("Hello World");
         FindStartAndEndChunk();
-        //Debug.Log("Chunk Start Location: " + ChunkStartAndEnd[0]);
-        //Debug.Log("Chunk End Location: " + ChunkStartAndEnd[1]);
+        Debug.Log("Chunk Start Location: " + ChunkStart);
+        Debug.Log("Chunk End Location: " + ChunkEnd);
     }
 
     private IEnumerator CheckGameObjectMovement()
@@ -124,38 +124,40 @@ public class ChunkBaker : MonoBehaviour
     {
         //Debug.Log("Hello");
         //Debug.Log(UnitGameObject.transform.position);
-        if (UnitGameObject != null)
-        {
-            FindWhichChunkGameObjectIsIn(UnitGameObject.transform.position);
-        }
+        ChunkStart = FindWhichChunkGameObjectIsIn(UnitGameObject.transform.position);
+        
         //Debug.Log(UnitGameObject.GetComponent<MovePlayer>().target);
         if (UnitGameObject.tag == "Player")
         {
-            FindWhichChunkGameObjectIsIn(UnitGameObject.GetComponent<MovePlayer>().target);
+            ChunkEnd = FindWhichChunkGameObjectIsIn(UnitGameObject.GetComponent<MovePlayer>().target);
         }
         else if (UnitGameObject.tag == "Enemy")
         {
-            FindWhichChunkGameObjectIsIn(UnitGameObject.GetComponent<MoveEnemy>().target);
+            ChunkEnd = FindWhichChunkGameObjectIsIn(UnitGameObject.GetComponent<MoveEnemy>().target);
         }
     }
 
-    private void FindWhichChunkGameObjectIsIn(Vector3 currentObjectPosition)
+    private GameObject FindWhichChunkGameObjectIsIn(Vector3 currentObjectPosition)
     {
         //float x = UnitGameObject.transform.position.x;
         //float z = UnitGameObject.transform.position.z;
+        GameObject foundChunk = null;
         foreach (GameObject chunk in Chunks)
         {
             string chunkCoordName = chunk.name.Substring(chunk.name.LastIndexOf('(') + 1).Remove(chunk.name.Substring(chunk.name.LastIndexOf('(') + 1).Length - 1, 1);
+            //Debug.Log("Chunk Coord Name: " + chunkCoordName);
             string[] chunkCoordList = chunkCoordName.Split(',');
             Vector3 chunkPosition = new Vector3(int.Parse(chunkCoordList[0]), int.Parse(chunkCoordList[1]), int.Parse(chunkCoordList[2]));
 
             if (CheckGameObjectInChunk(currentObjectPosition, chunkPosition))
             {
                 Debug.Log("Chunk: " + chunkCoordName);
-                ChunkStartAndEnd.Add(chunk);
+                //ChunkStartAndEnd.Add(chunk);
+                foundChunk = chunk;
                 break;
             }
         }
+        return foundChunk;
     }
 
     private bool CheckGameObjectInChunk(Vector3 currentObjectPosition, Vector3 chunkPosition)
