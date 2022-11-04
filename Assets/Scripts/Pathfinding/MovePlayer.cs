@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine.AI;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+//[RequireComponent(typeof(NavMeshAgent))]
 public class MovePlayer : MonoBehaviour
 {
     public NavMeshAgent agent;
     public LayerMask ground;
+    
+    [SerializeField] private GameObject clickMarkerPrefab;
+
     public int health;
 
     private PlayerInput _playerInput;
@@ -15,13 +18,13 @@ public class MovePlayer : MonoBehaviour
     [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string destinationControl;
     private InputAction _destination;
 
-    Vector3 target;
+    public Vector3 target;
     
     // Start is called before the first frame update
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-
+        target = gameObject.transform.position;
         _playerInput = FindObjectOfType<PlayerInput>();
         _destination = _playerInput.actions[destinationControl];
     }
