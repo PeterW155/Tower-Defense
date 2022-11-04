@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 70573509271531615}
   - component: {fileID: 4795316750887650801}
   - component: {fileID: 6390142407598143487}
+  - component: {fileID: 7386151739001095549}
   m_Layer: 0
   m_Name: Test Enemy
   m_TagString: Enemy
@@ -128,6 +129,7 @@ MonoBehaviour:
     m_Bits: 64
   health: 100
   walkPoint: {x: 0, y: 0, z: 0}
+  target: {x: 0, y: 0, z: 0}
   walkPointRange: 10
   timeBetweenAttacks: 10
   projectile: {fileID: 1148047656769899135, guid: 7a76b12fa6fe0e44084923967d4f654b, type: 3}
@@ -272,6 +274,22 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &7386151739001095549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70573509271531609}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa606ead17a9a384ba4ffb7b80d331e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Surface: {fileID: 454821261183601327, guid: 39e488dd2cc06664f823a0c2b7a3095d, type: 3}
+  UpdateRate: 0.1
+  MovementThreshold: 3
+  NavMeshSize: {x: 20, y: 20, z: 20}
 --- !u!1 &630902253298228400
 GameObject:
   m_ObjectHideFlags: 0

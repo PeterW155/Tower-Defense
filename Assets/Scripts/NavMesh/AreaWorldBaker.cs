@@ -9,10 +9,10 @@ public class AreaWorldBaker : MonoBehaviour
 {
     [SerializeField]
     private NavMeshSurface Surface;
-    [SerializeField]
+    //[SerializeField]
     private GameObject Player;
     [SerializeField]
-    private float UpdateRate = 0.1f;
+    private float UpdateRate = 0.5f;
     [SerializeField]
     private float MovementThreshold = 3;
     [SerializeField]
@@ -20,12 +20,14 @@ public class AreaWorldBaker : MonoBehaviour
 
     private Vector3 WorldAnchor;
     private NavMeshData NavMeshData;
+    private NavMeshDataInstance NavMeshDataInstance;
     private List<NavMeshBuildSource> Sources = new List<NavMeshBuildSource>();
 
     private void Start()
     {
         NavMeshData = new NavMeshData();
-        NavMesh.AddNavMeshData(NavMeshData);
+        Player = this.gameObject;
+        NavMeshDataInstance = NavMesh.AddNavMeshData(NavMeshData);
         BuildNavMesh(false);
         StartCoroutine(CheckGameObjectMovement());
     }
@@ -95,5 +97,10 @@ public class AreaWorldBaker : MonoBehaviour
         {
             NavMeshBuilder.UpdateNavMeshDataAsync(NavMeshData, Surface.GetBuildSettings(), Sources, new Bounds(Player.transform.position, NavMeshSize));
         }
+    }
+
+    private void OnDestroy() 
+    {
+        NavMesh.RemoveNavMeshData(NavMeshDataInstance);
     }
 }

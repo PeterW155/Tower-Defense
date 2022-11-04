@@ -1372,8 +1372,8 @@ MonoBehaviour:
   chunkSize: 16
   chunkHeight: 35
   blockDataManager: {fileID: 7801024117526780892}
-  chunkPrefab: {fileID: 770452292125942389, guid: 51997f7b7896ff847afc8c3cce52484a,
-    type: 3}
+  chunkPrefab: {fileID: 770452292125942389, guid: 51997f7b7896ff847afc8c3cce52484a, type: 3}
+  worldPrefab: {fileID: 0}
   worldRenderer: {fileID: 7801024116035675217}
   terrainGenerator: {fileID: 7801024115735198556}
   mapSeedOffset: {x: 500, y: 0}
@@ -1399,8 +1399,17 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 8
+  blockModifyBlacklist: 0800000009000000
   blockType: 7
+  playModeBlockType: 0
+  placeProxy: {fileID: 0}
+  removeProxy: {fileID: 0}
+  cost: 0
+  editingActionMap: Main
+  clickControl: Main/Select
+  removeControl: Main/Select
   world: {fileID: 7801024115731689475}
+  editing: 0
 --- !u!1 &7801024115735198557
 GameObject:
   m_ObjectHideFlags: 0
@@ -1676,8 +1685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd92e8200e121044a8eed81b3e0677f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chunkPrefab: {fileID: 770452292125942389, guid: 51997f7b7896ff847afc8c3cce52484a,
-    type: 3}
+  chunkPrefab: {fileID: 770452292125942389, guid: 51997f7b7896ff847afc8c3cce52484a, type: 3}
 --- !u!1 &7801024117024951371
 GameObject:
   m_ObjectHideFlags: 0

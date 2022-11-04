@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+//using Unity.AI.Navigation;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
@@ -14,6 +15,7 @@ public class ChunkRenderer : MonoBehaviour
     public bool showGizmo = false;
 
     public ChunkData ChunkData;
+    //private NavMeshSurface chunkSurface;
 
     public bool ModifiedByThePlayer
     {
@@ -30,6 +32,8 @@ public class ChunkRenderer : MonoBehaviour
     public void InitializeChunk(ChunkData data)
     {
         this.ChunkData = data;
+        //chunkSurface = this.gameObject.GetComponent<NavMeshSurface>();
+        //chunkSurface.
     }
 
     private void RenderMesh(MeshData meshData)
@@ -62,11 +66,15 @@ public class ChunkRenderer : MonoBehaviour
     public void UpdateChunk()
     {
         RenderMesh(Chunk.GetChunkMeshData(ChunkData));
+        //chunkSurface.BuildNavMesh();
+        //Debug.Log("UpdateChunk");
     }
 
     public void UpdateChunk(MeshData data)
     {
         RenderMesh(data);
+        //chunkSurface.BuildNavMesh();
+        //Debug.Log("UpdateChunk 2");
     }
 
 #if UNITY_EDITOR

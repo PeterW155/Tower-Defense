@@ -5,7 +5,7 @@ using Unity.AI.Navigation;
 
 public class NavMeshUpdate : MonoBehaviour
 {
-    public NavMeshSurface worldSurface;
+    /*public NavMeshSurface worldSurface;
     
     void OnEnable()
     {
@@ -21,5 +21,5 @@ public class NavMeshUpdate : MonoBehaviour
     {
         Debug.Log("chunk updated");
         worldSurface.BuildNavMesh();
-    }
+    }*/
 }

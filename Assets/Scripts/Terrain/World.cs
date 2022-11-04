@@ -16,7 +16,7 @@ using UnityEngine.Networking;
 [ExecuteAlways]
 public class World : MonoBehaviour
 {
-    public delegate void WorldEvent();
+    public delegate void WorldEvent(ChunkRenderer chunkRenderer = null);
     public static event WorldEvent ChunkUpdated;
 
     public int mapSizeInChunks = 6;
@@ -232,13 +232,14 @@ public class World : MonoBehaviour
         {
             CreateChunk(worldData, item.Key, item.Value, loadOnly);
             yield return 0;
+            if (ChunkUpdated != null)
+                ChunkUpdated(WorldDataHelper.GetChunk(this, item.Key));
         }
         if (IsWorldCreated == false)
         {
             IsWorldCreated = true;
             OnWorldCreated?.Invoke();
-            if (ChunkUpdated != null)
-                ChunkUpdated();
+            
         }
         Time.timeScale = 1;
         #if UNITY_EDITOR
@@ -308,8 +309,13 @@ public class World : MonoBehaviour
                 if (neighbourData != null)
                 {
                     ChunkRenderer chunkToUpdate = WorldDataHelper.GetChunk(neighbourData.worldReference, neighbourData.worldPosition);
+                    
                     if (chunkToUpdate != null)
+                    {
                         chunkToUpdate.UpdateChunk();
+                        if (ChunkUpdated != null)
+                            ChunkUpdated(chunkToUpdate);
+                    }
                 }
             }
 
@@ -317,7 +323,8 @@ public class World : MonoBehaviour
 
         chunk.UpdateChunk();
         if (ChunkUpdated != null)
-            ChunkUpdated();
+            ChunkUpdated(chunk);
+        
         return true;
     }
 
@@ -356,6 +363,7 @@ public class World : MonoBehaviour
                                 ChunkRenderer chunkToUpdate = WorldDataHelper.GetChunk(neighbourData.worldReference, neighbourData.worldPosition);
                                 if (chunkToUpdate != null)
                                     updateChunks.Add(chunkToUpdate);
+
                             }
                         }
 
@@ -364,9 +372,12 @@ public class World : MonoBehaviour
             }
         }
         foreach (ChunkRenderer cr in updateChunks)
+        {
             cr.UpdateChunk();
-        if (ChunkUpdated != null)
-            ChunkUpdated();
+            if (ChunkUpdated != null)
+                ChunkUpdated(cr);
+        }
+
         return true;
     }
 
