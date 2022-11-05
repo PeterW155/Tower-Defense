@@ -26,6 +26,7 @@ public class TerrainEditor : MonoBehaviour
     [Space]
     [Header("Controls")]
     [StringInList(typeof(PropertyDrawersHelper), "AllActionMaps")] public string editingActionMap;
+    [Space]
     [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string clickControl;
     private InputAction _click;
     [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string removeControl;
@@ -69,13 +70,21 @@ public class TerrainEditor : MonoBehaviour
     {
         editing = true;
         editCoroutine = StartCoroutine(Editing());
-        _playerInput.actions.FindActionMap(editingActionMap).Enable();
     }
     public void DisableTerrainEditing()
     {
         editing = false;
         if (editCoroutine != null)
             StopCoroutine(editCoroutine);
+    }
+
+    public void EnableMap()
+    {
+        _playerInput.actions.FindActionMap(editingActionMap).Enable();
+    }
+
+    public void DisableMap()
+    {
         _playerInput.actions.FindActionMap(editingActionMap).Disable();
     }
 

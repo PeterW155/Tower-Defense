@@ -256,7 +256,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 668968359478054578}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -316,21 +316,30 @@ MonoBehaviour:
   cameraParent: {fileID: 668968359509995569}
   cameraRotate: {fileID: 668968359122446957}
   cameraZoom: {fileID: 668968359478054577}
+  lockMouseWhileRotating: 1
   movementSensetivity: 2.5
   movementDrag: 16
   rotationSensetivity: 2.5
-  rotationDrag: 10
+  rotationDrag: 22
   zoomSensetivity: 2.5
+  zoomDrag: 18
   zoomMinMax: {x: 4, y: 30}
   _playerInput: {fileID: 0}
   cameraActionMap: Camera
-  UIActionMap: UI
-  moveControl: Camera/Move
-  lookControl: Camera/Look
-  rotateControl: Camera/Rotate
-  zoomControl: Camera/Zoom
+  mainActionMap: Main
+  moveControl: Main/Move
+  lookControl: Main/Look
+  lookAltControl: Main/LookAlt
+  rotateControl: Main/Rotate
+  rotateAltControl: Camera/Rotate
+  zoomControl: Main/Zoom
+  zoomAltControl: Camera/Zoom
+  activateControl: Main/ActivateCamera
+  deactivateControl: Camera/DeactivateCamera
+  cameraAltActive: 0
   move: {x: 0, y: 0}
   look: {x: 0, y: 0}
+  lookAlt: 0
   zoom: 0
 --- !u!114 &668968359509995568
 MonoBehaviour:

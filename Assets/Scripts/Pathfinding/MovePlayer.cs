@@ -11,7 +11,6 @@ public class MovePlayer : MonoBehaviour
     public int health;
 
     private PlayerInput _playerInput;
-    [StringInList(typeof(PropertyDrawersHelper), "AllActionMaps")] public string mainActionMap;
     [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string destinationControl;
     private InputAction _destination;
 

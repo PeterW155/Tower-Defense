@@ -10,7 +10,8 @@ public class UnitClick : MonoBehaviour
 
     [Header("Controls")]
     private PlayerInput _playerInput;
-    [StringInList(typeof(PropertyDrawersHelper), "AllActionMaps")] public string mainActionMap;
+    [StringInList(typeof(PropertyDrawersHelper), "AllActionMaps")] public string unitActionMap;
+    [Space]
     [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string destinationControl;
     private InputAction _destination;
     [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string selectControl;
@@ -28,14 +29,14 @@ public class UnitClick : MonoBehaviour
         _unionSelect = _playerInput.actions[unionSelectControl];
     }
 
-    public void EnableMain()
+    public void EnableMap()
     {
-        _playerInput.actions.FindActionMap(mainActionMap).Enable();
+        _playerInput.actions.FindActionMap(unitActionMap, true).Enable();
     }
 
-    public void DisableMain()
+    public void DisableMap()
     {
-        _playerInput.actions.FindActionMap(mainActionMap, true).Disable();
+        _playerInput.actions.FindActionMap(unitActionMap, true).Disable();
     }
 
     private void OnEnable()
