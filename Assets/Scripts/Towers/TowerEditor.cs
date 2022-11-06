@@ -63,14 +63,12 @@ public class TowerEditor : MonoBehaviour
     {
         editing = true;
         editCoroutine = StartCoroutine(Editing());
-        _playerInput.actions.FindActionMap(editingActionMap).Enable();
     }
     public void DisableTowerEditing()
     {
         editing = false;
         if (editCoroutine != null)
             StopCoroutine(editCoroutine);
-        _playerInput.actions.FindActionMap(editingActionMap).Disable();
 
         if (proxiesActive)
         {

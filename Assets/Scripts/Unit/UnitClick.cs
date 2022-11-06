@@ -7,6 +7,8 @@ public class UnitClick : MonoBehaviour
 
     public LayerMask clickableLayer;
     public LayerMask ground;
+    [Space]
+    public bool mapStartEnabled;
 
     [Header("Controls")]
     private PlayerInput _playerInput;
@@ -27,6 +29,9 @@ public class UnitClick : MonoBehaviour
         _destination = _playerInput.actions[destinationControl];
         _select = _playerInput.actions[selectControl];
         _unionSelect = _playerInput.actions[unionSelectControl];
+
+        if (mapStartEnabled)
+            EnableMap();
     }
 
     public void EnableMap()

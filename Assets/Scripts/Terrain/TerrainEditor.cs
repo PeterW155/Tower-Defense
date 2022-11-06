@@ -80,12 +80,12 @@ public class TerrainEditor : MonoBehaviour
 
     public void EnableMap()
     {
-        _playerInput.actions.FindActionMap(editingActionMap).Enable();
+        _playerInput.actions.FindActionMap(editingActionMap, true).Enable();
     }
 
     public void DisableMap()
     {
-        _playerInput.actions.FindActionMap(editingActionMap).Disable();
+        _playerInput.actions.FindActionMap(editingActionMap, true).Disable();
     }
 
     private IEnumerator Editing()

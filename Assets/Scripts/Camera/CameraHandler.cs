@@ -61,7 +61,9 @@ public class CameraHandler : MonoBehaviour
     private float zoomTime;
     [Space]
     [Header("Debug")]
+    #pragma warning disable 0414
     [ReadOnly] [SerializeField] private bool cameraAltActive;
+    #pragma warning restore 0414
     [ReadOnly] [SerializeField] private Vector2 move;
     [ReadOnly] [SerializeField] private Vector2 look;
     [ReadOnly] [SerializeField] private float lookAlt;
@@ -70,6 +72,8 @@ public class CameraHandler : MonoBehaviour
     private InputActionMap[] disabledActionMaps;
 
     float defaultDrag = 0.95f;
+
+    InputAction origionalBinding;
 
     void Awake()
     {
