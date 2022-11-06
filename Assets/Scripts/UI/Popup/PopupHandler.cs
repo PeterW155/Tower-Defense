@@ -138,9 +138,19 @@ public class PopupHandler : MonoBehaviour
         }
         //set final position
         if (direction == Direction.up || direction == Direction.down)
+        {
             rt.anchoredPosition = new Vector2(init.x, movementTarget);
+            if (offsets != null)
+                foreach (RectTransform offset in offsets)
+                    offset.anchoredPosition = new Vector2(init.x, movementTarget);
+        }
         else
+        {
             rt.anchoredPosition = new Vector2(movementTarget, init.y);
+            if (offsets != null)
+                foreach (RectTransform offset in offsets)
+                    offset.anchoredPosition = new Vector2(movementTarget, init.y);
+        }
 
         animating = false;
     }

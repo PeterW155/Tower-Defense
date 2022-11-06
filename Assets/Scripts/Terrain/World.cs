@@ -162,7 +162,8 @@ public class World : MonoBehaviour
             Debug.LogError("Task canceled");
             Time.timeScale = 1;
             #if UNITY_EDITOR
-            StopCoroutine(editorUpdate);
+            if (editorUpdate != null)
+                StopCoroutine(editorUpdate);
             #endif
             return;
         }
@@ -242,7 +243,8 @@ public class World : MonoBehaviour
         }
         Time.timeScale = 1;
         #if UNITY_EDITOR
-        StopCoroutine(editorUpdate);
+        if (editorUpdate != null)
+            StopCoroutine(editorUpdate);
         #endif
     }
 
@@ -511,7 +513,6 @@ public class World : MonoBehaviour
         Debug.Log("Saved to: " + Application.dataPath + assetPath + assetName + "." + fileType);
 
         PrefabUtility.SaveAsPrefabAsset(worldRenderer.gameObject, Application.dataPath + assetPath + assetName + ".prefab", out bool success);
-        Debug.Log(Application.dataPath + assetPath + assetName + ".prefab");
 
         BinaryFormatter bf = new BinaryFormatter();
 
