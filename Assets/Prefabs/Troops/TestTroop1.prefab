@@ -250,5 +250,5 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 8
-  mainActionMap: Main
-  destinationControl: Main/Destination
+  health: 0
+  destinationControl: Unit/Destination

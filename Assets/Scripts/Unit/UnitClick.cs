@@ -8,7 +8,7 @@ public class UnitClick : MonoBehaviour
     public LayerMask clickableLayer;
     public LayerMask ground;
     [Space]
-    public bool mapStartEnabled;
+    public bool mapStartEnabled = true;
 
     [Header("Controls")]
     private PlayerInput _playerInput;

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 315784632193153544}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2610151050243111025}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1059197709588517820}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PartToRotate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 6133098968432176526}
   - component: {fileID: 8530273194262266872}
   - component: {fileID: 7026521795302220667}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -207,7 +207,7 @@ GameObject:
   - component: {fileID: 2368559337298451331}
   - component: {fileID: 4338315449496293997}
   - component: {fileID: 3195597043435903839}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -304,7 +304,7 @@ GameObject:
   - component: {fileID: 3440720664847244696}
   - component: {fileID: 5148375799914689720}
   - component: {fileID: 1470204646228903007}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Proxy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -401,7 +401,7 @@ GameObject:
   - component: {fileID: 271891815889666696}
   - component: {fileID: 3948557167138927775}
   - component: {fileID: 1615564412082718658}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -497,7 +497,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5264246958178371879}
   - component: {fileID: 5661915814772635122}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -550,7 +550,7 @@ GameObject:
   - component: {fileID: 7939827575190920760}
   - component: {fileID: 7133776328832873815}
   - component: {fileID: -3680261497845567882}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FireTurret
   m_TagString: Untagged
   m_Icon: {fileID: 0}

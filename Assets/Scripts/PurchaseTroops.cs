@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PurchaseTroops : MonoBehaviour
 {
@@ -9,6 +10,17 @@ public class PurchaseTroops : MonoBehaviour
 
     public Transform spawnPoint;
 
+    [Space]
+    [StringInList(typeof(PropertyDrawersHelper), "AllActionMaps")] public string unitActionMap;
+
+    [HideInInspector] public bool menuActive;
+
+    private PlayerInput _playerInput;
+
+    private void Start()
+    {
+        _playerInput = CameraHandler.Instance.playerInput;
+    }
 
     public void SpawnTroop1()
     {
@@ -30,5 +42,16 @@ public class PurchaseTroops : MonoBehaviour
             Instantiate(troop2Prefab, spawnPoint);
             PlayerStats.Instance.money -= 100;
         }
+    }
+
+    public void MenuEnabled()
+    {
+        menuActive = true;
+        _playerInput.actions.FindActionMap(unitActionMap, true).Enable();
+    }
+    public void MenuDisabled()
+    {
+        menuActive = false;
+        _playerInput.actions.FindActionMap(unitActionMap, true).Disable();
     }
 }

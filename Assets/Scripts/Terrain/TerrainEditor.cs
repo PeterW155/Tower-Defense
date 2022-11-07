@@ -70,21 +70,13 @@ public class TerrainEditor : MonoBehaviour
     {
         editing = true;
         editCoroutine = StartCoroutine(Editing());
+        _playerInput.actions.FindActionMap(editingActionMap, true).Enable();
     }
     public void DisableTerrainEditing()
     {
         editing = false;
         if (editCoroutine != null)
             StopCoroutine(editCoroutine);
-    }
-
-    public void EnableMap()
-    {
-        _playerInput.actions.FindActionMap(editingActionMap, true).Enable();
-    }
-
-    public void DisableMap()
-    {
         _playerInput.actions.FindActionMap(editingActionMap, true).Disable();
     }
 

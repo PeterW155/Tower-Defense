@@ -28,9 +28,10 @@ public class CameraHandler : MonoBehaviour
     public float zoomDrag = 10f;
     public Vector2 zoomMinMax = new Vector2(2, 20);
 
+    [HideInInspector]
+    public PlayerInput playerInput;
     [Space]
     [Header("Controls")]
-    public PlayerInput _playerInput;
     [StringInList(typeof(PropertyDrawersHelper), "AllActionMaps")] public string cameraActionMap;
     [StringInList(typeof(PropertyDrawersHelper), "AllActionMaps")] public string mainActionMap;
     [Space]
@@ -73,10 +74,24 @@ public class CameraHandler : MonoBehaviour
 
     float defaultDrag = 0.95f;
 
-    InputAction origionalBinding;
+    //might be better to separate the player input component from the camera handler object in the future
+    private static CameraHandler _instance;
+    public static CameraHandler Instance { get { return _instance; } }
 
     void Awake()
     {
+        // If an instance of this already exists and it isn't this one
+        if (_instance != null && _instance != this)
+        {
+            // We destroy this instance
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            // Make this the instance
+            _instance = this;
+        }
+
         //set variables
         if (!cameraParent.TryGetComponent<Rigidbody>(out _rigidbodyParent))
             throw new Exception("Camera parent missing rigidbody.");
@@ -87,18 +102,18 @@ public class CameraHandler : MonoBehaviour
         zoomPosZ = cameraZoom.localPosition.z;
         zoomTarget = zoomPosZ;
 
-        _playerInput = GetComponent<PlayerInput>();
+        playerInput = GetComponent<PlayerInput>();
 
         //initialize inputs
-        _move = _playerInput.actions[moveControl];
-        _look = _playerInput.actions[lookControl];
-        _lookAlt = _playerInput.actions[lookAltControl];
-        _rotate = _playerInput.actions[rotateControl];
-        _rotateAlt = _playerInput.actions[rotateAltControl];
-        _zoom = _playerInput.actions[zoomControl];
-        _zoomAlt = _playerInput.actions[zoomAltControl];
-        _activate = _playerInput.actions[activateControl];
-        _deactivate = _playerInput.actions[deactivateControl];
+        _move = playerInput.actions[moveControl];
+        _look = playerInput.actions[lookControl];
+        _lookAlt = playerInput.actions[lookAltControl];
+        _rotate = playerInput.actions[rotateControl];
+        _rotateAlt = playerInput.actions[rotateAltControl];
+        _zoom = playerInput.actions[zoomControl];
+        _zoomAlt = playerInput.actions[zoomAltControl];
+        _activate = playerInput.actions[activateControl];
+        _deactivate = playerInput.actions[deactivateControl];
         ControlChange(null);
 
         //other stuff
@@ -111,7 +126,7 @@ public class CameraHandler : MonoBehaviour
 
         _deactivate.performed += DisableCameraControls;
 
-        _playerInput.onControlsChanged += ControlChange;
+        playerInput.onControlsChanged += ControlChange;
     }
 
     private void OnDisable()
@@ -120,7 +135,7 @@ public class CameraHandler : MonoBehaviour
 
         _deactivate.performed -= DisableCameraControls;
 
-        _playerInput.onControlsChanged -= ControlChange;
+        playerInput.onControlsChanged -= ControlChange;
     }
 
     private void ControlChange(PlayerInput input)
@@ -146,9 +161,9 @@ public class CameraHandler : MonoBehaviour
 
     private void EnableCameraControls(InputAction.CallbackContext context)
     {
-        disabledActionMaps = _playerInput.actions.actionMaps.Where(x => (x.enabled && x.name != mainActionMap)).ToArray(); //get all currently active maps
+        disabledActionMaps = playerInput.actions.actionMaps.Where(x => (x.enabled && x.name != mainActionMap)).ToArray(); //get all currently active maps
         //enable action map
-        _playerInput.actions.FindActionMap(cameraActionMap).Enable();
+        playerInput.actions.FindActionMap(cameraActionMap).Enable();
         //disable other action maps
         foreach(InputActionMap actionMap in disabledActionMaps)
             actionMap.Disable();
@@ -159,7 +174,7 @@ public class CameraHandler : MonoBehaviour
     private void DisableCameraControls(InputAction.CallbackContext context)
     {
         //disable action map
-        _playerInput.actions.FindActionMap(cameraActionMap).Disable();
+        playerInput.actions.FindActionMap(cameraActionMap).Disable();
         //enable previously disabled action maps
         foreach (InputActionMap actionMap in disabledActionMaps)
             actionMap.Enable();
@@ -195,7 +210,7 @@ public class CameraHandler : MonoBehaviour
             zoomPosZ = cameraZoom.localPosition.z;
             //float zoomAmount = Time.deltaTime * 40f * zoomSensetivity; //this is for scroll wheel
             //zoomTarget = Mathf.Clamp(zoomTarget + (look.y > 0 ? zoomAmount : -zoomAmount), -zoomMinMax.y, -zoomMinMax.x);
-            float valueAdjustment = _playerInput.currentControlScheme == "Controller" ? 10f : 120f;
+            float valueAdjustment = playerInput.currentControlScheme == "Controller" ? 10f : 120f;
             zoomTarget = Mathf.Clamp(zoomTarget + zoom * zoomSensetivity * valueAdjustment * Time.deltaTime, -zoomMinMax.y, -zoomMinMax.x);
         }
         if (zoomTime < (5 / zoomDrag))

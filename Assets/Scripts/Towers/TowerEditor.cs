@@ -13,7 +13,6 @@ public class TowerEditor : MonoBehaviour
     private LayerMask towerMask;
     [Space]
     public Transform towerParent;
-    public Transform towerProxiesParent;
 
     [Space]
     public Material placeMaterial;
@@ -63,12 +62,14 @@ public class TowerEditor : MonoBehaviour
     {
         editing = true;
         editCoroutine = StartCoroutine(Editing());
+        _playerInput.actions.FindActionMap(editingActionMap, true).Enable();
     }
     public void DisableTowerEditing()
     {
         editing = false;
         if (editCoroutine != null)
             StopCoroutine(editCoroutine);
+        _playerInput.actions.FindActionMap(editingActionMap, true).Disable();
 
         if (proxiesActive)
         {

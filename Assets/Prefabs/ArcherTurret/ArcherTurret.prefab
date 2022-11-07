@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2610151050243111025}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1059197709588517820}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PartToRotate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 1194527963344842708}
   - component: {fileID: 1489465662260389051}
   - component: {fileID: 6248509618103591273}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Proxy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 2368559337298451331}
   - component: {fileID: 4338315449496293997}
   - component: {fileID: 3195597043435903839}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -267,7 +267,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7661050811313969240}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -304,7 +304,7 @@ GameObject:
   - component: {fileID: 271891815889666696}
   - component: {fileID: 3948557167138927775}
   - component: {fileID: 1615564412082718658}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -400,7 +400,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5264246958178371879}
   - component: {fileID: 5661915814772635122}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -453,7 +453,7 @@ GameObject:
   - component: {fileID: 7939827575190920760}
   - component: {fileID: 1537364596359230182}
   - component: {fileID: -3707092166957288283}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ArcherTurret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -576,6 +576,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ffdf806c24562634b84c1ecc37bcd127, type: 3}
       propertyPath: m_Name
       value: Archer_Tower_lvl_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ffdf806c24562634b84c1ecc37bcd127, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffdf806c24562634b84c1ecc37bcd127, type: 3}

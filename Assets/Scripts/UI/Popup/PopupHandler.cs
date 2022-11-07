@@ -39,6 +39,7 @@ public class PopupHandler : MonoBehaviour
         activating = true;
         if (index == currentActive) //if selected active needs to be deactivated
         {
+            //Debug.Log("popup disabled");
             PopupDisabled.Invoke();
             //deactive current popup
             RectTransform deactivePopup = popups.ElementAtOrDefault(index);
@@ -68,6 +69,7 @@ public class PopupHandler : MonoBehaviour
         }
         else //nothing is active so activate index
         {
+            //Debug.Log("popup enabled");
             PopupEnabled.Invoke();
             //activate new popup
             RectTransform activePopup = popups.ElementAtOrDefault(index);
