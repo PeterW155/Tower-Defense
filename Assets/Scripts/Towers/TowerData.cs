@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using Unity.AI.Navigation;
 
 public class TowerData : MonoBehaviour
 {

@@ -11,8 +11,12 @@ public class MoveEnemy : MonoBehaviour
     public Transform[] destinations;
     public NavMeshAgent agent;
 
+    private LineRenderer myLineRenderer;
+
     //public Transform player;
     public Transform targetObject;
+    [SerializeField] private GameObject targetMarkerPrefab;
+    [SerializeField] private Transform visualObjectsParent;
 
     public LayerMask whatIsGround, whatIsPlayer;
 
@@ -38,6 +42,11 @@ public class MoveEnemy : MonoBehaviour
     {
         targetObject = GameObject.Find("END").transform;
         agent = GetComponent<NavMeshAgent>();
+        myLineRenderer = GetComponent<LineRenderer>();
+
+        myLineRenderer.startWidth = 0.15f;
+        myLineRenderer.endWidth = 0.15f;
+        myLineRenderer.positionCount = 0;
 
         StartCoroutine(CheckPlayerInSight());
     }
@@ -50,6 +59,10 @@ public class MoveEnemy : MonoBehaviour
             Destroy(gameObject);
             PlayerStats.Instance.lives--;
         }
+        else if (agent.hasPath)
+        {
+            DrawPath();
+        }
     }
 
     private IEnumerator CheckPlayerInSight()
@@ -57,8 +70,10 @@ public class MoveEnemy : MonoBehaviour
         for (; ;) 
         {
             playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+
             if (playerInSightRange) playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
             else playerInAttackRange = false;
+
             if (playerInSightRange && !playerInAttackRange) ChasePlayer(); // Prioritize chase player
             else if (playerInSightRange && playerInAttackRange) AttackPlayer(GetNearestPlayer()); // Then attacking player (probably need to prioritize this later on)
             else if (!playerInSightRange && !playerInAttackRange) MoveToTarget(); // Then move to target
@@ -69,6 +84,9 @@ public class MoveEnemy : MonoBehaviour
 
     private void MoveToTarget()
     {
+        targetMarkerPrefab.transform.SetParent(visualObjectsParent);
+        targetMarkerPrefab.SetActive(true);
+        targetMarkerPrefab.transform.position = targetObject.transform.position;
         agent.SetDestination(targetObject.position);
     }
 
@@ -155,6 +173,24 @@ public class MoveEnemy : MonoBehaviour
     private void DestroyEnemy()
     {
         Destroy(gameObject);
+    }
+
+    // Draws the path the player will take to reach its destination
+    void DrawPath()
+    {
+        myLineRenderer.positionCount = agent.path.corners.Length;
+        myLineRenderer.SetPosition(0, transform.position);
+
+        if (agent.path.corners.Length < 2)
+        {
+            return;
+        }
+
+        for (int i = 1; i < agent.path.corners.Length; i++)
+        {
+            Vector3 pointPosition = new Vector3(agent.path.corners[i].x, agent.path.corners[i].y, agent.path.corners[i].z);
+            myLineRenderer.SetPosition(i, pointPosition);
+        }
     }
 
     /*private void OnDrawGizmosSelected()
