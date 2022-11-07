@@ -47,22 +47,6 @@ public class PathLine : MonoBehaviour
             // ideally units going to one destination should only display one path line. Only displays different
             // paths if they have different destinations or have very different paths.
 
-            /*else if (previousAgent != null && determinePathSimilarityByCorner(agent, previousAgent))
-            {
-                /if (count >= enemyUnits.Length / 2)
-                {
-                    Debug.Log("Enemy with same path draw");
-                    //DrawPath(enemyUnit, agent, agent.GetComponent<LineRenderer>());
-                    enemyUnit.GetComponent<LineRenderer>().enabled = true;
-                    count = 0;
-                }
-                else
-                {
-                    Debug.Log("Enemy with same path not draw");
-                    enemyUnit.GetComponent<LineRenderer>().enabled = false;
-                    count++;
-                }
-            }*/
             previousAgent = agent;
         }
     }
@@ -93,21 +77,4 @@ public class PathLine : MonoBehaviour
         }
         return false;
     }
-
-    /*private void DrawPath(GameObject unit, NavMeshAgent agent, LineRenderer myLineRenderer)
-    {
-        myLineRenderer.positionCount = agent.path.corners.Length;
-        myLineRenderer.SetPosition(0, unit.transform.position);
-
-        if (agent.path.corners.Length < 2)
-        {
-            return;
-        }
-
-        for (int i = 1; i < agent.path.corners.Length; i++)
-        {
-            Vector3 pointPosition = new Vector3(agent.path.corners[i].x, agent.path.corners[i].y, agent.path.corners[i].z);
-            myLineRenderer.SetPosition(i, pointPosition);
-        }
-    }*/
 }
