@@ -8,6 +8,7 @@ using UnityEngine;
 public class ChunkData
 {
     public BlockType[] blocks;
+    public List<Vector2Int> unmodifiableColumns;
     public int chunkSize = 16;
     public int chunkHeight = 100;
     public World worldReference;
@@ -22,5 +23,6 @@ public class ChunkData
         this.worldReference = world;
         this.worldPosition = worldPosition;
         blocks = new BlockType[chunkSize * chunkHeight * chunkSize];
+        unmodifiableColumns = new List<Vector2Int>();
     }
 }

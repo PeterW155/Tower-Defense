@@ -64,7 +64,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: fb303ba479010e34e9f7a74bb0af24fd, type: 2}
-  - {fileID: 2100000, guid: 405f712bcc5f51848932a8d195f877f5, type: 2}
+  - {fileID: 2100000, guid: 5a2a0af9581275b41985a7ec470218b7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113,3 +113,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showGizmo: 0
+  ChunkData:
+    blocks: 
+    unmodifiableColumns: []
+    chunkSize: 0
+    chunkHeight: 0
+    worldReference: {fileID: 0}
+    worldPosition: {x: 0, y: 0, z: 0}
+    modifiedByThePlayer: 0
