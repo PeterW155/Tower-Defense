@@ -61,16 +61,9 @@ public class TerrainEditor : MonoBehaviour
 
     public void ModifyTerrain(RaycastHit hit, BlockType blockType = BlockType.Air, bool place = false)
     {
-        Vector3Int blockPos = Vector3Int.RoundToInt( world.GetBlockPos(hit, place));
-
-        if (world.IsBlockModifiable(blockPos) && !blockModifyBlacklist.Contains(world.GetBlock(hit, place)) 
-            && (place || WorldDataHelper.GetBlock(world, blockPos + Vector3Int.up) != BlockType.Barrier))
-            world.SetBlock(hit, blockType, place);
-    }
-
-    public void ModifyModifiabilityEditor(RaycastHit hit, bool unlock)
-    {
-        world.SetModifiability(hit, unlock);
+            if (!blockModifyBlacklist.Contains(world.GetBlock(hit, place)) 
+                && (place || WorldDataHelper.GetBlock(world, Vector3Int.RoundToInt(world.GetBlockPos(hit, place)) + Vector3Int.up) != BlockType.Barrier))
+                world.SetBlock(hit, blockType, place);
     }
 
     public void EnableTerrainEditing()

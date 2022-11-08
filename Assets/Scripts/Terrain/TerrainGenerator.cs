@@ -20,7 +20,7 @@ public class TerrainGenerator : MonoBehaviour
     private List<BiomeData> biomeGeneratorsData = new List<BiomeData>();
 
 
-    public ChunkData GenerateChunkData(ChunkData data, Vector2Int mapSeedOffset, WorldData worldData)
+    public ChunkData GenerateChunkData(ChunkData data, Vector2Int mapSeedOffset)
     {
         BiomeGeneratorSelection biomeSelection = SelectBiomeGenerator(data.worldPosition, data, false);
 
@@ -30,12 +30,6 @@ public class TerrainGenerator : MonoBehaviour
             {
                 biomeSelection = SelectBiomeGenerator(new Vector3Int(data.worldPosition.x + x, 0, data.worldPosition.z + z), data);
                 data = biomeSelection.biomeGenerator.ProcessChunkColumn(data, x, z, mapSeedOffset, biomeSelection.terrainSurfaceNoise);
-                int totalMapSize = worldData.chunkSize * worldData.mapSizeInChunks;
-                if (data.worldPosition.x + x < worldData.border || data.worldPosition.x + x >= totalMapSize - worldData.border ||
-                    data.worldPosition.z + z < worldData.border || data.worldPosition.z + z >= totalMapSize - worldData.border)
-                {
-                    data.unmodifiableColumns.Add(new Vector2Int(x, z));
-                }
             }
         }
         return data;

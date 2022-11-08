@@ -20,13 +20,6 @@ public static class BlockHelper
         if (blockType == BlockType.Air || blockType == BlockType.Nothing)
             return meshData;
 
-        bool unmodifiable = false;
-
-        if (chunk.unmodifiableColumns.Contains(new Vector2Int(x, z)))
-        {
-            unmodifiable = true;
-        }
-
         foreach (Direction direction in directions)
         {
             var neighbourBlockCoordinates = new Vector3Int(x, y, z) + direction.GetVector();
@@ -35,22 +28,19 @@ public static class BlockHelper
             if (neighbourBlockType != BlockType.Nothing && BlockDataManager.blockTextureDataDictionary[neighbourBlockType].isSolid == false)
             {
 
-                if (blockType == BlockType.Barrier)
+                if (blockType == BlockType.Water)
                 {
-                    if (neighbourBlockType == BlockType.Air || neighbourBlockType == BlockType.Nothing)
-                    {
-                        if (unmodifiable)
-                            meshData.unmodifiableMesh = GetFaceDataIn(direction, chunk, x, y, z, meshData.unmodifiableMesh, blockType);
-                        else
-                            meshData = GetFaceDataIn(direction, chunk, x, y, z, meshData, blockType);
-                    }
+                    if (neighbourBlockType == BlockType.Air)
+                        meshData.waterMesh = GetFaceDataIn(direction, chunk, x, y, z, meshData.waterMesh, blockType);
+                }
+                else if (blockType == BlockType.Barrier)
+                {
+                    if (neighbourBlockType == BlockType.Air)
+                        meshData = GetFaceDataIn(direction, chunk, x, y, z, meshData, blockType);
                 }
                 else
                 {
-                    if (unmodifiable)
-                        meshData.unmodifiableMesh = GetFaceDataIn(direction, chunk, x, y, z, meshData.unmodifiableMesh, blockType);
-                    else
-                        meshData = GetFaceDataIn(direction, chunk, x, y, z, meshData, blockType);
+                    meshData = GetFaceDataIn(direction, chunk, x, y, z, meshData, blockType);
                 }
 
             }

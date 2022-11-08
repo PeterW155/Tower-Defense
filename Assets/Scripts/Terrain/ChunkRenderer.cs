@@ -41,21 +41,19 @@ public class ChunkRenderer : MonoBehaviour
 
         Mesh mesh = new Mesh();
         mesh.subMeshCount = 2;
-        mesh.vertices = meshData.vertices.Concat(meshData.unmodifiableMesh.vertices).ToArray();
+        mesh.vertices = meshData.vertices.Concat(meshData.waterMesh.vertices).ToArray();
 
         mesh.SetTriangles(meshData.triangles.ToArray(), 0);
-        mesh.SetTriangles(meshData.unmodifiableMesh.triangles.Select(val => val + meshData.vertices.Count).ToArray(), 1);
+        mesh.SetTriangles(meshData.waterMesh.triangles.Select(val => val + meshData.vertices.Count).ToArray(), 1);
 
-        mesh.uv = meshData.uv.Concat(meshData.unmodifiableMesh.uv).ToArray();
+        mesh.uv = meshData.uv.Concat(meshData.waterMesh.uv).ToArray();
         mesh.RecalculateNormals();
 
         meshFilter.sharedMesh = mesh;
 
-        //collision meshes
         Mesh collisionMesh = new Mesh();
-
-        collisionMesh.vertices = meshData.colliderVertices.Concat(meshData.unmodifiableMesh.colliderVertices).ToArray();
-        collisionMesh.triangles = meshData.colliderTriangles.Concat(meshData.unmodifiableMesh.colliderTriangles.Select(val => val + meshData.colliderVertices.Count)).ToArray();
+        collisionMesh.vertices = meshData.colliderVertices.ToArray();
+        collisionMesh.triangles = meshData.colliderTriangles.ToArray();
         collisionMesh.RecalculateNormals();
 
         meshCollider.sharedMesh = collisionMesh;

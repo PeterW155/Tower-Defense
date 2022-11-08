@@ -11,13 +11,13 @@ public class MeshData
     public List<Vector3> colliderVertices = new List<Vector3>();
     public List<int> colliderTriangles = new List<int>();
 
-    public MeshData unmodifiableMesh;
+    public MeshData waterMesh;
 
     public MeshData(bool isMainMesh)
     {
         if (isMainMesh)
         {
-            unmodifiableMesh = new MeshData(false);
+            waterMesh = new MeshData(false);
         }
     }
 
