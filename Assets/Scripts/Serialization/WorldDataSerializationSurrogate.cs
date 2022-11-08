@@ -22,6 +22,7 @@ public class WorldDataSerializationSurrogate : ISerializationSurrogate
         info.AddValue("chunkHeight", worldData.chunkHeight);
         info.AddValue("chunkSize", worldData.chunkSize);
         info.AddValue("mapSizeInChunks", worldData.mapSizeInChunks);
+        info.AddValue("border", worldData.border);
         info.AddValue("mapSeedOffsetX", worldData.mapSeedOffset.x);
         info.AddValue("mapSeedOffsetY", worldData.mapSeedOffset.y);
     }
@@ -48,6 +49,7 @@ public class WorldDataSerializationSurrogate : ISerializationSurrogate
         worldData.chunkHeight = (int)info.GetValue("chunkHeight", typeof(int));
         worldData.chunkSize = (int)info.GetValue("chunkSize", typeof(int));
         worldData.mapSizeInChunks = (int)info.GetValue("mapSizeInChunks", typeof(int));
+        worldData.border = (int)info.GetValue("border", typeof(int));
         worldData.mapSeedOffset.x = (int)info.GetValue("mapSeedOffsetX", typeof(int));
         worldData.mapSeedOffset.y = (int)info.GetValue("mapSeedOffsetY", typeof(int));
         obj = worldData;

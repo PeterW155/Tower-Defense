@@ -31,7 +31,7 @@ public class TerrainEditingInspector : Editor
         GUIStyle style = new GUIStyle();
         style.wordWrap = true;
         style.normal.textColor = Color.cyan;
-        GUILayout.Label("\"left-click\" to place block \"shift-left-click\" to remove block. Gizmos must be turned on to work", style, GUILayout.ExpandWidth(true));
+        GUILayout.Label("\"left-click\" to place block \"shift-left-click\" to remove block. \"ctrl-left-click\" to unlock a column \"ctrl-shift-left-click\" to lock a column. Gizmos must be turned on to work", style, GUILayout.ExpandWidth(true));
 
         using (new EditorGUILayout.HorizontalScope())
         {
@@ -78,9 +78,19 @@ public class TerrainEditingInspector : Editor
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                 {
                     if (Event.current.shift)
-                        terrainEditor.ModifyTerrainEditor(hit);
+                    {
+                        if (Event.current.control)
+                            terrainEditor.ModifyModifiabilityEditor(hit, false);
+                        else
+                            terrainEditor.ModifyTerrainEditor(hit);
+                    }
                     else
-                        terrainEditor.ModifyTerrainEditor(hit, terrainEditor.blockType, true);
+                    {
+                        if (Event.current.control)
+                            terrainEditor.ModifyModifiabilityEditor(hit, true);
+                        else
+                            terrainEditor.ModifyTerrainEditor(hit, terrainEditor.blockType, true);
+                    }
                 }
             }
         }

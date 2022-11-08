@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Networking;
 
 [ExecuteAlways]
 public class World : MonoBehaviour
@@ -21,11 +20,11 @@ public class World : MonoBehaviour
 
     public int mapSizeInChunks = 6;
     public int chunkSize = 16, chunkHeight = 100;
+    public int border = 12;
     [Space]
     public BlockDataManager blockDataManager;
     [Space]
     public GameObject chunkPrefab;
-    public GameObject worldPrefab;
     public WorldRenderer worldRenderer;
     [Space]
     public TerrainGenerator terrainGenerator;
@@ -98,6 +97,7 @@ public class World : MonoBehaviour
                 chunkHeight = this.chunkHeight,
                 chunkSize = this.chunkSize,
                 mapSizeInChunks = this.mapSizeInChunks,
+                border = this.border,
                 mapSeedOffset = this.mapSeedOffset,
                 chunkDataDictionary = new Dictionary<Vector3Int, ChunkData>(),
                 chunkDictionary = new Dictionary<Vector3Int, ChunkRenderer>()
@@ -205,7 +205,7 @@ public class World : MonoBehaviour
                     taskTokenSource.Token.ThrowIfCancellationRequested();
                 }
                 ChunkData data = new ChunkData(chunkSize, chunkHeight, this, pos);
-                ChunkData newData = terrainGenerator.GenerateChunkData(data, mapSeedOffset);
+                ChunkData newData = terrainGenerator.GenerateChunkData(data, mapSeedOffset, worldData);
                 dictionary.TryAdd(pos, newData);
             }
             return dictionary;
@@ -256,6 +256,26 @@ public class World : MonoBehaviour
 
     }
 
+    internal bool IsBlockModifiable(Vector3Int blockWorldPos)
+    {
+        Vector3Int pos = Chunk.ChunkPositionFromBlockCoords(this, blockWorldPos.x, blockWorldPos.y, blockWorldPos.z);
+        ChunkData containerChunk = null;
+
+        worldData.chunkDataDictionary.TryGetValue(pos, out containerChunk);
+
+        if (containerChunk != null)
+        {
+            Vector3Int blockPos = Chunk.GetBlockInChunkCoordinates(containerChunk, new Vector3Int(blockWorldPos.x, blockWorldPos.y, blockWorldPos.z));
+
+            if (containerChunk.unmodifiableColumns.Contains(new Vector2Int(blockPos.x, blockPos.z))) //check if column is unmodifiable
+                return false;
+            else
+                return true;
+        }
+        else
+            return false;
+    }
+
     internal BlockType GetBlock(RaycastHit hit, bool place = false)
     {
         ChunkRenderer chunk = hit.collider.GetComponent<ChunkRenderer>();
@@ -277,8 +297,11 @@ public class World : MonoBehaviour
             {
                 for (int z = 0; (size.z > 0 ? z <= size.z : z >= size.z); z += (size.z > 0 ? 1 : -1))
                 {
+                    if (!IsBlockModifiable(new Vector3Int(corner1.x + x, corner1.y + y, corner1.z + z))) //check if column is unmodifiable
+                        return false;
+
                     BlockType block = GetBlockFromChunkCoordinates(null, corner1.x + x, corner1.y + y, corner1.z + z);
-                    if (checkEmpty? //whether to be checking for emptiness or filled
+                    if (checkEmpty ? //whether to be checking for emptiness or filled
                         block != BlockType.Nothing && block != BlockType.Air : //if the block is anything but empty
                         block == BlockType.Nothing || block == BlockType.Air || block == BlockType.Barrier)  //if the block is empty
                         return false;
@@ -290,6 +313,8 @@ public class World : MonoBehaviour
 
     internal bool SetBlock(RaycastHit hit, BlockType blockType, bool place = false)
     {
+        HashSet<ChunkRenderer> updateChunks = new HashSet<ChunkRenderer>();
+
         Vector3Int pos = Vector3Int.RoundToInt(GetBlockPos(hit, place));
 
         Vector3Int chunkPos = Chunk.ChunkPositionFromBlockCoords(this, pos.x, pos.y, pos.z);
@@ -300,6 +325,7 @@ public class World : MonoBehaviour
 
         WorldDataHelper.SetBlock(chunk.ChunkData.worldReference, pos, blockType);
         chunk.ModifiedByThePlayer = true;
+        updateChunks.Add(chunk);
 
         if (Chunk.IsOnEdge(chunk.ChunkData, pos))
         {
@@ -311,13 +337,14 @@ public class World : MonoBehaviour
                 {
                     ChunkRenderer chunkToUpdate = WorldDataHelper.GetChunk(neighbourData.worldReference, neighbourData.worldPosition);
                     if (chunkToUpdate != null)
-                        chunkToUpdate.UpdateChunk();
+                        updateChunks.Add(chunkToUpdate);
                 }
             }
 
         }
 
-        chunk.UpdateChunk();
+        foreach (ChunkRenderer cr in updateChunks)
+            cr.UpdateChunk();
         if (ChunkUpdated != null)
             ChunkUpdated();
         return true;
@@ -370,6 +397,36 @@ public class World : MonoBehaviour
         if (ChunkUpdated != null)
             ChunkUpdated();
         return true;
+    }
+
+    public void SetModifiability(RaycastHit hit, bool unlock)
+    {
+        Vector3Int blockWorldPos = Vector3Int.RoundToInt(GetBlockPos(hit));
+
+        Vector3Int chunkPos = Chunk.ChunkPositionFromBlockCoords(this, blockWorldPos.x, blockWorldPos.y, blockWorldPos.z);
+
+        ChunkRenderer chunk = WorldDataHelper.GetChunk(this, chunkPos);
+
+        Vector3Int blockPos = Chunk.GetBlockInChunkCoordinates(chunk.ChunkData, new Vector3Int(blockWorldPos.x, blockWorldPos.y, blockWorldPos.z));
+
+        if (chunk != null)
+        {
+            Vector2Int columnPos = new Vector2Int(blockPos.x, blockPos.z);
+            if (unlock && chunk.ChunkData.unmodifiableColumns.Contains(columnPos))
+            {
+                chunk.ChunkData.unmodifiableColumns.Remove(columnPos);
+                chunk.UpdateChunk();
+                if (ChunkUpdated != null)
+                    ChunkUpdated();
+            }
+            else if (!unlock)
+            {
+                chunk.ChunkData.unmodifiableColumns.Add(columnPos);
+                chunk.UpdateChunk();
+                if (ChunkUpdated != null)
+                    ChunkUpdated();
+            }
+        }
     }
 
     public Vector3 GetBlockPos(RaycastHit hit, bool place = false, int[] baseWidthLength = null )
@@ -576,6 +633,7 @@ public class World : MonoBehaviour
                 chunkHeight = worldDataTemp.chunkHeight,
                 chunkSize = worldDataTemp.chunkSize,
                 mapSizeInChunks = worldDataTemp.mapSizeInChunks,
+                border = worldDataTemp.border,
                 mapSeedOffset = worldDataTemp.mapSeedOffset,
                 chunkDataDictionary = new Dictionary<Vector3Int, ChunkData>(worldDataTemp.chunkDataDictionary),
                 chunkDictionary = new Dictionary<Vector3Int, ChunkRenderer>(worldDataTemp.chunkDictionary)
@@ -616,5 +674,6 @@ public struct WorldData
     public int chunkSize;
     public int chunkHeight;
     public int mapSizeInChunks;
+    public int border;
     public Vector2Int mapSeedOffset;
 }
