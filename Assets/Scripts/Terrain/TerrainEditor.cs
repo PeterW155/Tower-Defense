@@ -108,10 +108,10 @@ public class TerrainEditor : MonoBehaviour
                         pos = world.GetBlockPos(hit);
                         removeProxy.transform.position = pos;
 
-                        if (cost <= PlayerStats.Instance.money && _click.WasPerformedThisFrame()) //removed
+                        if (_click.WasPerformedThisFrame()) //removed
                         {
-                            ModifyTerrain(hit);
-                            PlayerStats.Instance.money -= cost; //update money
+                            StartCoroutine(PlacingTerrain(hit, BlockType.Air));
+                            
                         }
                     }
                     else
@@ -122,10 +122,9 @@ public class TerrainEditor : MonoBehaviour
                         pos = world.GetBlockPos(hit, true);
                         placeProxy.transform.position = pos;
 
-                        if (cost <= PlayerStats.Instance.money && _click.WasPerformedThisFrame()) //placed
+                        if (_click.WasPerformedThisFrame()) //placed
                         {
-                            ModifyTerrain(hit, playModeBlockType, true);
-                            PlayerStats.Instance.money -= cost; //update money
+                            StartCoroutine(PlacingTerrain(hit, playModeBlockType, true));
                         }
                     }
                 }
@@ -137,6 +136,31 @@ public class TerrainEditor : MonoBehaviour
 
             }
             yield return null;
+        }
+    }
+
+    private IEnumerator PlacingTerrain(RaycastHit hit, BlockType blockType, bool place = false)
+    {
+        //fill with dummy
+        BlockType origional = world.GetBlock(hit, place);
+        ModifyTerrain(hit, BlockType.Barrier, place);
+        yield return 1;
+
+        //check if path valid
+        bool pathValid = true;
+
+        //spawn tower
+        if (pathValid && cost <= PlayerStats.Instance.money)
+        {
+            ModifyTerrainEditor(hit, blockType, place);
+            Debug.Log(blockType);
+
+            //remove money from player
+            PlayerStats.Instance.money -= cost; //update money
+        }
+        else //otherwise remove barriers
+        {
+            ModifyTerrainEditor(hit, origional, place);
         }
     }
 }

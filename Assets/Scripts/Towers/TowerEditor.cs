@@ -13,6 +13,7 @@ public class TowerEditor : MonoBehaviour
     private LayerMask towerMask;
     [Space]
     public Transform towerParent;
+    public Transform towerDummyParent;
 
     [Space]
     public Material placeMaterial;
@@ -175,11 +176,8 @@ public class TowerEditor : MonoBehaviour
                                 materialActive = true;
                             }
 
-                            if (_click.WasPerformedThisFrame() && m_td.cost <= PlayerStats.Instance.money) //tower placed
+                            if (_click.WasPerformedThisFrame()) //tower placed
                             {
-                                //remove money from player
-                                PlayerStats.Instance.money -= m_td.cost;
-
                                 StartCoroutine(PlacingTower(selectedTower, corner1, corner2, pos));
                             }
                         }
@@ -203,27 +201,34 @@ public class TowerEditor : MonoBehaviour
 
     private IEnumerator PlacingTower(GameObject selectedTower, Vector3Int corner1, Vector3Int corner2, Vector3 pos)
     {
-        //fill with barriers
-        world.SetBlockVolume(corner1, corner2, BlockType.Barrier);
-        yield return 0;
+        //instantiate tower
+        GameObject newTower = Instantiate(selectedTower, pos, Quaternion.identity, towerDummyParent);
+        TowerData n_td = newTower.GetComponent<TowerData>();
+        n_td.main.SetActive(false);
+        n_td.proxy.SetActive(false);
+        yield return 1;
 
         //check if path valid
         bool pathValid = true;
 
         //spawn tower
-        if (pathValid)
+        if (pathValid && n_td.cost <= PlayerStats.Instance.money)
         {
-            GameObject newTower = Instantiate(selectedTower, pos, Quaternion.identity, towerParent);
-            TowerData n_td = newTower.GetComponent<TowerData>();
+            world.SetBlockVolume(corner1, corner2, BlockType.Barrier); //spawn barriers
+
+            newTower.transform.SetParent(towerParent);
             tdList.Add(n_td);
             foreach (Renderer r in n_td.GetComponentsInChildren<Renderer>())
                 r.material = removeMaterial;
             n_td.main.SetActive(true);
             n_td.proxy.SetActive(false);
+
+            //remove money from player
+            PlayerStats.Instance.money -= n_td.cost;
         }
-        else //otherwise remove barriers
+        else //otherwise remove tower
         {
-            world.SetBlockVolume(corner1, corner2, BlockType.Air);
+            Destroy(newTower);
         }
     }
 }
