@@ -180,15 +180,7 @@ public class TowerEditor : MonoBehaviour
                                 //remove money from player
                                 PlayerStats.Instance.money -= m_td.cost;
 
-                                GameObject newTower = Instantiate(selectedTower, pos, Quaternion.identity, towerParent);
-                                TowerData n_td = newTower.GetComponent<TowerData>();
-                                tdList.Add(n_td);
-                                foreach (Renderer r in n_td.GetComponentsInChildren<Renderer>())
-                                    r.material = removeMaterial;
-                                n_td.main.SetActive(true);
-                                n_td.proxy.SetActive(false);
-                                //fill with barriers
-                                world.SetBlockVolume(corner1, corner2, BlockType.Barrier);
+                                StartCoroutine(PlacingTower(selectedTower, corner1, corner2, pos));
                             }
                         }
                         else //if space is invalid show red proxy material
@@ -206,6 +198,32 @@ public class TowerEditor : MonoBehaviour
                 }
             }
             yield return null;
+        }
+    }
+
+    private IEnumerator PlacingTower(GameObject selectedTower, Vector3Int corner1, Vector3Int corner2, Vector3 pos)
+    {
+        //fill with barriers
+        world.SetBlockVolume(corner1, corner2, BlockType.Barrier);
+        yield return 0;
+
+        //check if path valid
+        bool pathValid = true;
+
+        //spawn tower
+        if (pathValid)
+        {
+            GameObject newTower = Instantiate(selectedTower, pos, Quaternion.identity, towerParent);
+            TowerData n_td = newTower.GetComponent<TowerData>();
+            tdList.Add(n_td);
+            foreach (Renderer r in n_td.GetComponentsInChildren<Renderer>())
+                r.material = removeMaterial;
+            n_td.main.SetActive(true);
+            n_td.proxy.SetActive(false);
+        }
+        else //otherwise remove barriers
+        {
+            world.SetBlockVolume(corner1, corner2, BlockType.Air);
         }
     }
 }
