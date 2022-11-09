@@ -44,7 +44,7 @@ public class World : MonoBehaviour
     {
         #if UNITY_EDITOR
         EditorApplication.playModeStateChanged += SaveTemp;
-        //if (!EditorApplication.isPlayingOrWillChangePlaymode)
+        if (!EditorApplication.isPlayingOrWillChangePlaymode)
             LoadWorld();
         #endif
     }
@@ -58,7 +58,7 @@ public class World : MonoBehaviour
 
     private void Awake()
     {
-        if (!Application.isEditor)
+        if (Application.isPlaying)
         {
             LoadWorld();
         }
