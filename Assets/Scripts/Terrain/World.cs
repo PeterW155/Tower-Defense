@@ -58,7 +58,7 @@ public class World : MonoBehaviour
 
     private void Awake()
     {
-        if (!Application.isEditor)
+        if (Application.isPlaying)
         {
             LoadWorld();
         }
