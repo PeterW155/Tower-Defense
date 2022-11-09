@@ -216,8 +216,9 @@ public class TowerEditor : MonoBehaviour
             world.SetBlockVolume(corner1, corner2, BlockType.Barrier); //spawn barriers
 
             tdList.Add(n_td);
-            foreach (Renderer r in n_td.GetComponentsInChildren<Renderer>())
+            foreach (Renderer r in n_td.proxy.GetComponentsInChildren<Renderer>(true))
                 r.material = removeMaterial;
+            Debug.Log("placed");
             n_td.main.SetActive(true);
             n_td.proxy.SetActive(false);
 

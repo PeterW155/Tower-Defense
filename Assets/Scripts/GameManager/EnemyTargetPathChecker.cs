@@ -15,16 +15,6 @@ public class EnemyTargetPathChecker : MonoBehaviour
     public static EnemyTargetPathChecker Instance { get { return _instance; } }
     private void Awake()
     {
-        myLineRenderer = enemyTarget.GetComponent<LineRenderer>();
-        pathToDraw = new NavMeshPath();
-        agent = enemyTarget.GetComponent<NavMeshAgent>();
-
-        myLineRenderer.startWidth = 0.15f;
-        myLineRenderer.endWidth = 0.15f;
-        myLineRenderer.positionCount = 0;
-        
-        DrawPath();
-
         // If an instance of this already exists and it isn't this one
         if (_instance != null && _instance != this)
         {
@@ -36,13 +26,23 @@ public class EnemyTargetPathChecker : MonoBehaviour
             // Make this the instance
             _instance = this;
         }
+
+        myLineRenderer = enemyTarget.GetComponent<LineRenderer>();
+        pathToDraw = new NavMeshPath();
+        agent = enemyTarget.GetComponent<NavMeshAgent>();
+
+        myLineRenderer.startWidth = 0.15f;
+        myLineRenderer.endWidth = 0.15f;
+        myLineRenderer.positionCount = 0;
+        
+        DrawPath();
     }
 
     public bool CheckPathFromTargetToEnemy()
     {
         //var enemyUnits = GameObject.FindGameObjectsWithTag("Enemy");
         NavMeshPath path = new NavMeshPath();
-        bool validPath = NavMesh.CalculatePath(enemyTarget.transform.position, enemySpawnPoint.transform.position, 1000, path);
+        bool validPath = NavMesh.CalculatePath(enemyTarget.transform.position, enemySpawnPoint.transform.position, NavMesh.AllAreas, path);
         
         //Debug.Log("Calculate Path: " + NavMesh.CalculatePath(enemyTarget.transform.position, enemySpawnPoint.transform.position, NavMesh.AllAreas, path));
         if (validPath && path.status == NavMeshPathStatus.PathComplete)
@@ -68,36 +68,7 @@ public class EnemyTargetPathChecker : MonoBehaviour
         return hasAtLeastOnePath;
     }
 
-    public bool CheckPathFromTargetToEnemyInDummy()
-    {
-        //var enemyUnits = GameObject.FindGameObjectsWithTag("Enemy");
-        NavMeshPath path = new NavMeshPath();
-        bool validPath = NavMesh.CalculatePath(enemyTarget.transform.position, enemySpawnPoint.transform.position, 0001, path);
-        
-        //Debug.Log("Calculate Path: " + NavMesh.CalculatePath(enemyTarget.transform.position, enemySpawnPoint.transform.position, NavMesh.AllAreas, path));
-        if (validPath && path.status == NavMeshPathStatus.PathComplete)
-        {
-            hasAtLeastOnePath = true;
-            Debug.Log("Is there a path? " + hasAtLeastOnePath);
-        }
-        else
-        {
-            hasAtLeastOnePath = false;
-            Debug.Log("Is there a path? " + hasAtLeastOnePath);
-        }
-        
-        /*foreach (GameObject enemyUnit in enemyUnits)
-        {
-            if (NavMesh.CalculatePath(enemyTarget.transform.position, enemyUnit.transform.position, NavMesh.AllAreas, new NavMeshPath()))
-            {
-                hasAtLeastOnePath = true;
-                break;
-            }
-        }*/
-        DrawPath();
-        return hasAtLeastOnePath;
-    }
-
+    
     /*public static bool EnemyHasAtLeastOnePath()
     {
         return hasAtLeastOnePath;
