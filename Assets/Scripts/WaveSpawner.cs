@@ -10,6 +10,9 @@ public class WaveSpawner : MonoBehaviour
     public Transform fastEnemyPrefab;
     public Transform spawnPoint;
     public GameObject text;
+    public GameObject uiButtons1;
+    public GameObject uiButtons2;
+    public GameObject uiButtons3;
 
     //public Text waveCountdownText;
 
@@ -56,12 +59,18 @@ public class WaveSpawner : MonoBehaviour
             gameObject.GetComponent<Button>().enabled = false;
             gameObject.GetComponent<Image>().enabled = false;
             text.SetActive(false);
+            uiButtons1.SetActive(false);
+            uiButtons2.SetActive(false);
+            uiButtons3.SetActive(false);
         }
         else
         {
             gameObject.GetComponent<Button>().enabled = true;
             gameObject.GetComponent<Image>().enabled = true;
             text.SetActive(true);
+            uiButtons1.SetActive(true);
+            uiButtons2.SetActive(true);
+            uiButtons3.SetActive(true);
         }
     }
 

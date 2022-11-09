@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class UpdateWaveNum : MonoBehaviour
+public class UpdateWaveCounter : MonoBehaviour
 {
 
     // Update is called once per frame
