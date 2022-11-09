@@ -10,10 +10,14 @@ public class CameraHandler : MonoBehaviour
 {
     public Camera cineCamera;
     public Transform cameraParent;
-    public Transform cameraRotate;
+    public Transform cameraYRotate;
+    public Transform cameraXRotate;
     public Transform cameraZoom;
     [Space]
     public bool lockMouseWhileRotating = true;
+    public bool lockLookX = true;
+    [Tooltip("Only necessary if lock look X is false.")]
+    public Vector2 minMaxLookX;
     [Range(1, 5)]
     public float movementSensetivity = 2.5f;
     [Range(1, 50)]
@@ -55,7 +59,7 @@ public class CameraHandler : MonoBehaviour
     private InputAction _deactivate;
 
     private Rigidbody _rigidbodyParent;
-    private Rigidbody _rigidbodyRotate;
+    private Rigidbody _rigidbodyYRotate;
     private Vector2 warpPosition;
     private float zoomPosZ;
     private float zoomTarget;
@@ -94,9 +98,9 @@ public class CameraHandler : MonoBehaviour
 
         //set variables
         if (!cameraParent.TryGetComponent<Rigidbody>(out _rigidbodyParent))
-            throw new Exception("Camera parent missing rigidbody.");
-        if (!cameraRotate.TryGetComponent<Rigidbody>(out _rigidbodyRotate))
-            throw new Exception("Camera rotate missing rigidbody.");
+            throw new Exception("Camera parent missing parent rigidbody.");
+        if (!cameraYRotate.TryGetComponent<Rigidbody>(out _rigidbodyYRotate))
+            throw new Exception("Camera rotate missing y rotate rigidbody.");
 
         cameraAltActive = false;
         zoomPosZ = cameraZoom.localPosition.z;
@@ -117,7 +121,7 @@ public class CameraHandler : MonoBehaviour
         ControlChange(null);
 
         //other stuff
-        _rigidbodyRotate.maxAngularVelocity = 100;
+        _rigidbodyYRotate.maxAngularVelocity = 100;
     }
 
     private void OnEnable()
@@ -191,6 +195,20 @@ public class CameraHandler : MonoBehaviour
         lookAlt = _lookAlt.ReadValue<float>();
         zoom = _zoom.ReadValue<Vector2>().normalized.y;
         
+        //look X (optional)
+        if (!lockLookX && (_rotateAlt.IsPressed() || _rotate.IsPressed()))
+        {
+            cameraXRotate.localEulerAngles += new Vector3(10f * -look.y * rotationSensetivity * Time.unscaledDeltaTime, 0, 0);
+
+            Debug.Log(cameraXRotate.localEulerAngles.x);
+            //check if camera is near x limits
+            if (cameraXRotate.localEulerAngles.x > minMaxLookX.y && cameraXRotate.localEulerAngles.x < minMaxLookX.x)
+            {
+                Debug.Log("too high");
+                float target = Mathf.Abs(minMaxLookX.y - cameraXRotate.localEulerAngles.x) > Mathf.Abs(minMaxLookX.x - cameraXRotate.localEulerAngles.x) ? minMaxLookX.x : minMaxLookX.y;
+                cameraXRotate.localEulerAngles = new Vector3(target, 0, 0);
+            }
+        }
 
         //camera zoom alt
         if (_zoomAlt.IsPressed() && !_rotateAlt.IsPressed()) //if zoom is pressed and rotate isn't so that both aren't active at once
@@ -201,7 +219,7 @@ public class CameraHandler : MonoBehaviour
             zoomTime = 0;
             zoomPosZ = cameraZoom.localPosition.z;
             Vector2 lookMinMax = new Vector2(look.x > look.y ? look.y : look.x, look.x > look.y ? look.x : look.y);
-            zoomTarget = Mathf.Clamp(zoomTarget + Mathf.Clamp(look.x + look.y, lookMinMax.x, lookMinMax.y) * zoomSensetivity * 2f * Time.deltaTime, -zoomMinMax.y, -zoomMinMax.x);
+            zoomTarget = Mathf.Clamp(zoomTarget + Mathf.Clamp(look.x + look.y, lookMinMax.x, lookMinMax.y) * zoomSensetivity * 2f * Time.unscaledDeltaTime, -zoomMinMax.y, -zoomMinMax.x);
         }
         //camera zoom
         else if (!_zoomAlt.IsPressed() && zoom != 0)
@@ -211,7 +229,7 @@ public class CameraHandler : MonoBehaviour
             //float zoomAmount = Time.deltaTime * 40f * zoomSensetivity; //this is for scroll wheel
             //zoomTarget = Mathf.Clamp(zoomTarget + (look.y > 0 ? zoomAmount : -zoomAmount), -zoomMinMax.y, -zoomMinMax.x);
             float valueAdjustment = playerInput.currentControlScheme == "Controller" ? 10f : 120f;
-            zoomTarget = Mathf.Clamp(zoomTarget + zoom * zoomSensetivity * valueAdjustment * Time.deltaTime, -zoomMinMax.y, -zoomMinMax.x);
+            zoomTarget = Mathf.Clamp(zoomTarget + zoom * zoomSensetivity * valueAdjustment * Time.unscaledDeltaTime, -zoomMinMax.y, -zoomMinMax.x);
         }
         if (zoomTime < (5 / zoomDrag))
         {
@@ -229,7 +247,7 @@ public class CameraHandler : MonoBehaviour
     {
         //camera movement
         Vector2 p_move = move.normalized;
-        Vector3 rotateOffset = cameraRotate.TransformDirection(new Vector3(p_move.x, 0, p_move.y));
+        Vector3 rotateOffset = cameraYRotate.TransformDirection(new Vector3(p_move.x, 0, p_move.y));
         p_move = new Vector2(rotateOffset.x, rotateOffset.z).normalized;
 
         if (p_move.magnitude > 0)
@@ -250,24 +268,22 @@ public class CameraHandler : MonoBehaviour
 
             if (look.magnitude > 0)
             {
-                //_rigidbodyRotate.AddRelativeTorque(new Vector3(0, 0.035f * look.x * rotationSensetivity, 0), ForceMode.Impulse);
-                //_rigidbodyRotate.angularVelocity *= defaultDrag;
-                _rigidbodyRotate.angularVelocity = new Vector3(0, 0.21f * look.x * rotationSensetivity, 0);
+                _rigidbodyYRotate.angularVelocity = new Vector3(0, 0.21f * look.x * rotationSensetivity, 0); //this is main horizontal rotate
             }
             else
             {
-                _rigidbodyRotate.angularVelocity *= (1f - (rotationDrag / 100));
+                _rigidbodyYRotate.angularVelocity *= (1f - (rotationDrag / 100));
             }
         }
         else if (lookAlt != 0)
         {
-            _rigidbodyRotate.AddRelativeTorque(new Vector3(0, 0.06f * lookAlt * rotationSensetivity, 0), ForceMode.Impulse);
-            _rigidbodyRotate.angularVelocity *= defaultDrag;
+            _rigidbodyYRotate.AddRelativeTorque(new Vector3(0, 0.06f * lookAlt * rotationSensetivity, 0), ForceMode.Impulse);
+            _rigidbodyYRotate.angularVelocity *= defaultDrag;
         }
         //rotation drag
         else
         {
-            _rigidbodyRotate.angularVelocity *= (1f - (rotationDrag / 100));
+            _rigidbodyYRotate.angularVelocity *= (1f - (rotationDrag / 100));
         }
     }
 }
