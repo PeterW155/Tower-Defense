@@ -15,7 +15,7 @@ public class MoveEnemy : MonoBehaviour
 
     //public Transform player;
     public Transform targetObject;
-    [SerializeField] private GameObject targetMarkerPrefab;
+    //[SerializeField] private GameObject targetMarkerPrefab;
     [SerializeField] private Transform visualObjectsParent;
 
     public LayerMask whatIsGround, whatIsPlayer;
@@ -61,7 +61,7 @@ public class MoveEnemy : MonoBehaviour
         }
         else if (agent.hasPath)
         {
-            DrawPath();
+            //DrawPath();
         }
     }
 
@@ -84,9 +84,9 @@ public class MoveEnemy : MonoBehaviour
 
     private void MoveToTarget()
     {
-        targetMarkerPrefab.transform.SetParent(visualObjectsParent);
-        targetMarkerPrefab.SetActive(true);
-        targetMarkerPrefab.transform.position = targetObject.transform.position;
+        //targetMarkerPrefab.transform.SetParent(visualObjectsParent);
+        //targetMarkerPrefab.SetActive(true);
+        //targetMarkerPrefab.transform.position = targetObject.transform.position;
         agent.SetDestination(targetObject.position);
     }
 

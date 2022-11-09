@@ -15,7 +15,7 @@ public class PathLine : MonoBehaviour
     {
         for (; ;)
         {
-            Debug.Log("Running PathLine.cs");
+            //Debug.Log("Running PathLine.cs");
             ShowOnlyOneEnemyPathLine();
             
             yield return new WaitForSeconds(0.1f);

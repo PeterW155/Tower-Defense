@@ -118,7 +118,6 @@ MonoBehaviour:
   destinations: []
   agent: {fileID: 70573509271531615}
   targetObject: {fileID: 4793479472201670347, guid: cb184f72956faa2438de7a2fa718cbd1, type: 3}
-  targetMarkerPrefab: {fileID: 4262262127803791362, guid: 3650f177d0f0f4b4a981037c04f6c631, type: 3}
   visualObjectsParent: {fileID: 4388565426445008922, guid: c6202901c5dd8e847a9c630a3e0c6c68, type: 3}
   whatIsGround:
     serializedVersion: 2
@@ -156,7 +155,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 7
   m_ObstacleAvoidanceType: 4
 --- !u!114 &4795316750887650801
 MonoBehaviour:

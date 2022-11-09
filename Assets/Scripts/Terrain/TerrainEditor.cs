@@ -108,7 +108,7 @@ public class TerrainEditor : MonoBehaviour
                         pos = world.GetBlockPos(hit);
                         removeProxy.transform.position = pos;
 
-                        if (_click.WasPerformedThisFrame()) //removed
+                        if (_click.WasPerformedThisFrame() && cost <= PlayerStats.Instance.money) //removed
                         {
                             StartCoroutine(PlacingTerrain(hit, BlockType.Air));
                             
@@ -122,7 +122,7 @@ public class TerrainEditor : MonoBehaviour
                         pos = world.GetBlockPos(hit, true);
                         placeProxy.transform.position = pos;
 
-                        if (_click.WasPerformedThisFrame()) //placed
+                        if (_click.WasPerformedThisFrame() && cost <= PlayerStats.Instance.money) //placed
                         {
                             StartCoroutine(PlacingTerrain(hit, playModeBlockType, true));
                         }
@@ -147,7 +147,7 @@ public class TerrainEditor : MonoBehaviour
         yield return 1;
 
         //check if path valid
-        bool pathValid = true;
+        bool pathValid = EnemyTargetPathChecker.Instance.CheckPathFromTargetToEnemy();
 
         //spawn tower
         if (pathValid && cost <= PlayerStats.Instance.money)
