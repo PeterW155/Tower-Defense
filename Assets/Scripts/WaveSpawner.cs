@@ -9,15 +9,17 @@ public class WaveSpawner : MonoBehaviour
     public Transform enemyPrefab;
     public Transform fastEnemyPrefab;
     public Transform spawnPoint;
-    public Text waveCountdownText;
+    public GameObject text;
 
-    public float intermissionTime = 5.5f;
-    private float countdown = 2f;
+    //public Text waveCountdownText;
+
+    //public float intermissionTime = 5.5f;
+    //private float countdown = 2f;
     private int waveIndex = 0;
-    private int waveNum = 1;
+    private static int waveNum = 1;
 
     // Update is called once per frame
-    void Update()
+    /*void Update()
     {
 
         if (countdown <= 0)
@@ -44,13 +46,54 @@ public class WaveSpawner : MonoBehaviour
 
         waveCountdownText.text = string.Format("{0:00.00}", countdown); ;
     }
+    */
+
+    private void Update()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        if (enemies.Length >= 1)
+        {
+            gameObject.GetComponent<Button>().enabled = false;
+            gameObject.GetComponent<Image>().enabled = false;
+            text.SetActive(false);
+        }
+        else
+        {
+            gameObject.GetComponent<Button>().enabled = true;
+            gameObject.GetComponent<Image>().enabled = true;
+            text.SetActive(true);
+        }
+    }
+
+    public static string getWaveNum()
+    {
+        return string.Format("{0}", waveNum - 1);
+    }
+
+    public void SpawnNextWave()
+    {
+        //Check for any MarketBuildings
+        MarketBuilding[] markets = FindObjectsOfType(typeof(MarketBuilding)) as MarketBuilding[];
+        foreach (MarketBuilding item in markets)
+        {
+            item.PayPlayer(item.buildingLevel);
+        }
+
+        StartCoroutine(spawnWave());
+        if (waveNum > 3)
+        {
+            StartCoroutine(spawnWaveFast());
+        }
+
+        waveNum++;
+    }
 
     IEnumerator spawnWave()
     {
         waveIndex++;
         PlayerStats.Instance.rounds++;
 
-        for(int i = 0; i <waveIndex; i++)
+        for (int i = 0; i < waveIndex; i++)
         {
             spawnEnemy(enemyPrefab);
             yield return new WaitForSeconds(0.5f);
