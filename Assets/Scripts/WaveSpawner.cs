@@ -8,6 +8,7 @@ public class WaveSpawner : MonoBehaviour
 
     public Transform enemyPrefab;
     public Transform fastEnemyPrefab;
+    public Transform slowEnemyPrefab;
     public Transform spawnPoint;
     public GameObject text;
     public GameObject uiButtons1;
@@ -93,6 +94,10 @@ public class WaveSpawner : MonoBehaviour
         {
             StartCoroutine(spawnWaveFast());
         }
+        if (waveNum > 5)
+        {
+            StartCoroutine(spawnWaveSlow());
+        }
 
         waveNum++;
     }
@@ -116,6 +121,16 @@ public class WaveSpawner : MonoBehaviour
         for (int i = 0; i < waveIndex / 2; i++)
         {
             spawnEnemy(fastEnemyPrefab);
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+    IEnumerator spawnWaveSlow()
+    {
+
+        for (int i = 0; i < waveIndex / 3; i++)
+        {
+            spawnEnemy(slowEnemyPrefab);
             yield return new WaitForSeconds(0.5f);
         }
     }
