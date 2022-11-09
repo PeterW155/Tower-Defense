@@ -44,7 +44,7 @@ public class World : MonoBehaviour
     {
         #if UNITY_EDITOR
         EditorApplication.playModeStateChanged += SaveTemp;
-        if (!EditorApplication.isPlayingOrWillChangePlaymode)
+        //if (!EditorApplication.isPlayingOrWillChangePlaymode)
             LoadWorld();
         #endif
     }
