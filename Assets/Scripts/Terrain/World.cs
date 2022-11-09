@@ -39,12 +39,11 @@ public class World : MonoBehaviour
 
     private Coroutine editorUpdate;
 
-
     private void OnEnable()
     {
         #if UNITY_EDITOR
         EditorApplication.playModeStateChanged += SaveTemp;
-        if (!EditorApplication.isPlayingOrWillChangePlaymode)
+        if (!EditorApplication.isPlayingOrWillChangePlaymode) //this will load the editor for non-play mode
             LoadWorld();
         #endif
     }
@@ -60,9 +59,10 @@ public class World : MonoBehaviour
     {
         if (Application.isPlaying)
         {
-            LoadWorld();
+            LoadWorld(); //called during build play
         }
     }
+
     #if UNITY_EDITOR
     private void SaveTemp(PlayModeStateChange change)
     {
@@ -72,12 +72,11 @@ public class World : MonoBehaviour
                 SaveWorld(false, true);
                 break;
             case PlayModeStateChange.EnteredPlayMode:
-                LoadWorld(false, true);
+                //LoadWorld(false, true); //this loads the editor version of play mode (only called if this scene is first)
                 break;
         }
     }
     #endif
-
 
     public async void GenerateWorld(bool loadOnly = false)
     {

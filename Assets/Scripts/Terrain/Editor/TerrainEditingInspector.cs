@@ -82,14 +82,14 @@ public class TerrainEditingInspector : Editor
                         if (Event.current.control)
                             terrainEditor.ModifyModifiabilityEditor(hit, false);
                         else
-                            terrainEditor.ModifyTerrainEditor(hit);
+                            terrainEditor.ModifyTerrain(hit);
                     }
                     else
                     {
                         if (Event.current.control)
                             terrainEditor.ModifyModifiabilityEditor(hit, true);
                         else
-                            terrainEditor.ModifyTerrainEditor(hit, terrainEditor.blockType, true);
+                            terrainEditor.ModifyTerrain(hit, terrainEditor.blockType, true);
                     }
                 }
             }

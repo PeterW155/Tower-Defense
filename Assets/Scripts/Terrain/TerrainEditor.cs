@@ -53,18 +53,9 @@ public class TerrainEditor : MonoBehaviour
         chd = FindObjectOfType<CanvasHitDetector>();
     }
 
-    public void ModifyTerrainEditor(RaycastHit hit, BlockType blockType = BlockType.Air, bool place = false)
-    {
-        if (world.GetBlock(hit, place) != BlockType.Bedrock)
-            world.SetBlock(hit, blockType, place);
-    }
-
     public void ModifyTerrain(RaycastHit hit, BlockType blockType = BlockType.Air, bool place = false)
     {
-        Vector3Int blockPos = Vector3Int.RoundToInt( world.GetBlockPos(hit, place));
-
-        if (world.IsBlockModifiable(blockPos) && !blockModifyBlacklist.Contains(world.GetBlock(hit, place)) 
-            && (place || WorldDataHelper.GetBlock(world, blockPos + Vector3Int.up) != BlockType.Barrier))
+        if (world.GetBlock(hit, place) != BlockType.Bedrock)
             world.SetBlock(hit, blockType, place);
     }
 
@@ -143,24 +134,30 @@ public class TerrainEditor : MonoBehaviour
     {
         //fill with dummy
         BlockType origional = world.GetBlock(hit, place);
-        ModifyTerrain(hit, BlockType.Barrier, place);
-        yield return 1;
+        Vector3Int blockPos = Vector3Int.RoundToInt(world.GetBlockPos(hit, place));
 
-        //check if path valid
-        bool pathValid = EnemyTargetPathChecker.Instance.CheckPathFromTargetToEnemy();
-
-        //spawn tower
-        if (pathValid && cost <= PlayerStats.Instance.money)
+        if (world.IsBlockModifiable(blockPos) && !blockModifyBlacklist.Contains(world.GetBlock(hit, place)) //check if column is modifiable, if its not in the blacklist,
+            && (place || WorldDataHelper.GetBlock(world, blockPos + Vector3Int.up) != BlockType.Barrier))   //and not destroying blocks below towers (barriers)
         {
-            ModifyTerrainEditor(hit, blockType, place);
-            Debug.Log(blockType);
+            ModifyTerrain(hit, BlockType.Barrier, place);
+            yield return 1;
 
-            //remove money from player
-            PlayerStats.Instance.money -= cost; //update money
+            //check if path valid
+            bool pathValid = EnemyTargetPathChecker.Instance.CheckPathFromTargetToEnemy();
+
+            //spawn tower
+            if (pathValid && cost <= PlayerStats.Instance.money)
+            {
+                ModifyTerrain(hit, blockType, place);
+
+                //remove money from player
+                PlayerStats.Instance.money -= cost; //update money
+            }
+            else //otherwise remove barriers
+            {
+                ModifyTerrain(hit, origional, place);
+            }
         }
-        else //otherwise remove barriers
-        {
-            ModifyTerrainEditor(hit, origional, place);
-        }
+        yield return null;
     }
 }
