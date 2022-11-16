@@ -15,8 +15,13 @@ public class TowerData : MonoBehaviour
     public Vector3Int size;
     public GameObject main;
     public GameObject proxy;
+    [Space]
     public GameObject lvl2Main;
     public GameObject lvl2Proxy;
+    [Space]
+    public GameObject lvl3Main;
+    public GameObject lvl3Proxy;
+
     [Space]
     public bool showGizmo;
     public GameObject upgradeUI;
@@ -38,11 +43,22 @@ public class TowerData : MonoBehaviour
     }
 #endif
 
-    public void OnMouseDown()
+    public void BeginUpgrade()
     {
-        upgradeUI.SetActive(true);
-        upgradeUI.GetComponent<UpgradeManager>().getInfo(costToLvl, gameObject, lvl, type);
+        if (lvl < 3)
+        {
+            upgradeUI.SetActive(true);
+            upgradeUI.GetComponent<UpgradeManager>().getInfo(costToLvl, gameObject, lvl, type);
+        }
     }
+
+
+    private void Update()
+    {
+        main.SetActive(true);
+
+    }
+
 
     public void Upgrade()
     {
@@ -52,9 +68,15 @@ public class TowerData : MonoBehaviour
             lvl2Main.SetActive(true);
             main = lvl2Main;
             proxy = lvl2Proxy;
+            lvl++;
+            costToLvl *= 2;
         }else if(lvl == 2)
         {
-            //ADD lvl 3 PART HERE
+            main.SetActive(false);
+            lvl3Main.SetActive(true);
+            main = lvl3Main;
+            proxy = lvl3Proxy;
+            lvl++;
         }
     }
 

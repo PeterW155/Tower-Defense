@@ -31,6 +31,13 @@ public class UpgradeManager : MonoBehaviour
         if (gm.GetComponent<PlayerStats>().money >= cost)
         {
             target.GetComponent<TowerData>().Upgrade();
+            gm.GetComponent<PlayerStats>().money -= cost;
+            gameObject.SetActive(false);
         }
+    }
+
+    public void Cancel()
+    {
+        gameObject.SetActive(false);
     }
 }
