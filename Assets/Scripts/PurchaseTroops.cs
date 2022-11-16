@@ -24,23 +24,19 @@ public class PurchaseTroops : MonoBehaviour
 
     public void SpawnTroop1()
     {
-        //Temp cost of 100
-
-        if(PlayerStats.Instance.money >= 100)
+        if(PlayerStats.Instance.money >= 150)
         {
             Instantiate(troop1Prefab, spawnPoint);
-            PlayerStats.Instance.money -= 100;
+            PlayerStats.Instance.money -= 150;
         }
     }
 
     public void SpawnTroop2()
     {
-        //Temp cost of 100
-
-        if (PlayerStats.Instance.money >= 100)
+        if (PlayerStats.Instance.money >= 200)
         {
             Instantiate(troop2Prefab, spawnPoint);
-            PlayerStats.Instance.money -= 100;
+            PlayerStats.Instance.money -= 200;
         }
     }
 
