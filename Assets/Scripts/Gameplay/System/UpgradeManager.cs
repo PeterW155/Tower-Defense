@@ -21,6 +21,7 @@ public class UpgradeManager : MonoBehaviour
         updateInfo();
     }
 
+
     private void updateInfo()
     {
         infoText.GetComponent<Text>().text = "Turret Type: " + turretType + "\nCurrent Level: " + lvl + "\n<b>Cost To Level-Up: $" + cost + " </b>";
@@ -40,4 +41,5 @@ public class UpgradeManager : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
 }

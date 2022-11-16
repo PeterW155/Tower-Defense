@@ -339,7 +339,7 @@ MonoBehaviour:
   fireRate: 1
   fireReload: 0
   range: 15
-  damage: 75
+  damage: 100
   enemyTag: Enemy
   partToRotate: {fileID: 2372660282177081792}
   rotationSpeed: 7
@@ -1806,7 +1806,7 @@ MonoBehaviour:
   lvl3Main: {fileID: 8422478646709018389}
   lvl3Proxy: {fileID: 3319273720344487888}
   showGizmo: 0
-  upgradeUI: {fileID: 2028893108336315151, guid: 942f06207b4505048a19d18ecf312273, type: 3}
+  upgradeUI: {fileID: 4632405266475360092, guid: 159b0eb1468e7bc4d996abbc0f96a6d6, type: 3}
 --- !u!208 &-3707092166957288283
 NavMeshObstacle:
   m_ObjectHideFlags: 0
