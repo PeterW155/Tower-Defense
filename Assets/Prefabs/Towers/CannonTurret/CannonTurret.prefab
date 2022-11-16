@@ -311,6 +311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 600
+  lvl: 1
   size: {x: 2, y: 2, z: 2}
   main: {fileID: 5981949345776186755}
   proxy: {fileID: 6254517953521390530}

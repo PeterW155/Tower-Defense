@@ -11,6 +11,7 @@ public class Turret : MonoBehaviour
     public float fireRate = 1f;
     public float fireReload = 0f;
     public float range = 15f;
+    public int damage = 50;
 
     [Header("Unity Setup Fields")]
 
@@ -84,11 +85,11 @@ public class Turret : MonoBehaviour
 
         if(bulletS != null)
         {
-            bulletS.Seek(target);
+            bulletS.Seek(target, damage);
         }
         else if(cBullet != null)
         {
-            cBullet.Seek(target);
+            cBullet.Seek(target, damage);
         }
     }
 

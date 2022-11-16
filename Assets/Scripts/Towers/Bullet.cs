@@ -8,8 +8,9 @@ public class Bullet : MonoBehaviour
     public GameObject impactEffect;
     public int damage = 50;
 
-    public void Seek(Transform _target)
+    public void Seek(Transform _target, int damage)
     {
+        this.damage = damage;
         target = _target;
     }
 

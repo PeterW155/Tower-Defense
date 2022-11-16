@@ -11,6 +11,7 @@ public class CannonTurret : MonoBehaviour
     public float fireRate = 1f;
     public float fireReload = 0f;
     public float range = 15f;
+    public int damage = 25;
 
     [Header("Unity Setup Fields")]
 
@@ -82,7 +83,7 @@ public class CannonTurret : MonoBehaviour
 
         if(bulletS != null)
         {
-            bulletS.Seek(target);
+            bulletS.Seek(target, damage);
         }
     }
 

@@ -11,9 +11,10 @@ public class CannonBullet : MonoBehaviour
     public int damage = 75;
     public int splashDamage = 50;
 
-    public void Seek(Transform _target)
+    public void Seek(Transform _target, int damage)
     {
         target = _target;
+        this.damage = damage;
     }
 
 

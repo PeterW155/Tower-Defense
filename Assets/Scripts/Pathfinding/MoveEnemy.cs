@@ -147,7 +147,7 @@ public class MoveEnemy : MonoBehaviour
             
             if(bulletS != null)
             {
-                bulletS.Seek(playerObject);
+                bulletS.Seek(playerObject, 50);
             }
 
             alreadyAttacked = true;

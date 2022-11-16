@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 400
+  lvl: 1
   size: {x: 2, y: 3, z: 2}
   main: {fileID: 5529824526244204144}
   proxy: {fileID: 8963570503108493976}

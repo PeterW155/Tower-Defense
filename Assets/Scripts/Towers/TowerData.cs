@@ -7,12 +7,16 @@ using Unity.AI.Navigation;
 public class TowerData : MonoBehaviour
 {
     public int cost;
+    public int lvl;
     [Space]
     public Vector3Int size;
     public GameObject main;
     public GameObject proxy;
+    public GameObject lvl2Main;
+    public GameObject lvl2Proxy;
     [Space]
     public bool showGizmo;
+
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()
@@ -28,4 +32,12 @@ public class TowerData : MonoBehaviour
         }
     }
 #endif
+
+    private void OnMouseDown()
+    {
+        main.SetActive(false);
+        lvl2Main.SetActive(true);
+        main = lvl2Main;
+        proxy = lvl2Proxy;
+    }
 }
