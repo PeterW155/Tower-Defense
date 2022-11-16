@@ -10,9 +10,7 @@ public class MainMenu : MonoBehaviour
 
     public void Play()
     {
-        //world.LoadWorld();
         SceneManager.LoadScene(levelToLoad);
-        //SceneManager.LoadScene(levelToLoad, LoadSceneMode.Additive);
     }
 
     public void Quit()
