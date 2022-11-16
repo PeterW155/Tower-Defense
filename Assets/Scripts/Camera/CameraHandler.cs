@@ -14,6 +14,8 @@ public class CameraHandler : MonoBehaviour
     public Transform cameraXRotate;
     public Transform cameraZoom;
     [Space]
+    public bool lockControls = false;
+    [Space]
     public bool lockMouseWhileRotating = true;
     public bool lockLookX = true;
     [Tooltip("Only necessary if lock look X is false.")]
@@ -188,49 +190,53 @@ public class CameraHandler : MonoBehaviour
 
     private void Update()
     {
-        if (_rotate.WasPressedThisFrame() || _rotateAlt.WasPressedThisFrame() || _zoomAlt.WasPressedThisFrame())
-            warpPosition = Mouse.current.position.ReadValue();
-        move = _move.ReadValue<Vector2>();
-        look = _look.ReadValue<Vector2>();
-        lookAlt = _lookAlt.ReadValue<float>();
-        zoom = _zoom.ReadValue<Vector2>().normalized.y;
-        
-        //look X (optional)
-        if (!lockLookX && (_rotateAlt.IsPressed() || _rotate.IsPressed()))
+        if (!lockControls)
         {
-            cameraXRotate.localEulerAngles += new Vector3(10f * -look.y * rotationSensetivity * Time.unscaledDeltaTime, 0, 0);
+            if (_rotate.WasPressedThisFrame() || _rotateAlt.WasPressedThisFrame() || _zoomAlt.WasPressedThisFrame())
+                warpPosition = Mouse.current.position.ReadValue();
+            move = _move.ReadValue<Vector2>();
+            look = _look.ReadValue<Vector2>();
+            lookAlt = _lookAlt.ReadValue<float>();
+            zoom = _zoom.ReadValue<Vector2>().normalized.y;
 
-            Debug.Log(cameraXRotate.localEulerAngles.x);
-            //check if camera is near x limits
-            if (cameraXRotate.localEulerAngles.x > minMaxLookX.y && cameraXRotate.localEulerAngles.x < minMaxLookX.x)
+            //look X (optional)
+            if (!lockLookX && (_rotateAlt.IsPressed() || _rotate.IsPressed()))
             {
-                Debug.Log("too high");
-                float target = Mathf.Abs(minMaxLookX.y - cameraXRotate.localEulerAngles.x) > Mathf.Abs(minMaxLookX.x - cameraXRotate.localEulerAngles.x) ? minMaxLookX.x : minMaxLookX.y;
-                cameraXRotate.localEulerAngles = new Vector3(target, 0, 0);
+                cameraXRotate.localEulerAngles += new Vector3(10f * -look.y * rotationSensetivity * Time.unscaledDeltaTime, 0, 0);
+
+                Debug.Log(cameraXRotate.localEulerAngles.x);
+                //check if camera is near x limits
+                if (cameraXRotate.localEulerAngles.x > minMaxLookX.y && cameraXRotate.localEulerAngles.x < minMaxLookX.x)
+                {
+                    Debug.Log("too high");
+                    float target = Mathf.Abs(minMaxLookX.y - cameraXRotate.localEulerAngles.x) > Mathf.Abs(minMaxLookX.x - cameraXRotate.localEulerAngles.x) ? minMaxLookX.x : minMaxLookX.y;
+                    cameraXRotate.localEulerAngles = new Vector3(target, 0, 0);
+                }
+            }
+
+            //camera zoom alt
+            if (_zoomAlt.IsPressed() && !_rotateAlt.IsPressed()) //if zoom is pressed and rotate isn't so that both aren't active at once
+            {
+                if (lockMouseWhileRotating)
+                    Mouse.current.WarpCursorPosition(warpPosition);
+
+                zoomTime = 0;
+                zoomPosZ = cameraZoom.localPosition.z;
+                Vector2 lookMinMax = new Vector2(look.x > look.y ? look.y : look.x, look.x > look.y ? look.x : look.y);
+                zoomTarget = Mathf.Clamp(zoomTarget + Mathf.Clamp(look.x + look.y, lookMinMax.x, lookMinMax.y) * zoomSensetivity * 2f * Time.unscaledDeltaTime, -zoomMinMax.y, -zoomMinMax.x);
+            }
+            //camera zoom
+            else if (!_zoomAlt.IsPressed() && zoom != 0)
+            {
+                zoomTime = 0;
+                zoomPosZ = cameraZoom.localPosition.z;
+                //float zoomAmount = Time.deltaTime * 40f * zoomSensetivity; //this is for scroll wheel
+                //zoomTarget = Mathf.Clamp(zoomTarget + (look.y > 0 ? zoomAmount : -zoomAmount), -zoomMinMax.y, -zoomMinMax.x);
+                float valueAdjustment = playerInput.currentControlScheme == "Controller" ? 10f : 120f;
+                zoomTarget = Mathf.Clamp(zoomTarget + zoom * zoomSensetivity * valueAdjustment * Time.unscaledDeltaTime, -zoomMinMax.y, -zoomMinMax.x);
             }
         }
-
-        //camera zoom alt
-        if (_zoomAlt.IsPressed() && !_rotateAlt.IsPressed()) //if zoom is pressed and rotate isn't so that both aren't active at once
-        {
-            if (lockMouseWhileRotating)
-                Mouse.current.WarpCursorPosition(warpPosition);
-
-            zoomTime = 0;
-            zoomPosZ = cameraZoom.localPosition.z;
-            Vector2 lookMinMax = new Vector2(look.x > look.y ? look.y : look.x, look.x > look.y ? look.x : look.y);
-            zoomTarget = Mathf.Clamp(zoomTarget + Mathf.Clamp(look.x + look.y, lookMinMax.x, lookMinMax.y) * zoomSensetivity * 2f * Time.unscaledDeltaTime, -zoomMinMax.y, -zoomMinMax.x);
-        }
-        //camera zoom
-        else if (!_zoomAlt.IsPressed() && zoom != 0)
-        {
-            zoomTime = 0;
-            zoomPosZ = cameraZoom.localPosition.z;
-            //float zoomAmount = Time.deltaTime * 40f * zoomSensetivity; //this is for scroll wheel
-            //zoomTarget = Mathf.Clamp(zoomTarget + (look.y > 0 ? zoomAmount : -zoomAmount), -zoomMinMax.y, -zoomMinMax.x);
-            float valueAdjustment = playerInput.currentControlScheme == "Controller" ? 10f : 120f;
-            zoomTarget = Mathf.Clamp(zoomTarget + zoom * zoomSensetivity * valueAdjustment * Time.unscaledDeltaTime, -zoomMinMax.y, -zoomMinMax.x);
-        }
+        
         if (zoomTime < (5 / zoomDrag))
         {
             zoomTime += Time.deltaTime;
@@ -250,7 +256,7 @@ public class CameraHandler : MonoBehaviour
         Vector3 rotateOffset = cameraYRotate.TransformDirection(new Vector3(p_move.x, 0, p_move.y));
         p_move = new Vector2(rotateOffset.x, rotateOffset.z).normalized;
 
-        if (p_move.magnitude > 0)
+        if (!lockControls && p_move.magnitude > 0)
         {
             _rigidbodyParent.AddForce(movementSensetivity * 6f * new Vector3(p_move.x, 0, p_move.y), ForceMode.Impulse);
             _rigidbodyParent.velocity *= defaultDrag;
@@ -261,7 +267,7 @@ public class CameraHandler : MonoBehaviour
         }
 
         //camera rotation
-        if (_rotateAlt.IsPressed() || _rotate.IsPressed())
+        if (!lockControls && (_rotateAlt.IsPressed() || _rotate.IsPressed()))
         {
             if (lockMouseWhileRotating)
                 Mouse.current.WarpCursorPosition(warpPosition);
@@ -275,7 +281,7 @@ public class CameraHandler : MonoBehaviour
                 _rigidbodyYRotate.angularVelocity *= (1f - (rotationDrag / 100));
             }
         }
-        else if (lookAlt != 0)
+        else if (!lockControls && lookAlt != 0)
         {
             _rigidbodyYRotate.AddRelativeTorque(new Vector3(0, 0.06f * lookAlt * rotationSensetivity, 0), ForceMode.Impulse);
             _rigidbodyYRotate.angularVelocity *= defaultDrag;
