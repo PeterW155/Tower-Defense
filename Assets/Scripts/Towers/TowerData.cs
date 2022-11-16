@@ -28,8 +28,6 @@ public class TowerData : MonoBehaviour
 
 
 
-
-
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
@@ -51,6 +49,19 @@ public class TowerData : MonoBehaviour
         {
             upgradeUI.SetActive(true);
             upgradeUI.GetComponent<UpgradeManager>().getInfo(costToLvl, gameObject, lvl, type);
+        }
+    }
+
+    void Awake()
+    {
+        upgradeUI = GameObject.Find("UpgradeUI");
+        if(upgradeUI != null)
+        {
+            Debug.Log("NOT NULL");
+        }
+        else
+        {
+            Debug.Log("NULL");
         }
     }
 

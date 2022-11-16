@@ -9,7 +9,7 @@ public class TurretCollider : MonoBehaviour
     private void OnMouseDown()
     {
         turret.GetComponent<TowerData>().BeginUpgrade();
-        
+        Debug.Log("---------------");
     }
 
 }

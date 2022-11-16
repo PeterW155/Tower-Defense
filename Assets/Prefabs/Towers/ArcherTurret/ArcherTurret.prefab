@@ -434,8 +434,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3196596875750928915}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.9, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.9000001, z: 0}
   m_LocalScale: {x: 1.434347, y: 4, z: 1.434347}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1755,8 +1755,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7939827575190920760}
-  - component: {fileID: 1537364596359230182}
   - component: {fileID: -3707092166957288283}
+  - component: {fileID: 3708675045115499066}
   m_Layer: 8
   m_Name: ArcherTurret
   m_TagString: Tower
@@ -1783,7 +1783,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1537364596359230182
+--- !u!208 &-3707092166957288283
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6387314077730022355}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1, y: 1.5, z: 1}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 1.5, z: 0}
+  m_TimeToStationary: 0.5
+--- !u!114 &3708675045115499066
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1806,23 +1822,7 @@ MonoBehaviour:
   lvl3Main: {fileID: 8422478646709018389}
   lvl3Proxy: {fileID: 3319273720344487888}
   showGizmo: 0
-  upgradeUI: {fileID: 4632405266475360092, guid: 159b0eb1468e7bc4d996abbc0f96a6d6, type: 3}
---- !u!208 &-3707092166957288283
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6387314077730022355}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 1, y: 1.5, z: 1}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 1.5, z: 0}
-  m_TimeToStationary: 0.5
+  upgradeUI: {fileID: 0}
 --- !u!1 &7096536761263362894
 GameObject:
   m_ObjectHideFlags: 0
