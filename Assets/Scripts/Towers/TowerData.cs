@@ -9,6 +9,9 @@ public class TowerData : MonoBehaviour
     public int cost;
     public int lvl;
     [Space]
+    private int costToLvl = 350;
+    public string type = "Archer";
+    [Space]
     public Vector3Int size;
     public GameObject main;
     public GameObject proxy;
@@ -16,6 +19,8 @@ public class TowerData : MonoBehaviour
     public GameObject lvl2Proxy;
     [Space]
     public bool showGizmo;
+    public GameObject upgradeUI;
+
 
 
 #if UNITY_EDITOR
@@ -33,11 +38,25 @@ public class TowerData : MonoBehaviour
     }
 #endif
 
-    private void OnMouseDown()
+    public void OnMouseDown()
     {
-        main.SetActive(false);
-        lvl2Main.SetActive(true);
-        main = lvl2Main;
-        proxy = lvl2Proxy;
+        upgradeUI.SetActive(true);
+        upgradeUI.GetComponent<UpgradeManager>().getInfo(costToLvl, gameObject, lvl, type);
     }
+
+    public void Upgrade()
+    {
+        if (lvl == 1)
+        {
+            main.SetActive(false);
+            lvl2Main.SetActive(true);
+            main = lvl2Main;
+            proxy = lvl2Proxy;
+        }else if(lvl == 2)
+        {
+            //ADD lvl 3 PART HERE
+        }
+    }
+
+
 }

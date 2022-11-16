@@ -132,6 +132,37 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1489192196325012177
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7692330782979158820}
+  m_Layer: 0
+  m_Name: uiArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7692330782979158820
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489192196325012177}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.44, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7939827575190920760}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2191305708233337854
 GameObject:
   m_ObjectHideFlags: 0
@@ -1098,6 +1129,7 @@ Transform:
   m_Children:
   - {fileID: 3877451214448414143}
   - {fileID: 1986243738697667369}
+  - {fileID: 7692330782979158820}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1115,12 +1147,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost: 300
   lvl: 1
+  type: Archer
   size: {x: 2, y: 3, z: 2}
   main: {fileID: 4953947662352260004}
   proxy: {fileID: 5911949047010154162}
   lvl2Main: {fileID: 626151332578261127}
   lvl2Proxy: {fileID: 7096536761263362894}
   showGizmo: 0
+  upgradeUI: {fileID: 7398143372183277921, guid: 942f06207b4505048a19d18ecf312273, type: 3}
 --- !u!208 &-3707092166957288283
 NavMeshObstacle:
   m_ObjectHideFlags: 0
