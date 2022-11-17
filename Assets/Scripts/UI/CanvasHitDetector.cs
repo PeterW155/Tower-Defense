@@ -9,6 +9,24 @@ public class CanvasHitDetector : MonoBehaviour
 {
     private GraphicRaycaster _graphicRaycaster;
 
+    private static CanvasHitDetector _instance;
+    public static CanvasHitDetector Instance { get { return _instance; } }
+
+    private void Awake()
+    {
+        // If an instance of this already exists and it isn't this one
+        if (_instance != null && _instance != this)
+        {
+            // We destroy this instance
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            // Make this the instance
+            _instance = this;
+        }
+    }
+
     private void Start()
     {
         // This instance is needed to compare between UI interactions and

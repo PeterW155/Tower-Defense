@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,6 +7,7 @@ public class UnitDrag : MonoBehaviour
 {
     // Graphical
     [SerializeField]
+    private string selectionUI;
     private RectTransform boxVisual;
 
     [Header("Controls")]
@@ -16,7 +18,7 @@ public class UnitDrag : MonoBehaviour
     // Logical
     private Rect selectionBox;
 
-    private Canvas canvas;
+    private Canvas _canvas;
 
     private Vector2 startPosition;
     private Vector2 endPosition;
@@ -25,7 +27,6 @@ public class UnitDrag : MonoBehaviour
 
     private void Awake()
     {
-        canvas = FindObjectOfType<Canvas>();
         _playerInput = FindObjectOfType<PlayerInput>();
         _selection = _playerInput.actions[selectionControl];
     }
@@ -33,6 +34,12 @@ public class UnitDrag : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _canvas = Root.Instance.GetComponent<Canvas>();
+
+        GameObject UI = Root.Instance.UIGroups.Where(obj => obj.name == selectionUI).SingleOrDefault();
+        if (UI != null)
+            boxVisual = UI.transform.GetChild(0).GetComponent<RectTransform>();
+
         startPosition = Vector2.zero;
         endPosition = Vector2.zero;
         DrawVisual();
@@ -90,7 +97,7 @@ public class UnitDrag : MonoBehaviour
         Vector2 boxCenter = (boxStart + boxEnd) / 2;
         boxVisual.position = boxCenter;
 
-        Vector2 boxSize = new Vector2(Mathf.Abs(boxStart.x - boxEnd.x), Mathf.Abs(boxStart.y - boxEnd.y)) / canvas.scaleFactor;
+        Vector2 boxSize = new Vector2(Mathf.Abs(boxStart.x - boxEnd.x), Mathf.Abs(boxStart.y - boxEnd.y)) / _canvas.scaleFactor;
 
         boxVisual.sizeDelta = boxSize;
     }

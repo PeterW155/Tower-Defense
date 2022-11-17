@@ -37,20 +37,31 @@ public class TerrainEditor : MonoBehaviour
     [HideInInspector]
     public bool editing;
 
-    private CanvasHitDetector chd;
-
     private Coroutine editCoroutine;
+
+    private static TerrainEditor _instance;
+    public static TerrainEditor Instance { get { return _instance; } }
 
     private void Awake()
     {
+        // If an instance of this already exists and it isn't this one
+        if (_instance != null && _instance != this)
+        {
+            // We destroy this instance
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            // Make this the instance
+            _instance = this;
+        }
+
         _playerInput = FindObjectOfType<PlayerInput>();
 
         _click = _playerInput.actions[clickControl];
         _remove = _playerInput.actions[removeControl];
 
         editing = false;
-
-        chd = FindObjectOfType<CanvasHitDetector>();
     }
 
     public void ModifyTerrain(RaycastHit hit, BlockType blockType = BlockType.Air, bool place = false)
@@ -87,7 +98,7 @@ public class TerrainEditor : MonoBehaviour
                 Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
                 RaycastHit hit;
 
-                if (!chd.IsPointerOverUI() && Physics.Raycast(ray, out hit, Mathf.Infinity, groundMask))
+                if (!CanvasHitDetector.Instance.IsPointerOverUI() && Physics.Raycast(ray, out hit, Mathf.Infinity, groundMask))
                 {
                     Vector3 pos;
 

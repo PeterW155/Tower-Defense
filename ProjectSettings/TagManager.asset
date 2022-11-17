@@ -6,7 +6,6 @@ TagManager:
   tags:
   - Enemy
   - Tower
-  - uUI
   layers:
   - Default
   - TransparentFX

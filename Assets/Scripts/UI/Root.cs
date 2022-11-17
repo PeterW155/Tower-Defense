@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Root : MonoBehaviour
 {
-    public List<GameObject> UIGroups;
+    public List<GameObject> UIGroups = new List<GameObject>();
 
     private static Root _instance;
     public static Root Instance { get { return _instance; } }

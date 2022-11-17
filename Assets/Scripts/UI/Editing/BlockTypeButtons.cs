@@ -6,7 +6,7 @@ using TMPro;
 
 public class BlockTypeButtons : MonoBehaviour
 {
-    public TerrainEditor terrainEditor;
+    private TerrainEditor terrainEditor;
     public Toggle startToggleDefault;
     public TextMeshProUGUI infoText;
     [SerializeField]
@@ -17,19 +17,27 @@ public class BlockTypeButtons : MonoBehaviour
         set { serializableButtonBlockType.CopyFrom(value); }
     }
 
-    private void Awake()
+    private void OnEnable()
     {
+        terrainEditor = TerrainEditor.Instance;
+
         UpdateText();
 
-        foreach(var entry in buttonBlockType)
+        foreach (var entry in buttonBlockType)
         {
             entry.Key.onValueChanged.AddListener((b) => ChangeBlockType(entry.Value));
         }
-    }
-    private void Start()
-    {
+
         startToggleDefault.isOn = true;
         ChangeBlockType(buttonBlockType[startToggleDefault]);
+    }
+
+    private void OnDisable()
+    {
+        foreach (var entry in buttonBlockType)
+        {
+            entry.Key.onValueChanged.RemoveAllListeners();
+        }
     }
 
     public void ChangeBlockType(BlockType blockType)

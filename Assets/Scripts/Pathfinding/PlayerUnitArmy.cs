@@ -102,7 +102,7 @@ public class PlayerUnitArmy : MonoBehaviour
             float unitDestinationZ = unit.position.z + distanceZ;
             Vector3 unitDestination = new Vector3(unitDestinationX, unit.position.y, unitDestinationZ);
             //Debug.Log("unitDestination: " + unitDestination);
-            unit.GetComponent<MovePlayer>().MoveToDestination(unitDestination);
+            //unit.GetComponent<MovePlayer>().MoveToDestination(unitDestination);
             //unit.GetComponent<MovePlayer>().MoveToDestination(target);
         }
     }

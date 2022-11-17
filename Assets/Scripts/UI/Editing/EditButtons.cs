@@ -4,49 +4,46 @@ using UnityEngine;
 
 public class EditButtons : MonoBehaviour
 {
-    public TerrainEditor terrainEditor;
-    public TowerEditor towerEditor;
-    public PurchaseTroops purchaseTroops;
     public void ToggleTerrainEditing()
     {
         //disable other editors
-        if (towerEditor.editing)
-            towerEditor.DisableTowerEditing();
-        if (purchaseTroops.menuActive)
-            purchaseTroops.MenuDisabled();
+        if (TowerEditor.Instance.editing)
+            TowerEditor.Instance.DisableTowerEditing();
+        if (PurchaseTroops.Instance.menuActive)
+            PurchaseTroops.Instance.MenuDisabled();
 
 
-        if (terrainEditor.editing) //if it is already editing turn it off
-            terrainEditor.DisableTerrainEditing();
+        if (TerrainEditor.Instance.editing) //if it is already editing turn it off
+            TerrainEditor.Instance.DisableTerrainEditing();
         else //enable
-            terrainEditor.EnableTerrainEditing();
+            TerrainEditor.Instance.EnableTerrainEditing();
     }
     public void ToggleTowerEditing()
     {
         //disable other editors
-        if (terrainEditor.editing)
-            terrainEditor.DisableTerrainEditing();
-        if (purchaseTroops.menuActive)
-            purchaseTroops.MenuDisabled();
+        if (TerrainEditor.Instance.editing)
+            TerrainEditor.Instance.DisableTerrainEditing();
+        if (PurchaseTroops.Instance.menuActive)
+            PurchaseTroops.Instance.MenuDisabled();
 
 
-        if (towerEditor.editing) //if it is already editing turn it off
-            towerEditor.DisableTowerEditing();
+        if (TowerEditor.Instance.editing) //if it is already editing turn it off
+            TowerEditor.Instance.DisableTowerEditing();
         else //enable
-            towerEditor.EnableTowerEditing();
+            TowerEditor.Instance.EnableTowerEditing();
     }
     public void ToggleTroopSpawning()
     {
         //disable other editors
-        if (towerEditor.editing)
-            towerEditor.DisableTowerEditing();
-        if (terrainEditor.editing)
-            terrainEditor.DisableTerrainEditing();
+        if (TowerEditor.Instance.editing)
+            TowerEditor.Instance.DisableTowerEditing();
+        if (TerrainEditor.Instance.editing)
+            TerrainEditor.Instance.DisableTerrainEditing();
 
 
-        if (purchaseTroops.menuActive) //if it is already active turn it off
-            purchaseTroops.MenuDisabled();
+        if (PurchaseTroops.Instance.menuActive) //if it is already active turn it off
+            PurchaseTroops.Instance.MenuDisabled();
         else //enable
-            purchaseTroops.MenuEnabled();
+            PurchaseTroops.Instance.MenuEnabled();
     }
 }

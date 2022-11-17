@@ -24,7 +24,6 @@ public class TowerData : MonoBehaviour
 
     [Space]
     public bool showGizmo;
-    public GameObject upgradeUI;
 
 
 
@@ -47,21 +46,8 @@ public class TowerData : MonoBehaviour
     {
         if (lvl < 3)
         {
-            upgradeUI.SetActive(true);
-            upgradeUI.GetComponent<UpgradeManager>().getInfo(costToLvl, gameObject, lvl, type);
-        }
-    }
-
-    void Awake()
-    {
-        upgradeUI = GameObject.Find("UpgradeUI");
-        if(upgradeUI != null)
-        {
-            Debug.Log("NOT NULL");
-        }
-        else
-        {
-            Debug.Log("NULL");
+            UpgradeManager.Instance.upgradeMenu.SetActive(true);
+            UpgradeManager.Instance.GetComponent<UpgradeManager>().GetInfo(costToLvl, gameObject, lvl, type);
         }
     }
 

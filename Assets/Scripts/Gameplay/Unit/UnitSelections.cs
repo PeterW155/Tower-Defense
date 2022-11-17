@@ -72,16 +72,19 @@ public class UnitSelections : MonoBehaviour
 
     public void DeselectAll()
     {
-        foreach (var unit in unitsSelected)
+        if (unitsSelected != null && unitsSelected.Count > 0)
         {
-            if (LayerMask.LayerToName(unit.gameObject.layer) == "Player")
+            foreach (var unit in unitsSelected)
             {
-                unit.GetComponent<MovePlayer>().enabled = false;
-            }           
-            unit.transform.GetChild(0).gameObject.SetActive(false);
+                if (LayerMask.LayerToName(unit.gameObject.layer) == "Player")
+                {
+                    unit.GetComponent<MovePlayer>().enabled = false;
+                }
+                unit.transform.GetChild(0).gameObject.SetActive(false);
+            }
+
+            unitsSelected.Clear();
         }
-        
-        unitsSelected.Clear();
     }
 
     public void Deselect(GameObject unitToDeselect)

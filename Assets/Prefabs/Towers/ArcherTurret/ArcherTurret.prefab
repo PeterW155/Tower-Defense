@@ -418,9 +418,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9010099579760578517}
-  - component: {fileID: 4792137763143809510}
-  - component: {fileID: 1273211035853558603}
-  m_Layer: 0
+  - component: {fileID: 7557391959795785170}
+  m_Layer: 8
   m_Name: collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -435,14 +434,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3196596875750928915}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.9000001, z: 0}
-  m_LocalScale: {x: 1.434347, y: 4, z: 1.434347}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7939827575190920760}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &4792137763143809510
+--- !u!65 &7557391959795785170
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -453,21 +452,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1273211035853558603
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3196596875750928915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1677f45add792ea45ac14ac9de512df2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turret: {fileID: 6387314077730022355}
+  m_Size: {x: 1.2, y: 3, z: 1.2}
+  m_Center: {x: 0, y: 1.5, z: -0.2}
 --- !u!1 &3319273720344487888
 GameObject:
   m_ObjectHideFlags: 0
@@ -1822,7 +1808,6 @@ MonoBehaviour:
   lvl3Main: {fileID: 8422478646709018389}
   lvl3Proxy: {fileID: 3319273720344487888}
   showGizmo: 0
-  upgradeUI: {fileID: 0}
 --- !u!1 &7096536761263362894
 GameObject:
   m_ObjectHideFlags: 0

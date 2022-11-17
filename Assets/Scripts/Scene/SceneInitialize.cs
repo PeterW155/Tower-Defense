@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class SceneInitialize : MonoBehaviour
 {
-    [StringInList(typeof(PropertyDrawersHelper), "AllSceneNames")] public string currentScene;
-
     [Space]
     public Vector3 cameraStartPosition;
     [Tooltip("this should be 0")]
@@ -50,6 +48,12 @@ public class SceneInitialize : MonoBehaviour
             UI.SetActive(false);
 
         foreach (string UIName in activeUI) //enable only wanted
-            Root.Instance.UIGroups.Where(obj => obj.name == UIName).SingleOrDefault().SetActive(true);
+        {
+            GameObject UI = Root.Instance.UIGroups.Where(obj => obj.name == UIName).SingleOrDefault();
+            if (UI != null)
+                UI.SetActive(true);
+            else
+                Debug.Log("invalid UI name");
+        }
     }
 }

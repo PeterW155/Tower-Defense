@@ -25,7 +25,7 @@ public class EnemyMovement : MonoBehaviour
     {
         PlayerStats.Instance.money += value;
 
-        GameObject effect = (GameObject)Instantiate(deathEffect, transform.position, Quaternion.identity);
+        GameObject effect = (GameObject)Instantiate(deathEffect, transform.position, Quaternion.identity, WaveSpawner.Instance.effectParent);
         Destroy(effect, 5f);
 
         Destroy(gameObject);

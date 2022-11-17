@@ -13,6 +13,7 @@ public class TowerEditor : MonoBehaviour
     private LayerMask towerMask;
     [Space]
     public Transform towerParent;
+    public Transform towerProxyParent;
 
     [Space]
     public Material placeMaterial;
@@ -40,12 +41,25 @@ public class TowerEditor : MonoBehaviour
     [HideInInspector]
     public bool editing;
 
-    private CanvasHitDetector chd;
-
     private Coroutine editCoroutine;
+
+    private static TowerEditor _instance;
+    public static TowerEditor Instance { get { return _instance; } }
 
     private void Awake()
     {
+        // If an instance of this already exists and it isn't this one
+        if (_instance != null && _instance != this)
+        {
+            // We destroy this instance
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            // Make this the instance
+            _instance = this;
+        }
+
         _playerInput = FindObjectOfType<PlayerInput>();
 
         _click = _playerInput.actions[clickControl];
@@ -54,8 +68,6 @@ public class TowerEditor : MonoBehaviour
         tdList = new List<TowerData>();
 
         editing = false;
-
-        chd = FindObjectOfType<CanvasHitDetector>();
     }
 
     public void EnableTowerEditing()
@@ -86,7 +98,7 @@ public class TowerEditor : MonoBehaviour
     {
         if (selectedTower != null)
             Destroy(selectedTower);
-        selectedTower = Instantiate(prefab);
+        selectedTower = Instantiate(prefab, towerProxyParent);
         td = selectedTower.GetComponent<TowerData>();
         td.main.SetActive(false);
         td.proxy.SetActive(true);
@@ -118,7 +130,7 @@ public class TowerEditor : MonoBehaviour
                         }
                     }
 
-                    if (!chd.IsPointerOverUI() && Physics.Raycast(ray, out hit, Mathf.Infinity, towerMask))
+                    if (!CanvasHitDetector.Instance.IsPointerOverUI() && Physics.Raycast(ray, out hit, Mathf.Infinity, towerMask))
                     {
                         //tower removal
                         if (_click.WasPerformedThisFrame())
@@ -150,7 +162,7 @@ public class TowerEditor : MonoBehaviour
                             m_td.proxy.SetActive(false);
                         }
                     }
-                    if (!chd.IsPointerOverUI() && Physics.Raycast(ray, out hit, Mathf.Infinity, groundMask))
+                    if (!CanvasHitDetector.Instance.IsPointerOverUI() && Physics.Raycast(ray, out hit, Mathf.Infinity, groundMask))
                     {
                         selectedTower.SetActive(true);
                         Vector3 pos = world.GetBlockPos(hit, true, new int[2]{td.size.z, td.size.z}) + new Vector3(0, -0.5f, 0);
@@ -218,7 +230,6 @@ public class TowerEditor : MonoBehaviour
             tdList.Add(n_td);
             foreach (Renderer r in n_td.proxy.GetComponentsInChildren<Renderer>(true))
                 r.material = removeMaterial;
-            Debug.Log("placed");
             n_td.main.SetActive(true);
             n_td.proxy.SetActive(false);
 

@@ -20,6 +20,26 @@ public class SceneLoader : MonoBehaviour
     [ReadOnly] public string currentScene;
     [ReadOnly] public bool loading;
 
+    private bool worldLoading = false;
+
+    private static SceneLoader _instance;
+    public static SceneLoader Instance { get { return _instance; } }
+
+    private void Awake()
+    {
+        // If an instance of this already exists and it isn't this one
+        if (_instance != null && _instance != this)
+        {
+            // We destroy this instance
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            // Make this the instance
+            _instance = this;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,6 +85,20 @@ public class SceneLoader : MonoBehaviour
         _loadingProgress = StartCoroutine(sceneLoadProgress());
     }
 
+    public void LoadWorldScene(string scene, bool unloadCurrent = false)
+    {
+        loadScreen.SetActive(true);
+
+        worldLoading = true;
+
+        if (unloadCurrent && SceneManager.GetSceneByName(currentScene) != null) { scenesLoading.Add(SceneManager.UnloadSceneAsync(currentScene)); }
+        scenesLoading.Add(SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive));
+        currentScene = scene;
+
+        if (_loadingProgress != null) { StopCoroutine(_loadingProgress); }
+        _loadingProgress = StartCoroutine(sceneLoadProgress());
+    }
+
     public void Unload(string scene)
     {
         scenesLoading.Add(SceneManager.UnloadSceneAsync(scene));
@@ -97,11 +131,21 @@ public class SceneLoader : MonoBehaviour
                 totalSceneProgress = (totalSceneProgress / (scenesLoading.Count - nullCount)) * 100f;
 
                 progressBar.value = Mathf.RoundToInt(totalSceneProgress);
-                progressText.text = progressBar.value + "%";
+                progressText.text = Mathf.RoundToInt(totalSceneProgress) + "%";
 
                 yield return null;
             }
         }
+
+        progressText.text = 100 + "%";
+
+        while (worldLoading)
+        {
+            if (World.Instance != null && World.Instance.IsWorldCreated)
+                worldLoading = false;
+            yield return null;
+        }
+
         loadScreen.SetActive(false);
 
         scenesLoading.Clear();

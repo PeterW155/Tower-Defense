@@ -17,6 +17,7 @@ public class World : MonoBehaviour
 {
     public delegate void WorldEvent();
     public static event WorldEvent ChunkUpdated;
+    public static event WorldEvent WorldLoaded;
 
     public int mapSizeInChunks = 6;
     public int chunkSize = 16, chunkHeight = 100;
@@ -39,6 +40,9 @@ public class World : MonoBehaviour
 
     private Coroutine editorUpdate;
 
+    private static World _instance;
+    public static World Instance { get { return _instance; } }
+
     private void OnEnable()
     {
         #if UNITY_EDITOR
@@ -60,6 +64,18 @@ public class World : MonoBehaviour
         if (Application.isPlaying)
         {
             LoadWorld(); //called during build play
+        }
+
+        // If an instance of this already exists and it isn't this one
+        if (_instance != null && _instance != this)
+        {
+            // We destroy this instance
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            // Make this the instance
+            _instance = this;
         }
     }
 
@@ -239,6 +255,8 @@ public class World : MonoBehaviour
             OnWorldCreated?.Invoke();
             if (ChunkUpdated != null)
                 ChunkUpdated();
+            if (WorldLoaded != null)
+                WorldLoaded();
         }
         Time.timeScale = 1;
         #if UNITY_EDITOR

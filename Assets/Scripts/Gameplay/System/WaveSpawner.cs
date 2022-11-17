@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using System.Linq;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class WaveSpawner : MonoBehaviour
     public Transform fastEnemyPrefab;
     public Transform slowEnemyPrefab;
     public Transform spawnPoint;
+    public Transform parent;
+    public Transform effectParent;
 
     public UnityEvent startWave;
     public UnityEvent endWave;
@@ -21,6 +24,24 @@ public class WaveSpawner : MonoBehaviour
     //private float countdown = 2f;
     private int waveIndex = 0;
     private static int waveNum = 1;
+
+    private static WaveSpawner _instance;
+    public static WaveSpawner Instance { get { return _instance; } }
+
+    private void Awake()
+    {
+        // If an instance of this already exists and it isn't this one
+        if (_instance != null && _instance != this)
+        {
+            // We destroy this instance
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            // Make this the instance
+            _instance = this;
+        }
+    }
 
     // Update is called once per frame
     /*void Update()
@@ -57,25 +78,25 @@ public class WaveSpawner : MonoBehaviour
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         if (enemies.Length >= 1)
         {
-            gameObject.GetComponent<Button>().enabled = false;
-            gameObject.GetComponent<Image>().enabled = false;
             startWave.Invoke();
         }
         else
         {
-            gameObject.GetComponent<Button>().enabled = true;
-            gameObject.GetComponent<Image>().enabled = true;
             endWave.Invoke();
         }
     }
 
-    public void disableGameObject(GameObject gameObject)
+    public void DisableUI(string UIName)
     {
-        gameObject.SetActive(false);
+        GameObject UI = Root.Instance.UIGroups.Where(obj => obj.name == UIName).SingleOrDefault();
+        if (UI != null)
+            UI.SetActive(false);
     }
-    public void enableGameObject(GameObject gameObject)
+    public void EnableUI(string UIName)
     {
-        gameObject.SetActive(true);
+        GameObject UI = Root.Instance.UIGroups.Where(obj => obj.name == UIName).SingleOrDefault();
+        if (UI != null)
+            UI.SetActive(true);
     }
 
     public static string getWaveNum()
@@ -140,6 +161,6 @@ public class WaveSpawner : MonoBehaviour
 
     void spawnEnemy(Transform prefab)
     {
-        Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
+        Instantiate(prefab, spawnPoint.position, spawnPoint.rotation, parent);
     }
 }
