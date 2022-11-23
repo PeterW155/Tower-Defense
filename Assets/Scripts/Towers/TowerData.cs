@@ -9,7 +9,7 @@ public class TowerData : MonoBehaviour
     public int cost;
     public int lvl;
     [Space]
-    private int costToLvl = 350;
+    public int costToLvl = 350;
     public string type = "Archer";
     [Space]
     public Vector3Int size;
