@@ -7,8 +7,8 @@ public class UnitDrag : MonoBehaviour
 {
     // Graphical
     [SerializeField]
-    private string selectionUI;
     private RectTransform boxVisual;
+    private string selectionUI;
 
     [Header("Controls")]
     private PlayerInput _playerInput;
