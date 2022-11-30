@@ -62,6 +62,7 @@ public class PurchaseTroops : MonoBehaviour
     public void MenuEnabled()
     {
         menuActive = true;
+        Debug.Log("troops");
         _playerInput.actions.FindActionMap(unitActionMap, true).Enable();
     }
     public void MenuDisabled()

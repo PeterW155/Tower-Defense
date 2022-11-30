@@ -248,7 +248,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8db0e744b7ccf924595e8041489afc0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  ground:
+    serializedVersion: 2
+    m_Bits: 8
   health: 50
+  destinationControl: Unit/Destination
 --- !u!114 &741353762586387624
 MonoBehaviour:
   m_ObjectHideFlags: 0
