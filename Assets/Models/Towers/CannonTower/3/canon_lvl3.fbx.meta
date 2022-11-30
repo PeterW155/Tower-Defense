@@ -3,7 +3,32 @@ guid: d218bb98daafda6468f67e8aa21de4aa
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: canonmetal
+    second: {fileID: 2100000, guid: 930d46d3085ae2b459afca91729c7527, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: standardSurface1
+    second: {fileID: 2100000, guid: 52f6ac19d821d174183fadd85ed83efd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: topmetal
+    second: {fileID: 2100000, guid: 2728005a0dc7ac54aa77b6ba03810c3c, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: albedo
+    second: {fileID: 2800000, guid: 162ff3c43c0779e4e9cbb41e62ee52c5, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: metallic
+    second: {fileID: 2800000, guid: 97f4b7525b309114699c733d0e4f33d3, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

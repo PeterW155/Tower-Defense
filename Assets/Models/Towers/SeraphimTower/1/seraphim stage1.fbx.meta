@@ -3,7 +3,27 @@ guid: 3847e3066255e6441a9fd234b90c7037
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Eye
+    second: {fileID: 2100000, guid: 9af47a2b6151d994095f6f1b2bf39250, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Eyelid
+    second: {fileID: 2100000, guid: aac9f6db8f52ff14fb88595065a083c5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Mwing
+    second: {fileID: 2100000, guid: 82a65cfd4d8c4e34c899a763b4457f86, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Tower
+    second: {fileID: 2100000, guid: 6c4aa4835b775574e86fce7ef6041332, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

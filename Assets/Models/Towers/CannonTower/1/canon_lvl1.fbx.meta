@@ -5,15 +5,25 @@ ModelImporter:
   internalIDToNameTable: []
   externalObjects:
   - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: canonmetal
+    second: {fileID: 2100000, guid: ac85b7c0a4a745c418d866e240cf33ae, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: woodfirst
+    second: {fileID: 2100000, guid: c4a23be71a3fbe44ebd2055a5434fcf3, type: 2}
+  - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Wood081_1K_Color
-    second: {fileID: 2800000, guid: 066ca042db4183f46bd9eb96ec583901, type: 3}
+    second: {fileID: 2800000, guid: c7d5d0b582012d54e9cc005eb4e12ab7, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Wood081_1K_Roughness
-    second: {fileID: 2800000, guid: fb3959617cff5c84188aa42cc5c16f16, type: 3}
+    second: {fileID: 2800000, guid: 3a65d45fd3112e646959a48206a26d52, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

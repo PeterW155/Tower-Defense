@@ -3,7 +3,32 @@ guid: 6050a90f45755cb419f0c77f36358f06
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Eye
+    second: {fileID: 2100000, guid: 9af47a2b6151d994095f6f1b2bf39250, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Eyelid
+    second: {fileID: 2100000, guid: aac9f6db8f52ff14fb88595065a083c5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_ring
+    second: {fileID: 2100000, guid: 1a471dbe10a226f4fa2d950afcd89616, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_tower
+    second: {fileID: 2100000, guid: 2f6d29fe34ca6bb409f8e6d81bf7a31e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_wing
+    second: {fileID: 2100000, guid: 82a65cfd4d8c4e34c899a763b4457f86, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
