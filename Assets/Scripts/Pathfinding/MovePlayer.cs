@@ -47,6 +47,11 @@ public class MovePlayer : MonoBehaviour
         }
     }
 
+    public void MoveToDestination(Vector3 destination)
+    {
+        agent.SetDestination(destination);
+    }
+
     public void TakeDamage(int damage)
     {
         health -= damage;
