@@ -4851,7 +4851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b260e24ae290da54281aba98c8e6b08c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxVisual: {fileID: 0}
+  boxVisual: {fileID: 76972754}
   selectionControl: Unit/Select
 --- !u!1 &645961982
 GameObject:
