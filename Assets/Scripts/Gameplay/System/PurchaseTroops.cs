@@ -8,8 +8,10 @@ public class PurchaseTroops : MonoBehaviour
     public Transform troop1Prefab;
     public Transform troop2Prefab;
     public Transform troopParent;
+    private Transform troop;
 
     public Transform spawnPoint;
+    public float speed = 5;
 
     [Space]
     [StringInList(typeof(PropertyDrawersHelper), "AllActionMaps")] public string unitActionMap;
@@ -45,7 +47,8 @@ public class PurchaseTroops : MonoBehaviour
     {
         if(PlayerStats.Instance.money >= 150)
         {
-            Instantiate(troop1Prefab, spawnPoint, troopParent);
+            troop = Instantiate(troop1Prefab, spawnPoint, troopParent);
+            troop.position += new Vector3(speed * Time.deltaTime, 0, 0);
             PlayerStats.Instance.money -= 150;
         }
     }
@@ -54,7 +57,8 @@ public class PurchaseTroops : MonoBehaviour
     {
         if (PlayerStats.Instance.money >= 200)
         {
-            Instantiate(troop2Prefab, spawnPoint, troopParent);
+            troop = Instantiate(troop2Prefab, spawnPoint, troopParent);
+            troop.position += new Vector3(speed * Time.deltaTime, 0, 0);
             PlayerStats.Instance.money -= 200;
         }
     }
