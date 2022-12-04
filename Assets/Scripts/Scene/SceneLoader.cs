@@ -60,7 +60,7 @@ public class SceneLoader : MonoBehaviour
         }
 
         if (_loadingProgress != null) { StopCoroutine(_loadingProgress); }
-        _loadingProgress = StartCoroutine(sceneLoadProgress());
+        _loadingProgress = StartCoroutine(SceneLoadProgress());
     }
 
     public void LoadScreenless(string scene, bool unloadCurrent = false)
@@ -70,7 +70,7 @@ public class SceneLoader : MonoBehaviour
         currentScene = scene;
 
         if (_loadingProgress != null) { StopCoroutine(_loadingProgress); }
-        _loadingProgress = StartCoroutine(sceneLoadProgress());
+        _loadingProgress = StartCoroutine(SceneLoadProgress());
     }
 
     public void Load(string scene, bool unloadCurrent = false)
@@ -82,7 +82,7 @@ public class SceneLoader : MonoBehaviour
         currentScene = scene;
 
         if (_loadingProgress != null) { StopCoroutine(_loadingProgress); }
-        _loadingProgress = StartCoroutine(sceneLoadProgress());
+        _loadingProgress = StartCoroutine(SceneLoadProgress());
     }
 
     public void LoadWorldScene(string scene, bool unloadCurrent = false)
@@ -96,7 +96,7 @@ public class SceneLoader : MonoBehaviour
         currentScene = scene;
 
         if (_loadingProgress != null) { StopCoroutine(_loadingProgress); }
-        _loadingProgress = StartCoroutine(sceneLoadProgress());
+        _loadingProgress = StartCoroutine(SceneLoadProgress());
     }
 
     public void Unload(string scene)
@@ -104,7 +104,7 @@ public class SceneLoader : MonoBehaviour
         scenesLoading.Add(SceneManager.UnloadSceneAsync(scene));
     }
 
-    private IEnumerator sceneLoadProgress()
+    private IEnumerator SceneLoadProgress()
     {
         loading = true;
         float totalSceneProgress;

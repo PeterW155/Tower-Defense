@@ -7,10 +7,8 @@ public class EditButtons : MonoBehaviour
     public void ToggleTerrainEditing()
     {
         //disable other editors
-        if (TowerEditor.Instance.editing)
-            TowerEditor.Instance.DisableTowerEditing();
-        if (PurchaseTroops.Instance.menuActive)
-            PurchaseTroops.Instance.MenuDisabled();
+        TowerEditor.Instance.DisableTowerEditing();
+        PurchaseTroops.Instance.MenuDisabled();
 
 
         if (TerrainEditor.Instance.editing) //if it is already editing turn it off
@@ -21,10 +19,8 @@ public class EditButtons : MonoBehaviour
     public void ToggleTowerEditing()
     {
         //disable other editors
-        if (TerrainEditor.Instance.editing)
-            TerrainEditor.Instance.DisableTerrainEditing();
-        if (PurchaseTroops.Instance.menuActive)
-            PurchaseTroops.Instance.MenuDisabled();
+        TerrainEditor.Instance.DisableTerrainEditing();
+        PurchaseTroops.Instance.MenuDisabled();
 
 
         if (TowerEditor.Instance.editing) //if it is already editing turn it off
@@ -35,10 +31,8 @@ public class EditButtons : MonoBehaviour
     public void ToggleTroopSpawning()
     {
         //disable other editors
-        if (TowerEditor.Instance.editing)
-            TowerEditor.Instance.DisableTowerEditing();
-        if (TerrainEditor.Instance.editing)
-            TerrainEditor.Instance.DisableTerrainEditing();
+        TowerEditor.Instance.DisableTowerEditing();
+        TerrainEditor.Instance.DisableTerrainEditing();
 
 
         if (PurchaseTroops.Instance.menuActive) //if it is already active turn it off
