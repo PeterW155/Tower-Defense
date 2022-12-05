@@ -31,7 +31,9 @@ public class UnitSelections : MonoBehaviour
         unitToAdd.transform.GetChild(0).gameObject.SetActive(true);
         if (LayerMask.LayerToName(unitToAdd.gameObject.layer) == "Player")
         {
-            unitToAdd.GetComponent<MovePlayer>().enabled = true;
+            // unitToAdd.GetComponent<MovePlayer>().enabled = true;
+            unitToAdd.GetComponent<MovePlayerNew>().enabled = true;
+            PlayerUnitArmyNew.AddUnitToSelectedParent(unitToAdd);
         }
     }
 
@@ -43,14 +45,18 @@ public class UnitSelections : MonoBehaviour
             unitToAdd.transform.GetChild(0).gameObject.SetActive(true);
             if (LayerMask.LayerToName(unitToAdd.gameObject.layer) == "Player")
             {
-                unitToAdd.GetComponent<MovePlayer>().enabled = true;
+                // unitToAdd.GetComponent<MovePlayer>().enabled = true;
+                unitToAdd.GetComponent<MovePlayerNew>().enabled = true;
+                PlayerUnitArmyNew.AddUnitToSelectedParent(unitToAdd);
             }
         }
         else
         {
             if (LayerMask.LayerToName(unitToAdd.gameObject.layer) == "Player")
             {
-                unitToAdd.GetComponent<MovePlayer>().enabled = false;
+                // unitToAdd.GetComponent<MovePlayer>().enabled = false;
+                unitToAdd.GetComponent<MovePlayerNew>().enabled = false;
+                PlayerUnitArmyNew.RemoveUnitFromSelectedParent(unitToAdd);
             }
             unitToAdd.transform.GetChild(0).gameObject.SetActive(false);
             unitsSelected.Remove(unitToAdd);
@@ -65,7 +71,9 @@ public class UnitSelections : MonoBehaviour
             unitToAdd.transform.GetChild(0).gameObject.SetActive(true);
             if (LayerMask.LayerToName(unitToAdd.gameObject.layer) == "Player")
             {
-                unitToAdd.GetComponent<MovePlayer>().enabled = true;
+                // unitToAdd.GetComponent<MovePlayer>().enabled = true;
+                unitToAdd.GetComponent<MovePlayerNew>().enabled = true;
+                PlayerUnitArmyNew.AddUnitToSelectedParent(unitToAdd);
             }
         }
     }
@@ -78,7 +86,9 @@ public class UnitSelections : MonoBehaviour
             {
                 if (LayerMask.LayerToName(unit.gameObject.layer) == "Player")
                 {
-                    unit.GetComponent<MovePlayer>().enabled = false;
+                    // unit.GetComponent<MovePlayer>().enabled = false;
+                    unit.GetComponent<MovePlayerNew>().enabled = false;
+                    PlayerUnitArmyNew.RemoveUnitFromSelectedParent(unit);
                 }
                 unit.transform.GetChild(0).gameObject.SetActive(false);
             }

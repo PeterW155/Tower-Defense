@@ -143,6 +143,7 @@ public class UnitDrag : MonoBehaviour
             {
                 // If any unit is within the selection add them to selection
                 UnitSelections.Instance.DragSelect(unit);
+                PlayerUnitArmyNew.AddUnitToSelectedParent(unit);
             }
         }
     }
