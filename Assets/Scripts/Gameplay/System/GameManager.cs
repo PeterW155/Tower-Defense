@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
         {
             EndGame();
         }
-        
+
         if (PlayerStats.Instance.lives <= 0)
         {
             EndGame();
