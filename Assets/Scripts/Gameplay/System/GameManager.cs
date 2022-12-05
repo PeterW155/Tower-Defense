@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public static bool GameIsOver;
 
     public string gameOverUI;
+    public string gamePausedUI;
 
     private static GameManager _instance;
     public static GameManager Instance { get { return _instance; } }
@@ -41,10 +42,15 @@ public class GameManager : MonoBehaviour
         {
             EndGame();
         }
-        
+
         if (PlayerStats.Instance.lives <= 0)
         {
             EndGame();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseGame();
         }
     }
 
@@ -52,6 +58,14 @@ public class GameManager : MonoBehaviour
     {
         GameIsOver = true;
         GameObject UI = Root.Instance.UIGroups.Where(obj => obj.name == gameOverUI).SingleOrDefault();
+        if (UI != null)
+            UI.SetActive(true);
+    }
+
+    void PauseGame()
+    {
+        Time.timeScale = 0f;
+        GameObject UI = Root.Instance.UIGroups.Where(obj => obj.name == gamePausedUI).SingleOrDefault();
         if (UI != null)
             UI.SetActive(true);
     }
