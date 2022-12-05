@@ -19,11 +19,11 @@ public class MarketBuilding : MonoBehaviour
         }
         else if (level == 2)
         {
-            PlayerStats.Instance.money += 250;
+            PlayerStats.Instance.money += 300;
         }
         else
         {
-            PlayerStats.Instance.money += 350;
+            PlayerStats.Instance.money += 750;
         }
     }
 }

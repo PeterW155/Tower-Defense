@@ -207,7 +207,7 @@ MonoBehaviour:
   deathEffect: {fileID: 5153799349873572474, guid: cd62e84504fcd4e47b25e84c77b5be5d, type: 3}
   aSource: {fileID: 2095304563810743312}
   clip: {fileID: 8300000, guid: d65b81d6b848b467da29dab292d5ac66, type: 3}
-  startHealth: 150
+  startHealth: 100
   healthBar: {fileID: 2827955095543940960}
 --- !u!120 &8033207656192654846
 LineRenderer:
