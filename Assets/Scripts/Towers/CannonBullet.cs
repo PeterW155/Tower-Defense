@@ -10,6 +10,7 @@ public class CannonBullet : MonoBehaviour
     public float splashDamageRange = 10f;
     public int damage = 75;
     public int splashDamage = 50;
+    public AudioClip zombieHurt;
 
     public void Seek(Transform _target, int damage)
     {
@@ -50,6 +51,7 @@ public class CannonBullet : MonoBehaviour
         if (e != null)
         {
             e.TakeDamage(damage);
+            
         }
 
         GameObject effectInst = (GameObject)Instantiate(impactEffect, transform.position, transform.rotation);

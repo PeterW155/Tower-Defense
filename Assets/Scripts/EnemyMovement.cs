@@ -9,6 +9,9 @@ public class EnemyMovement : MonoBehaviour
     public int value = 75;
 
     public GameObject deathEffect;
+    public AudioSource aSource;
+    public AudioClip clip;
+
 
     public int startHealth = 100;
     private float health;
@@ -24,12 +27,14 @@ public class EnemyMovement : MonoBehaviour
 
     public void TakeDamage (int amount)
     {
+        
         health -= amount;
         healthBar.fillAmount = health/startHealth;
         if (health <= 0)
         {
             Die();
         }
+        aSource.PlayOneShot(clip);
     }
 
     void Die ()

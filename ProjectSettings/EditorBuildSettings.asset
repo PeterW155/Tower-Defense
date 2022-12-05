@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Preload.unity
+    path: Assets/Prefabs/Towers/ArcherTurret/Preload.unity
     guid: ce07bab43df435747a15dd7cf5d132be
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
