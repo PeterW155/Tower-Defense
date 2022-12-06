@@ -25,6 +25,8 @@ public class WaveSpawner : MonoBehaviour
     private int waveIndex = 0;
     private static int waveNum = 1;
 
+    private bool waveStarted;
+
     private static WaveSpawner _instance;
     public static WaveSpawner Instance { get { return _instance; } }
 
@@ -41,6 +43,8 @@ public class WaveSpawner : MonoBehaviour
             // Make this the instance
             _instance = this;
         }
+
+        waveStarted = false;
     }
 
     // Update is called once per frame
@@ -76,13 +80,17 @@ public class WaveSpawner : MonoBehaviour
     private void Update()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        if (enemies.Length >= 1)
+        if (enemies.Length >= 1 && !waveStarted)
         {
+            waveStarted = true;
             startWave.Invoke();
+            EditButtons.Instance.DisableButtons();
         }
-        else
+        else if (enemies.Length == 0 && waveStarted)
         {
+            waveStarted = false;
             endWave.Invoke();
+            EditButtons.Instance.EnableButtons();
         }
     }
 

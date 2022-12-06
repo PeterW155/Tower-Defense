@@ -22,7 +22,7 @@ public class PopupHandler : MonoBehaviour
 
     private InputActionMap[] disabledActionMaps;
 
-    private int currentActive;
+    [ReadOnly] public int currentActive;
     private bool animating;
     private bool activating;
 
@@ -35,7 +35,7 @@ public class PopupHandler : MonoBehaviour
 
     public void ActivatePopup(int index)
     {
-        if (!activating)
+        if (!activating && index >= 0 && index < popups.Count)
             StartCoroutine(AwaitAnimation(index));
     }
 

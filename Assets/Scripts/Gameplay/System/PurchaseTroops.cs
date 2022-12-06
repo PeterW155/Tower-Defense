@@ -62,16 +62,4 @@ public class PurchaseTroops : MonoBehaviour
             PlayerStats.Instance.money -= 200;
         }
     }
-
-    public void MenuEnabled()
-    {
-        menuActive = true;
-        Debug.Log("troops");
-        _playerInput.actions.FindActionMap(unitActionMap, true).Enable();
-    }
-    public void MenuDisabled()
-    {
-        menuActive = false;
-        _playerInput.actions.FindActionMap(unitActionMap, true).Disable();
-    }
 }

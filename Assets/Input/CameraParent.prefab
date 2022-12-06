@@ -290,7 +290,8 @@ MonoBehaviour:
   lockLookX: 1
   minMaxLookX: {x: 280, y: 80}
   screenEdgeMoving: 1
-  screenEdgeRatio: 0.03
+  screenEdgeRatio: 0.02
+  lockToWorldBorder: 1
   movementSensetivity: 2.5
   movementDrag: 16
   rotationSensetivity: 2.5
