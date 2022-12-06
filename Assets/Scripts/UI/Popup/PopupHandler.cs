@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class PopupHandler : MonoBehaviour
 {
@@ -14,8 +15,12 @@ public class PopupHandler : MonoBehaviour
     public float animationTime = 0.5f;
     public AnimationCurve animationCurve = AnimationCurve.Linear(0, 0, 1, 1);
     [Space(25)]
+    public List<string> actionMapBlacklist;
+    [Space(25)]
     public UnityEvent PopupEnabled;
     public UnityEvent PopupDisabled;
+
+    private InputActionMap[] disabledActionMaps;
 
     private int currentActive;
     private bool animating;
@@ -34,11 +39,36 @@ public class PopupHandler : MonoBehaviour
             StartCoroutine(AwaitAnimation(index));
     }
 
+    public void SaveAndDisableControls()
+    {
+        disabledActionMaps = CameraHandler.Instance.playerInput.actions.actionMaps.Where(x => (x.enabled && !actionMapBlacklist.Contains(x.name))).ToArray(); //get all currently active maps
+        //disable action maps
+        foreach (InputActionMap actionMap in disabledActionMaps)
+            actionMap.Disable();
+    }
+
+    public void DisableControls()
+    {
+        foreach (InputActionMap actionMap in disabledActionMaps)
+            actionMap.Disable();
+    }
+
+    public void LoadSavedControls()
+    {
+        //disable action maps
+        foreach (InputActionMap actionMap in CameraHandler.Instance.playerInput.actions.actionMaps.Where(x => (x.enabled && !actionMapBlacklist.Contains(x.name))))
+            actionMap.Disable();
+        //enable previously disabled action maps
+        foreach (InputActionMap actionMap in disabledActionMaps)
+            actionMap.Enable();
+    }
+
     private IEnumerator AwaitAnimation(int index)
     {
         activating = true;
         if (index == currentActive) //if selected active needs to be deactivated
         {
+            LoadSavedControls();
             //Debug.Log("popup disabled");
             PopupDisabled.Invoke();
             //deactive current popup
@@ -69,6 +99,7 @@ public class PopupHandler : MonoBehaviour
         }
         else //nothing is active so activate index
         {
+            SaveAndDisableControls();
             //Debug.Log("popup enabled");
             PopupEnabled.Invoke();
             //activate new popup

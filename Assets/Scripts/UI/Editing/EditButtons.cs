@@ -4,40 +4,45 @@ using UnityEngine;
 
 public class EditButtons : MonoBehaviour
 {
+    public PopupHandler popupHandler;
+
     public void ToggleTerrainEditing()
     {
-        //disable other editors
-        TowerEditor.Instance.DisableTowerEditing();
-        PurchaseTroops.Instance.MenuDisabled();
-
-
         if (TerrainEditor.Instance.editing) //if it is already editing turn it off
             TerrainEditor.Instance.DisableTerrainEditing();
-        else //enable
+        else
+        {
+            //disable other editors
+            TowerEditor.Instance.DisableTowerEditing();
+            PurchaseTroops.Instance.MenuDisabled();
+            popupHandler.DisableControls();
+
+            //enable
             TerrainEditor.Instance.EnableTerrainEditing();
+        }
     }
     public void ToggleTowerEditing()
     {
-        //disable other editors
-        TerrainEditor.Instance.DisableTerrainEditing();
-        PurchaseTroops.Instance.MenuDisabled();
-
-
         if (TowerEditor.Instance.editing) //if it is already editing turn it off
             TowerEditor.Instance.DisableTowerEditing();
-        else //enable
+        else
+        {
+            //disable other editors
+            TerrainEditor.Instance.DisableTerrainEditing();
+            PurchaseTroops.Instance.MenuDisabled();
+            popupHandler.DisableControls();
+
+            //enable
             TowerEditor.Instance.EnableTowerEditing();
+        }
     }
-    public void ToggleTroopSpawning()
+    public void ToggleDefault()
     {
         //disable other editors
-        TowerEditor.Instance.DisableTowerEditing();
         TerrainEditor.Instance.DisableTerrainEditing();
+        TowerEditor.Instance.DisableTowerEditing();
 
-
-        if (PurchaseTroops.Instance.menuActive) //if it is already active turn it off
-            PurchaseTroops.Instance.MenuDisabled();
-        else //enable
-            PurchaseTroops.Instance.MenuEnabled();
+        //enable
+        popupHandler.LoadSavedControls();
     }
 }
