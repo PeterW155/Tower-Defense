@@ -33,7 +33,10 @@ public class EditButtons : MonoBehaviour
     public void ToggleTerrainEditing()
     {
         if (TerrainEditor.Instance.editing) //if it is already editing turn it off
+        {
+            reactivateIndex = -1;
             TerrainEditor.Instance.DisableTerrainEditing();
+        }
         else
         {
             //disable other editors
@@ -47,7 +50,10 @@ public class EditButtons : MonoBehaviour
     public void ToggleTowerEditing()
     {
         if (TowerEditor.Instance.editing) //if it is already editing turn it off
+        {
+            reactivateIndex = -1;
             TowerEditor.Instance.DisableTowerEditing();
+        }
         else
         {
             //disable other editors

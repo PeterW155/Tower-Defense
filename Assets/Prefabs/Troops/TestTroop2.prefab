@@ -114,6 +114,7 @@ GameObject:
   - component: {fileID: 386663479654082285}
   - component: {fileID: -8980304092676207372}
   - component: {fileID: 741353762586387624}
+  - component: {fileID: 7277954610886438009}
   m_Layer: 6
   m_Name: TestTroop2
   m_TagString: Untagged
@@ -243,7 +244,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386663479654082284}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8db0e744b7ccf924595e8041489afc0a, type: 3}
   m_Name: 
@@ -275,6 +276,19 @@ MonoBehaviour:
   rotationSpeed: 7
   bullet: {fileID: 8952111980692290676, guid: a655ca9076677e149ad72f8d8a5ee2c5, type: 3}
   firePoint: {fileID: 8641179442993172763}
+--- !u!114 &7277954610886438009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386663479654082284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cd363ab23e2dba4d8fc7e84cbb2aa8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 386663479654082274}
 --- !u!1 &7965597175854595937
 GameObject:
   m_ObjectHideFlags: 0

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2281,15 +2281,37 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  actionMapBlacklist:
-  - Main
-  - UI
   PopupEnabled:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 273875125}
+        m_TargetAssemblyTypeName: PopupHandler, Assembly-CSharp
+        m_MethodName: DisableUI
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: PauseButton
+          m_BoolArgument: 0
+        m_CallState: 2
   PopupDisabled:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 273875125}
+        m_TargetAssemblyTypeName: PopupHandler, Assembly-CSharp
+        m_MethodName: EnableUI
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: PauseButton
+          m_BoolArgument: 0
+        m_CallState: 2
+  disabledActionMaps: []
   currentActive: 0
 --- !u!1001 &284958159
 PrefabInstance:
@@ -2804,7 +2826,7 @@ RectTransform:
   - {fileID: 1032444172}
   - {fileID: 1609649817}
   m_Father: {fileID: 2131687290}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -6444,7 +6466,7 @@ RectTransform:
   - {fileID: 1163151547}
   - {fileID: 313360053}
   m_Father: {fileID: 2131687290}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -6486,7 +6508,7 @@ RectTransform:
   - {fileID: 672066791}
   - {fileID: 1888049783}
   m_Father: {fileID: 2131687290}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -12865,7 +12887,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1134833972
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12873,17 +12895,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1134833971}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2050671265}
-  m_RootOrder: 5
+  m_Father: {fileID: 2131687290}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -50}
+  m_AnchoredPosition: {x: 50, y: -50.00009}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1134833973
@@ -19966,9 +19988,8 @@ RectTransform:
   - {fileID: 16762284}
   - {fileID: 1582032114}
   - {fileID: 4632405265942500184}
-  - {fileID: 1134833972}
   m_Father: {fileID: 2131687290}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -20587,6 +20608,7 @@ RectTransform:
   - {fileID: 733691990}
   - {fileID: 330966264}
   - {fileID: 1881081116}
+  - {fileID: 1134833972}
   - {fileID: 2050671265}
   - {fileID: 345370890}
   - {fileID: 707416857}
@@ -20619,6 +20641,7 @@ MonoBehaviour:
   - {fileID: 2050671264}
   - {fileID: 345370889}
   - {fileID: 709446147}
+  - {fileID: 1134833971}
 --- !u!1 &2132342348
 GameObject:
   m_ObjectHideFlags: 0

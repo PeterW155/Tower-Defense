@@ -38,6 +38,19 @@ public class PopupHandler : MonoBehaviour
             StartCoroutine(AwaitAnimation(index));
     }
 
+    public void DisableUI(string UIName)
+    {
+        GameObject UI = Root.Instance.UIGroups.Where(obj => obj.name == UIName).SingleOrDefault();
+        if (UI != null)
+            UI.SetActive(false);
+    }
+    public void EnableUI(string UIName)
+    {
+        GameObject UI = Root.Instance.UIGroups.Where(obj => obj.name == UIName).SingleOrDefault();
+        if (UI != null)
+            UI.SetActive(true);
+    }
+
     public void SaveAndDisableControls()
     {
         if (CameraHandler.Instance.cameraAltActive)

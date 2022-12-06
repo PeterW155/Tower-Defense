@@ -80,13 +80,13 @@ public class WaveSpawner : MonoBehaviour
     private void Update()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        if (enemies.Length >= 1 && !waveStarted)
+        if (enemies.Length >= 1 && !waveStarted) //wave started
         {
             waveStarted = true;
-            startWave.Invoke();
             EditButtons.Instance.DisableButtons();
+            startWave.Invoke();
         }
-        else if (enemies.Length == 0 && waveStarted)
+        else if (enemies.Length == 0 && waveStarted) //wave ended
         {
             waveStarted = false;
             endWave.Invoke();
