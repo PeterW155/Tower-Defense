@@ -15,12 +15,11 @@ public class PopupHandler : MonoBehaviour
     public float animationTime = 0.5f;
     public AnimationCurve animationCurve = AnimationCurve.Linear(0, 0, 1, 1);
     [Space(25)]
-    public List<string> actionMapBlacklist;
-    [Space(25)]
     public UnityEvent PopupEnabled;
     public UnityEvent PopupDisabled;
 
-    private InputActionMap[] disabledActionMaps;
+    [HideInInspector]
+    public InputActionMap[] disabledActionMaps;
 
     [ReadOnly] public int currentActive;
     private bool animating;
@@ -41,26 +40,43 @@ public class PopupHandler : MonoBehaviour
 
     public void SaveAndDisableControls()
     {
-        disabledActionMaps = CameraHandler.Instance.playerInput.actions.actionMaps.Where(x => (x.enabled && !actionMapBlacklist.Contains(x.name))).ToArray(); //get all currently active maps
-        //disable action maps
-        foreach (InputActionMap actionMap in disabledActionMaps)
-            actionMap.Disable();
+        if (CameraHandler.Instance.cameraAltActive)
+        {
+            disabledActionMaps = CameraHandler.Instance.disabledActionMaps;
+        }
+        else
+        {
+            disabledActionMaps = CameraHandler.Instance.playerInput.actions.actionMaps.Where(x => (x.enabled && !CameraHandler.Instance.actionMapBlacklist.Contains(x.name))).ToArray(); //get all currently active maps
+            //disable action maps
+            foreach (InputActionMap actionMap in disabledActionMaps)
+                actionMap.Disable();
+        }
     }
 
     public void DisableControls()
     {
-        foreach (InputActionMap actionMap in disabledActionMaps)
-            actionMap.Disable();
+        if (!CameraHandler.Instance.cameraAltActive) //the disabled action maps will get overwritten in some way or another so they don't need to be disabled
+        {
+            foreach (InputActionMap actionMap in disabledActionMaps)
+                actionMap.Disable();
+        }
     }
 
     public void LoadSavedControls()
     {
-        //disable action maps
-        foreach (InputActionMap actionMap in CameraHandler.Instance.playerInput.actions.actionMaps.Where(x => (x.enabled && !actionMapBlacklist.Contains(x.name))))
-            actionMap.Disable();
-        //enable previously disabled action maps
-        foreach (InputActionMap actionMap in disabledActionMaps)
-            actionMap.Enable();
+        if (CameraHandler.Instance.cameraAltActive)
+        {
+            CameraHandler.Instance.disabledActionMaps = disabledActionMaps;
+        }
+        else
+        {
+            //disable action maps
+            foreach (InputActionMap actionMap in CameraHandler.Instance.playerInput.actions.actionMaps.Where(x => (x.enabled && !CameraHandler.Instance.actionMapBlacklist.Contains(x.name))))
+                actionMap.Disable();
+            //enable previously disabled action maps
+            foreach (InputActionMap actionMap in disabledActionMaps)
+                actionMap.Enable();
+        }
     }
 
     private IEnumerator AwaitAnimation(int index)

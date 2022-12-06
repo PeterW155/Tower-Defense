@@ -304,7 +304,9 @@ MonoBehaviour:
     m_Bits: 8
   playerInput: {fileID: 0}
   cameraActionMap: Camera
-  mainActionMap: Main
+  actionMapBlacklist:
+  - Main
+  - UI
   moveControl: Main/Move
   lookControl: Main/Look
   lookAltControl: Main/LookAlt
@@ -319,6 +321,7 @@ MonoBehaviour:
   look: {x: 0, y: 0}
   lookAlt: 0
   zoom: 0
+  disabledActionMaps: []
 --- !u!114 &668968359509995568
 MonoBehaviour:
   m_ObjectHideFlags: 0

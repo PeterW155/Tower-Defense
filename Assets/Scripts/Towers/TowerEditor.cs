@@ -74,14 +74,24 @@ public class TowerEditor : MonoBehaviour
     {
         editing = true;
         editCoroutine = StartCoroutine(Editing());
-        _playerInput.actions.FindActionMap(editingActionMap, true).Enable();
+        if (CameraHandler.Instance.cameraAltActive)
+        {
+            CameraHandler.Instance.disabledActionMaps = new InputActionMap[] { _playerInput.actions.FindActionMap(editingActionMap, true) };
+        }
+        else
+            _playerInput.actions.FindActionMap(editingActionMap, true).Enable();
     }
     public void DisableTowerEditing()
     {
         editing = false;
         if (editCoroutine != null)
             StopCoroutine(editCoroutine);
-        _playerInput.actions.FindActionMap(editingActionMap, true).Disable();
+        if (CameraHandler.Instance.cameraAltActive)
+        {
+            CameraHandler.Instance.disabledActionMaps = EditButtons.Instance.popupHandler.disabledActionMaps;
+        }
+        else
+            _playerInput.actions.FindActionMap(editingActionMap, true).Disable();
 
         if (proxiesActive)
         {

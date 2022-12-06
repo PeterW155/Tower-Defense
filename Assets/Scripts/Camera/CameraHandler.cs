@@ -47,7 +47,8 @@ public class CameraHandler : MonoBehaviour
     [Space]
     [Header("Controls")]
     [StringInList(typeof(PropertyDrawersHelper), "AllActionMaps")] public string cameraActionMap;
-    [StringInList(typeof(PropertyDrawersHelper), "AllActionMaps")] public string mainActionMap;
+    [Space]
+    public List<string> actionMapBlacklist;
     [Space]
     [StringInList(typeof(PropertyDrawersHelper), "AllPlayerInputs")] public string moveControl;
     private InputAction _move;
@@ -77,14 +78,15 @@ public class CameraHandler : MonoBehaviour
     [Space]
     [Header("Debug")]
     #pragma warning disable 0414
-    [ReadOnly] [SerializeField] private bool cameraAltActive;
+    [ReadOnly] public bool cameraAltActive;
     #pragma warning restore 0414
     [ReadOnly] [SerializeField] private Vector2 move;
     [ReadOnly] [SerializeField] private Vector2 look;
     [ReadOnly] [SerializeField] private float lookAlt;
     [ReadOnly] [SerializeField] private float zoom;
 
-    private InputActionMap[] disabledActionMaps;
+    [HideInInspector]
+    public InputActionMap[] disabledActionMaps;
 
     float defaultDrag = 0.95f;
 
@@ -179,7 +181,7 @@ public class CameraHandler : MonoBehaviour
 
     private void EnableCameraControls(InputAction.CallbackContext context)
     {
-        disabledActionMaps = playerInput.actions.actionMaps.Where(x => (x.enabled && x.name != mainActionMap)).ToArray(); //get all currently active maps
+        disabledActionMaps = playerInput.actions.actionMaps.Where(x => (x.enabled && !actionMapBlacklist.Contains(x.name))).ToArray(); //get all currently active maps
         //enable action map
         playerInput.actions.FindActionMap(cameraActionMap).Enable();
         //disable other action maps
