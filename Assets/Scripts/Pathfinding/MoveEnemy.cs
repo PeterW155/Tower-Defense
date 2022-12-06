@@ -54,7 +54,7 @@ public class MoveEnemy : MonoBehaviour
     private void Update()
     {
         float dist = Vector3.Distance(transform.position, targetObject.transform.position);
-        if(dist <= 1)
+        if(dist <= 2)
         {
             Destroy(gameObject);
             PlayerStats.Instance.lives--;

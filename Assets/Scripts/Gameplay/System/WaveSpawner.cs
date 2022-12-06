@@ -152,7 +152,7 @@ public class WaveSpawner : MonoBehaviour
     IEnumerator spawnWaveSlow()
     {
 
-        for (int i = 0; i < waveIndex / 3; i++)
+        for (int i = 0; i < waveIndex / 5; i++)
         {
             spawnEnemy(slowEnemyPrefab);
             yield return new WaitForSeconds(0.5f);

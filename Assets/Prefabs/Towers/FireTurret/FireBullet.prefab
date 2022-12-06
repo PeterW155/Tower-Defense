@@ -102,7 +102,8 @@ MonoBehaviour:
   enemyTag: Enemy
   splashDamageRange: 12
   damage: 25
-  splashDamage: 25
+  splashDamage: 50
+  zombieHurt: {fileID: 0}
 --- !u!82 &-8534582599656690074
 AudioSource:
   m_ObjectHideFlags: 0

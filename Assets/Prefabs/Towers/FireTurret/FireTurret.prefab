@@ -642,10 +642,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d223c27a1fe739f4fb786546eb550eb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 0.38
+  fireRate: 0.5
   fireReload: 0
-  range: 30
-  damage: 50
+  range: 40
+  damage: 25
   enemyTag: Enemy
   partToRotate: {fileID: 1059197709588517820}
   rotationSpeed: 7
@@ -695,10 +695,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d223c27a1fe739f4fb786546eb550eb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 0.75
+  fireRate: 1.2
   fireReload: 0
-  range: 50
-  damage: 100
+  range: 80
+  damage: 150
   enemyTag: Enemy
   partToRotate: {fileID: 3345525493414881168}
   rotationSpeed: 7
@@ -748,10 +748,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d223c27a1fe739f4fb786546eb550eb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 0.5
+  fireRate: 0.8
   fireReload: 0
-  range: 40
-  damage: 75
+  range: 55
+  damage: 100
   enemyTag: Enemy
   partToRotate: {fileID: 1797692411046737718}
   rotationSpeed: 7
@@ -806,9 +806,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dff9402201803b479ddfed13b5736d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 1000
+  cost: 750
   lvl: 1
-  costToLvl: 1500
+  costToLvl: 750
   type: Fire
   size: {x: 2, y: 2, z: 2}
   main: {fileID: 1602951521015417412}

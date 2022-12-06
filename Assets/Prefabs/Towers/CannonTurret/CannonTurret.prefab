@@ -269,10 +269,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d223c27a1fe739f4fb786546eb550eb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 0.8
+  fireRate: 1
   fireReload: 0
   range: 25
-  damage: 200
+  damage: 300
   enemyTag: Enemy
   partToRotate: {fileID: 117567090681730931}
   rotationSpeed: 7
@@ -715,10 +715,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d223c27a1fe739f4fb786546eb550eb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 0.3
+  fireRate: 0.5
   fireReload: 0
   range: 15
-  damage: 50
+  damage: 100
   enemyTag: Enemy
   partToRotate: {fileID: 1059197709588517820}
   rotationSpeed: 7
@@ -1115,9 +1115,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dff9402201803b479ddfed13b5736d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 600
+  cost: 500
   lvl: 1
-  costToLvl: 700
+  costToLvl: 500
   type: Cannon
   size: {x: 2, y: 2, z: 2}
   main: {fileID: 5981949345776186755}
@@ -1296,10 +1296,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d223c27a1fe739f4fb786546eb550eb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 0.55
+  fireRate: 0.75
   fireReload: 0
   range: 20
-  damage: 100
+  damage: 200
   enemyTag: Enemy
   partToRotate: {fileID: 6194113013883389052}
   rotationSpeed: 7
